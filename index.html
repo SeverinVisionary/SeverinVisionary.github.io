@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hanyu Yang — certified mathematics deposits</title>
+<link rel="canonical" href="https://severinvisionary.github.io/">
+<meta name="description" content="Machine-checkable mathematical results with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), and a certified n = 14 construction for Heilbronn's triangle problem in the disk.">
+<meta name="keywords" content="certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, reproducible research, open data, Hanyu Yang">
+<meta name="author" content="Hanyu Yang">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Hanyu Yang — certified mathematics deposits">
+<meta property="og:description" content="Machine-checkable mathematical results with public certificates and DOIs.">
+<meta property="og:url" content="https://severinvisionary.github.io/">
+<meta name="twitter:card" content="summary">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": "https://severinvisionary.github.io/",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Hanyu Yang",
+    "identifier": "https://orcid.org/0009-0005-0419-4070",
+    "url": "https://severinvisionary.github.io/",
+    "sameAs": [
+      "https://orcid.org/0009-0005-0419-4070",
+      "https://github.com/SeverinVisionary"
+    ]
+  },
+  "hasPart": [
+    {
+      "@type": "Dataset",
+      "name": "The Bernstein constant: ten rigorously certified digits",
+      "url": "https://severinvisionary.github.io/bernstein-constant-certificate/",
+      "identifier": "https://doi.org/10.5281/zenodo.22106774",
+      "datePublished": "2026-08-26",
+      "creator": {"@type": "Person", "name": "Hanyu Yang"},
+      "license": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Twofold coverings of the Hamming cube: a Lean-verified K(8,1,2) >= 61",
+      "url": "https://severinvisionary.github.io/oeis-a004045/",
+      "identifier": "https://doi.org/10.5281/zenodo.22217672",
+      "datePublished": "2026-09-03",
+      "creator": {"@type": "Person", "name": "Hanyu Yang"},
+      "programmingLanguage": ["Lean 4", "Python"],
+      "license": "https://opensource.org/licenses/MIT"
+    },
+    {
+      "@type": "Dataset",
+      "name": "Heilbronn's triangle problem in the disk: a certified n = 14 construction",
+      "url": "https://severinvisionary.github.io/heilbronn-records/",
+      "identifier": "https://doi.org/10.5281/zenodo.22091169",
+      "datePublished": "2026-08-25",
+      "creator": {"@type": "Person", "name": "Hanyu Yang"},
+      "license": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ]
+}
+</script>
+
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#fbfbfa; --ink:#1a1d21; --ink2:#4a5158; --ink3:#767e86;
+    --rule:#dfe3e7; --accent:#14563d; --accent-soft:#e3f0e9; --mono-bg:#f2f4f5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --bg:#111417; --ink:#e6e9ec; --ink2:#a9b1b8; --ink3:#7d868e;
+      --rule:#2b3238; --accent:#6fc79c; --accent-soft:#152a21; --mono-bg:#1e2429;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#111417; --ink:#e6e9ec; --ink2:#a9b1b8; --ink3:#7d868e;
+    --rule:#2b3238; --accent:#6fc79c; --accent-soft:#152a21; --mono-bg:#1e2429;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+  code,.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  main{max-width:820px;margin:0 auto;padding:40px 20px 80px}
+  h1{font-size:28px;line-height:1.25;margin:0 0 10px}
+  h2{font-size:19px;margin:36px 0 6px}
+  h2 a{text-decoration:none}
+  p{margin:0 0 12px;max-width:70ch}
+  a{color:var(--accent)}
+  .sub{color:var(--ink2);font-size:17px;margin-bottom:18px}
+  .meta{font-size:14px;color:var(--ink3);border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);padding:12px 0;margin:20px 0 30px}
+  .work{border-left:3px solid var(--rule);padding:2px 0 2px 16px;margin:0 0 26px}
+  .result{background:var(--accent-soft);border:1px solid var(--rule);
+    padding:10px 14px;margin:10px 0;font-size:15px;word-break:break-word}
+  .links{font-size:14px;color:var(--ink3)}
+  footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--rule);
+    font-size:13.5px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<main>
+
+<h1>Hanyu Yang — certified mathematics deposits</h1>
+<p class="sub">Machine-checkable results, each with a public certificate, a
+reproduction command and a DOI. Every claim below is checked by something other
+than the author's judgement, and each deposit states what it does
+<em>not</em> establish.</p>
+
+<div class="meta">
+  ORCID <a href="https://orcid.org/0009-0005-0419-4070">0009-0005-0419-4070</a> ·
+  <a href="https://github.com/SeverinVisionary">github.com/SeverinVisionary</a>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/bernstein-constant-certificate/">Bernstein's constant: ten rigorously certified digits</a></h2>
+<div class="result"><span class="m">β = 0.2801694990</span> — ten
+correctly-rounded decimal places, proved in Arb interval arithmetic, where the
+1985 Varga–Carpenter rigorous enclosure determines five.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.22106774">10.5281/zenodo.22106774</a> ·
+  <a href="https://github.com/SeverinVisionary/bernstein-constant-certificate">repository</a> ·
+  <a href="https://oeis.org/A073001">OEIS A073001</a> · dataset, 26 Aug 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/oeis-a004045/">Twofold coverings of the Hamming cube: a Lean-verified <span class="m">K(8,1,2) ≥ 61</span></a></h2>
+<div class="result"><span class="m">61 ≤ K(8,1,2) ≤ 64</span> — the lower bound
+formalised in Lean 4 with zero <span class="m">sorry</span>s, plus an elementary
+even-<span class="m">n</span> theorem improving five published lower bounds.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.22217672">10.5281/zenodo.22217672</a> ·
+  <a href="https://github.com/SeverinVisionary/oeis-a004045">repository</a> ·
+  <a href="https://oeis.org/A004045">OEIS A004045</a> · software, 3 Sep 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/heilbronn-records/">Heilbronn's triangle problem in the disk: a certified <span class="m">n = 14</span> construction</a></h2>
+<div class="result"><span class="m">α_disk(14) ≥ 0.0767158857710289397517847755066…</span>
+— an explicit 14-point configuration in exact integer coordinates, about +1.075%
+above the best earlier documented value; a certified lower bound, not a proved
+record.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.22091169">10.5281/zenodo.22091169</a> ·
+  <a href="https://github.com/SeverinVisionary/heilbronn-records">repository</a> ·
+  dataset, 25 Aug 2026
+</p>
+</div>
+
+<footer>
+Each deposit is licensed on its own page (CC BY 4.0 for data and prose; MIT for
+code where stated). This index exists so the three landing pages, their sitemaps
+and a single <a href="https://severinvisionary.github.io/robots.txt">robots.txt</a>
+sit at the site root, where crawlers actually read them.
+</footer>
+
+</main>
+</body>
+</html>
