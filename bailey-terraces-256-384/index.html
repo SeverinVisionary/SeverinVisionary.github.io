@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A terrace for every non-abelian group of order 256 and 384</title>
+<link rel="canonical" href="https://severinvisionary.github.io/bailey-terraces-256-384/">
+<meta name="description" content="Explicit terraces for all 76,224 non-abelian groups of order 256 and 384, with a standard-library Python verifier, nine negative controls, a coverage check and a GAP script confirming every SmallGroup id. Orders 256 and 384 were the cases left open by Theorem 32(vi) of the dynamic survey DS10; with them closed, every non-abelian group of order at most 511 is terraced.">
+<meta name="keywords" content="terrace, Bailey's conjecture, sequenceable groups, R-sequencing, 2-sequencing, combinatorial design theory, finite groups, GAP Small Groups library, order 256, order 384, DS10, Ollis, reproducible research, open data, Hanyu Yang">
+<meta name="author" content="Hanyu Yang">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A terrace for every non-abelian group of order 256 and 384">
+<meta property="og:description" content="76,325 checkable witness records closing the last two open orders of Bailey's conjecture below 512.">
+<meta property="og:url" content="https://severinvisionary.github.io/bailey-terraces-256-384/">
+<meta name="twitter:card" content="summary">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "An explicit terrace for every non-abelian group of order 256 and 384",
+  "url": "https://severinvisionary.github.io/bailey-terraces-256-384/",
+  "description": "Explicit terraces for all 56,070 non-abelian groups of order 256 and all 20,154 of order 384, in 76,325 witness records, with a standalone Python verifier, nine negative controls, a coverage check and a GAP id check. Both checks were run on the released files and their unedited logs ship with the data.",
+  "datePublished": "2026-09-16",
+  "creator": {
+    "@type": "Person",
+    "name": "Hanyu Yang",
+    "identifier": "https://orcid.org/0009-0005-0419-4070"
+  },
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "keywords": ["terrace", "Bailey's conjecture", "sequenceable groups", "R-sequencing", "finite groups", "GAP Small Groups library"],
+  "codeRepository": "https://github.com/SeverinVisionary/bailey-terraces-256-384",
+  "distribution": {
+    "@type": "DataDownload",
+    "encodingFormat": "application/gzip",
+    "contentUrl": "https://github.com/SeverinVisionary/bailey-terraces-256-384/archive/refs/tags/v1.0.0.zip"
+  }
+}
+</script>
+
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#fbfbfa; --ink:#1a1d21; --ink2:#4a5158; --ink3:#767e86;
+    --rule:#dfe3e7; --accent:#14563d; --accent-soft:#e3f0e9; --mono-bg:#f2f4f5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --bg:#111417; --ink:#e6e9ec; --ink2:#a9b1b8; --ink3:#7d868e;
+      --rule:#2b3238; --accent:#6fc79c; --accent-soft:#152a21; --mono-bg:#1e2429;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#111417; --ink:#e6e9ec; --ink2:#a9b1b8; --ink3:#7d868e;
+    --rule:#2b3238; --accent:#6fc79c; --accent-soft:#152a21; --mono-bg:#1e2429;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+  code,.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  main{max-width:820px;margin:0 auto;padding:40px 20px 80px}
+  h1{font-size:28px;line-height:1.25;margin:0 0 10px}
+  h2{font-size:19px;margin:34px 0 8px}
+  p{margin:0 0 12px;max-width:70ch}
+  a{color:var(--accent)}
+  .sub{color:var(--ink2);font-size:17px;margin-bottom:18px}
+  .meta{font-size:14px;color:var(--ink3);border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);padding:12px 0;margin:20px 0 26px}
+  .result{background:var(--accent-soft);border:1px solid var(--rule);
+    padding:10px 14px;margin:10px 0 18px;font-size:15px;word-break:break-word}
+  pre{background:var(--mono-bg);border:1px solid var(--rule);padding:12px 14px;
+    overflow-x:auto;font-size:14px}
+  table{border-collapse:collapse;font-size:15px;margin:8px 0 18px}
+  th,td{border-bottom:1px solid var(--rule);padding:6px 14px 6px 0;text-align:left}
+  ul{max-width:70ch}
+  footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--rule);
+    font-size:13.5px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<main>
+
+<h1>A terrace for every non-abelian group of order 256 and 384</h1>
+<p class="sub">76,325 witness records, a verifier that needs nothing but Python 3,
+and the logs of both checks run on the released files.</p>
+
+<div class="meta">
+  <a href="https://github.com/SeverinVisionary/bailey-terraces-256-384">repository</a> ·
+  CC0 1.0 · dataset, 16 Sep 2026 ·
+  ORCID <a href="https://orcid.org/0009-0005-0419-4070">0009-0005-0419-4070</a>
+</div>
+
+<div class="result">Every non-abelian group of order 256 (56,070 of them) and of
+order 384 (20,154) has an explicit terrace here. Orders 256 and 384 were the two
+cases left open by Theorem 32(vi) of Ollis's dynamic survey; combined with that
+survey, <strong>every non-abelian group of order at most 511 is terraced</strong>.</div>
+
+<h2>What a terrace is</h2>
+<p>Let <span class="m">G</span> be a finite group of order <span class="m">n</span>
+with identity <span class="m">e</span>. Order all its elements as
+<span class="m">a_1, …, a_n</span> with <span class="m">a_1 = e</span>, and form the
+<span class="m">n−1</span> differences
+<span class="m">b_i = (a_i)⁻¹ a_{i+1}</span>. The ordering is a
+<strong>terrace</strong> when every element that is its own inverse occurs exactly
+once among the differences, and every other element occurs together with its
+inverse exactly twice in total. Bailey's conjecture, as the survey states it, is
+that every finite group is terraced except the elementary abelian 2-groups of
+order at least 4.</p>
+
+<h2>What is deposited</h2>
+<table>
+  <tr><th>order</th><th>groups in GAP's library</th><th>abelian</th><th>covered here</th></tr>
+  <tr><td>256</td><td>56,092</td><td>22</td><td><strong>56,070</strong></td></tr>
+  <tr><td>384</td><td>20,169</td><td>15</td><td><strong>20,154</strong></td></tr>
+</table>
+<p>One gzipped JSON object per record: the group as generator permutations with
+their relative orders, and the terrace as a list of element indices. 101 groups
+of order 384 carry two terraces, so there are 76,325 records for 76,224 groups.
+About 57 MB in total.</p>
+
+<h2>Checking it yourself</h2>
+<pre>git clone https://github.com/SeverinVisionary/bailey-terraces-256-384
+cd bailey-terraces-256-384
+sh run_all.sh        # a few hours; Python 3 standard library only</pre>
+<p>Four checks, stopping at the first that is not exactly as expected: the files
+match their checksums; every record is a terrace of a genuine group of the stated
+order; nine deliberately wrong records are all rejected; and every non-abelian id
+of each order is present, counted against the library size minus the abelian
+groups. A fifth check needs GAP and confirms that each record's group really is
+the <span class="m">SmallGroup</span> its id names:</p>
+<pre>python3 scripts/export_for_gap.py
+gap -q scripts/check_ids.g</pre>
+<p>Both were run on the released files. Their unedited logs ship with the data,
+each headed by the SHA-256 of every file it read:
+<span class="m">76,325 / 76,325</span> records verified, and
+<span class="m">76,325 / 76,325</span> ids confirmed with 0 mismatches.</p>
+
+<h2>What it does not establish</h2>
+<ul>
+  <li>Nothing about abelian groups: their case is settled separately, and the
+      non-cyclic elementary abelian 2-groups have no terrace at all. One of them,
+      <span class="m">C₂⁸</span>, is included as a negative control.</li>
+  <li>Nothing about orders other than 256 and 384. The statement for every order
+      below 512 rests on the survey and the work it cites.</li>
+  <li>GAP's Small Groups library is taken as given, for the list of groups of each
+      order. The deposit's own id check ties each record to that library, but does
+      not re-derive the classification.</li>
+</ul>
+
+<footer>
+CC0 1.0 (public domain dedication) — data, code, logs and documentation.
+Part of <a href="https://severinvisionary.github.io/">Hanyu Yang — certified
+mathematics deposits</a>.
+</footer>
+
+</main>
+</body>
+</html>

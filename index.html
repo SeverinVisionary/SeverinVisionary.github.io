@@ -6,8 +6,8 @@
 <title>Hanyu Yang — certified mathematics deposits</title>
 <link rel="canonical" href="https://severinvisionary.github.io/">
 <meta name="google-site-verification" content="B60QY6VtultYCU8wjBrU6MESDhCsu93_Hh0pPYkCP_s">
-<meta name="description" content="Machine-checkable mathematical results with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, and three settled conjectures on alternating plane graphs.">
-<meta name="keywords" content="certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, reproducible research, open data, Hanyu Yang">
+<meta name="description" content="Machine-checkable mathematical results with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, three settled conjectures on alternating plane graphs, and an explicit terrace for every non-abelian group of order 256 and 384.">
+<meta name="keywords" content="certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, Hanyu Yang">
 <meta name="author" content="Hanyu Yang">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="profile">
@@ -69,6 +69,14 @@
       "creator": {"@type": "Person", "name": "Hanyu Yang"},
       "programmingLanguage": ["Python"],
       "license": "https://opensource.org/licenses/MIT"
+    },
+    {
+      "@type": "Dataset",
+      "name": "An explicit terrace for every non-abelian group of order 256 and 384",
+      "url": "https://severinvisionary.github.io/bailey-terraces-256-384/",
+      "datePublished": "2026-09-16",
+      "creator": {"@type": "Person", "name": "Hanyu Yang"},
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/"
     },
     {
       "@type": "SoftwareSourceCode",
@@ -201,9 +209,25 @@ without a solver and checked by complete enumeration.</div>
 </p>
 </div>
 
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/bailey-terraces-256-384/">A terrace for every non-abelian group of order 256 and 384</a></h2>
+<div class="result">All <span class="m">56,070</span> non-abelian groups of order
+256 and all <span class="m">20,154</span> of order 384 given an explicit terrace
+&mdash; the two orders left open by Theorem 32(vi) of Ollis's dynamic survey, so
+that with it every non-abelian group of order at most 511 is terraced. 76,325
+witness records, checked by a standard-library Python verifier, nine negative
+controls, a coverage count, and a GAP check tying every record to its
+<span class="m">SmallGroup</span> id.</div>
+<p class="links">
+  <a href="https://github.com/SeverinVisionary/bailey-terraces-256-384">repository</a> &middot;
+  Ollis, <em>Sequenceable Groups and Related Topics</em>, EJC Dynamic Survey DS10 v3 &middot;
+  dataset, CC0, 16 Sep 2026
+</p>
+</div>
+
 <footer>
 Each deposit is licensed on its own page (CC BY 4.0 for data and prose; MIT for
-code where stated). This index exists so the five landing pages, their sitemaps
+code where stated; CC0 for the terraces deposit). This index exists so the six landing pages, their sitemaps
 and a single <a href="https://severinvisionary.github.io/robots.txt">robots.txt</a>
 sit at the site root, where crawlers actually read them.
 </footer>
