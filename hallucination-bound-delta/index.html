@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is δ small? Measuring the premise of a hallucination lower bound on OLMo-2</title>
+<link rel="canonical" href="https://severinvisionary.github.io/hallucination-bound-delta/">
+<meta name="description" content="A measurement of the slack term δ in the hallucination lower bound of Kalai, Nachum, Vempala and Zhang, on their birthday example, with OLMo-2 and its public training corpus. For the 7B base model δ = +0.028 (95% CI [0.017, 0.042]); for the 1B it is inconclusive; weighting every frame person equally gives +0.156.">
+<meta name="keywords" content="hallucination, language models, calibration, Why Language Models Hallucinate, Kalai Nachum Vempala Zhang, singleton rate, OLMo-2, infini-gram, training data frequency, lower bound, post-training, Hanyu Yang">
+<meta name="author" content="Hanyu Yang">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="citation_title" content="Is δ small? Measuring the premise of a hallucination lower bound on OLMo-2">
+<meta name="citation_author" content="Yang, Hanyu">
+<meta name="citation_publication_date" content="2026/10/07">
+<meta name="citation_doi" content="10.5281/zenodo.23225543">
+<meta name="citation_publisher" content="Zenodo">
+<meta name="citation_pdf_url" content="https://zenodo.org/records/23225596/files/note.pdf">
+<meta name="citation_abstract_html_url" content="https://severinvisionary.github.io/hallucination-bound-delta/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Is δ small? Measuring the premise of a hallucination lower bound on OLMo-2">
+<meta property="og:description" content="For OLMo-2 7B base, δ = +0.028 (95% CI [0.017, 0.042]), inside a ±0.05 band set in advance, but the run was added after part of its data had been seen, and equal weights give +0.156.">
+<meta property="og:url" content="https://severinvisionary.github.io/hallucination-bound-delta/">
+<meta property="og:image" content="https://severinvisionary.github.io/hallucination-bound-delta/fig3_sensitivity.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Is δ small? Measuring the premise of a hallucination lower bound on OLMo-2",
+  "name": "Is δ small? Measuring the premise of a hallucination lower bound on OLMo-2",
+  "url": "https://severinvisionary.github.io/hallucination-bound-delta/",
+  "identifier": "https://doi.org/10.5281/zenodo.23225543",
+  "datePublished": "2026-10-07",
+  "author": {
+    "@type": "Person",
+    "name": "Hanyu Yang",
+    "identifier": "https://orcid.org/0009-0005-0419-4070"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Zenodo"
+  },
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "inLanguage": "en",
+  "keywords": [
+    "hallucination",
+    "language models",
+    "calibration",
+    "OLMo-2",
+    "training data frequency",
+    "lower bound"
+  ],
+  "about": [
+    "Machine learning",
+    "Natural language processing"
+  ],
+  "abstract": "Kalai, Nachum, Vempala and Zhang prove that a pretrained language model errs on arbitrary facts at least about as often as such facts appear once in training, up to a slack term δ. The term compares the probability the model puts on answers above a threshold with how often the true answer is above it. They argue that pretraining keeps δ small, but do not measure it. We measure its signed form on their birthday example. OLMo-2's corpus is public, so we weight each of 2,083 people by how often their name and birth date occur together in it. For the 7B base model δ = +0.028 (95% CI [0.017, 0.042]), inside a ±0.05 band set before the probe was built. For the 1B it is inconclusive. The 7B run was added after part of its data had been seen, and weighting every frame person equally gives +0.156. On this frame the floor itself is vacuous.",
+  "image": "https://severinvisionary.github.io/hallucination-bound-delta/fig3_sensitivity.png",
+  "encoding": {
+    "@type": "MediaObject",
+    "encodingFormat": "application/pdf",
+    "contentUrl": "https://zenodo.org/records/23225596/files/note.pdf"
+  },
+  "isBasedOn": "https://doi.org/10.5281/zenodo.23216820",
+  "sameAs": [
+    "https://zenodo.org/records/23225596"
+  ]
+}
+</script>
+
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#fbfbfa; --ink:#1a1d21; --ink2:#4a5158; --ink3:#767e86;
+    --rule:#dfe3e7; --accent:#14563d; --accent-soft:#e3f0e9; --mono-bg:#f2f4f5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --bg:#111417; --ink:#e6e9ec; --ink2:#a9b1b8; --ink3:#7d868e;
+      --rule:#2b3238; --accent:#6fc79c; --accent-soft:#152a21; --mono-bg:#1e2429;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#111417; --ink:#e6e9ec; --ink2:#a9b1b8; --ink3:#7d868e;
+    --rule:#2b3238; --accent:#6fc79c; --accent-soft:#152a21; --mono-bg:#1e2429;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+  code,.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  pre{background:var(--mono-bg);padding:10px 14px;overflow-x:auto;font-size:14px;max-width:70ch}
+  main{max-width:820px;margin:0 auto;padding:40px 20px 80px}
+  h1{font-size:28px;line-height:1.25;margin:0 0 10px}
+  h2{font-size:19px;margin:34px 0 8px}
+  p{margin:0 0 12px;max-width:70ch}
+  a{color:var(--accent)}
+  .sub{color:var(--ink2);font-size:17px;margin-bottom:18px}
+  .meta{font-size:14px;color:var(--ink3);border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);padding:12px 0;margin:20px 0 26px}
+  .result{background:var(--accent-soft);border:1px solid var(--rule);
+    padding:10px 14px;margin:10px 0 18px;font-size:15px;word-break:break-word}
+  .tw{overflow-x:auto}
+  table{border-collapse:collapse;font-size:15px;margin:8px 0 18px}
+  th,td{border-bottom:1px solid var(--rule);padding:6px 14px 6px 0;text-align:left;
+    font-variant-numeric:tabular-nums}
+  .nw{white-space:nowrap}
+  figure{margin:14px 0 22px}
+  figure img{max-width:100%;height:auto;border:1px solid var(--rule);background:#fff}
+  figcaption{font-size:14px;color:var(--ink3);margin-top:6px;max-width:70ch}
+  ul{max-width:70ch}
+  footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--rule);
+    font-size:13.5px;color:var(--ink3)}
+</style>
+
+</head>
+<body>
+<main>
+
+<h1>Is &delta; small? Measuring the premise of a hallucination lower bound on OLMo-2</h1>
+<p class="sub">On the birthday example of Kalai et al., OLMo-2 7B gives &delta; = +0.028,
+inside a &plusmn;0.05 band set in advance. The result is fragile, and the floor itself is vacuous
+on this frame.</p>
+
+<div class="meta">
+  DOI <a href="https://doi.org/10.5281/zenodo.23225543">10.5281/zenodo.23225543</a> &middot;
+  <a href="https://zenodo.org/records/23225596/files/note.pdf">PDF</a> &middot;
+  <a href="https://doi.org/10.5281/zenodo.23216820">data and code</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2509.04664">discussion on alphaXiv</a> &middot;
+  CC BY 4.0 &middot; preprint, 7 Oct 2026 &middot;
+  ORCID <a href="https://orcid.org/0009-0005-0419-4070">0009-0005-0419-4070</a>
+</div>
+
+<div class="result">Kalai, Nachum, Vempala and Zhang argue that pretraining keeps the slack term
+&delta; of their hallucination bound small, but do not measure it. For OLMo-2 7B base,
+<strong class="nw">&delta; = +0.028</strong> (95% CI <span class="nw">[0.017, 0.042]</span>). That run was
+added after a feasibility probe had scored the people who carry 83% of the weight, and weighting
+every frame person equally gives +0.156.</div>
+
+<h2>Abstract</h2>
+<p>Kalai, Nachum, Vempala and Zhang prove that a pretrained language model errs on arbitrary facts at
+least about as often as such facts appear once in training, up to a slack term &delta;. The term
+compares the probability the model puts on answers above a threshold with how often the true answer
+is above it. They argue that pretraining keeps &delta; small, but do not measure it.</p>
+<p>We measure its signed form on their birthday example. OLMo-2's corpus is public, so we weight each
+of 2,083 people by how often their name and birth date occur together in it. For the 7B base model
+&delta; = +0.028 (95% CI [0.017, 0.042]), inside a &plusmn;0.05 band set before the probe was built.
+For the 1B it is inconclusive.</p>
+<p>The 7B run was added after part of its data had been seen, and weighting every frame person
+equally gives +0.156. On this frame the floor itself is vacuous.</p>
+
+<h2>The measurement</h2>
+<figure>
+  <img src="fig1_pipeline.png" width="1722" height="425" alt="Pipeline from Wikidata people to the frame, training-corpus counts, strata, scored people, log-probability matrices and the statistic.">
+  <figcaption>The measurement, from Wikidata people to &delta;<sub>s</sub>. Each box is one directory of the dataset.</figcaption>
+</figure>
+<p>The frame is 3,992 Wikidata humans with a day-precise date of birth. For each we count matches of the
+name within 100 tokens of the date in the OLMo-2 stage-1 corpus, split the frame into six strata by that
+count, and score 350 per stratum. The model scores all 366 month&ndash;day strings, so no sampling is
+needed. The primary prompt T1 is:</p>
+<pre>Birthdays (month and day):
+Albert Einstein: March 14
+Marie Curie: November 7
+Abraham Lincoln: February 12
+{name}:</pre>
+
+<h2>Results</h2>
+<div class="tw"><table>
+  <tr><th>model</th><th>status</th><th>prompt</th><th>&delta;<sub>s</sub></th><th>95% CI</th><th>accuracy</th></tr>
+  <tr><td>OLMo-2 1B base, fp32</td><td>pre-specified</td><td>T1</td><td>+0.028</td><td class="nw">[&minus;0.001, 0.061]</td><td>7.2%</td></tr>
+  <tr><td></td><td></td><td>T2</td><td>+0.077</td><td class="nw">[0.021, 0.139]</td><td></td></tr>
+  <tr><td></td><td></td><td>T3</td><td>+0.097</td><td class="nw">[0.061, 0.137]</td><td></td></tr>
+  <tr><td>OLMo-2 7B base, Q8_0</td><td>amendment</td><td>T1</td><td>+0.028</td><td class="nw">[0.017, 0.042]</td><td>64.6%</td></tr>
+  <tr><td></td><td></td><td>T2</td><td>&minus;0.012</td><td class="nw">[&minus;0.029, 0.006]</td><td></td></tr>
+  <tr><td></td><td></td><td>T3</td><td>+0.012</td><td class="nw">[0.001, 0.024]</td><td></td></tr>
+</table></div>
+<p>Count-weighted &delta;<sub>s</sub>. Accuracy: top-ranked date correct, people with
+<i>n<sub>c</sub></i> &ge; 100, unweighted. The 1B's interval crosses +0.05, so its verdict is
+inconclusive.</p>
+
+<h2>How firm the 7B result is</h2>
+<figure>
+  <img src="fig3_sensitivity.png" width="1801" height="681" alt="Delta for the 7B under T1 with 95% intervals: the pre-specified weight at +0.028 and six alternatives, two near +0.05 and frame-uniform weights at +0.156.">
+  <figcaption>&delta;<sub>s</sub> for the 7B base model under T1, with 95% intervals: the pre-specified
+  weight (blue) and six alternatives computed afterwards. The alternatives reweight or relabel the same
+  scores; they are not new runs. Grey band: &plusmn;0.05. Dashed line: the point threshold 0.10 of the
+  harmful row.</figcaption>
+</figure>
+<p>Dropping the 50 heaviest people (37% of the weight), or the 63 whose counts the index could only
+approximate (35.5%), moves &delta;<sub>s</sub> to about +0.05, with intervals that cross the band.</p>
+
+<h2>Where &delta; sits</h2>
+<figure>
+  <img src="fig4_strata.png" width="1719" height="768" alt="By training-count stratum: delta near +0.15 below 100 mentions and near zero above; accuracy at most 7% below 100 mentions and 65% above.">
+  <figcaption>OLMo-2 7B base under T1, by training-count stratum. Left: &delta;<sub>s</sub> (blue, 95%
+  interval) and its expected value if the true dates were assigned at random within the stratum
+  (orange). Right: share of people whose top-ranked date is correct; dashed line, chance.</figcaption>
+</figure>
+<p>For people with <i>n<sub>c</sub></i> &ge; 100 the 7B is right 65% of the time and the unweighted
+&delta;<sub>s</sub> is +0.012. In each stratum below 100 it is right at most 7% of the time and
+&delta;<sub>s</sub> is +0.14 to +0.19.</p>
+<figure>
+  <img src="fig5_top_dates.png" width="1720" height="843" alt="Top-ranked dates for people with no counted mention: March 14 and February 12 dominate under T1.">
+  <figcaption>Top-ranked date of the 7B base model for the 350 people with <i>n<sub>c</sub></i> = 0,
+  under T1 (top) and T2 (bottom).</figcaption>
+</figure>
+
+<h2>Post-training</h2>
+<figure>
+  <img src="fig6_posttraining.png" width="1551" height="702" alt="OLMo-2 1B across base, SFT, DPO and Instruct: delta rises from 0.03 to 0.33; top-answer ECE from 0.015 to 0.027.">
+  <figcaption>OLMo-2 1B under T1 at each post-training stage. Left: &delta;<sub>s</sub> with 95%
+  intervals. Right: top-answer ECE.</figcaption>
+</figure>
+
+<h2>What it does not establish</h2>
+<ul>
+  <li>An empirical lower bound on hallucination. The singleton rate on this frame is 0.0056, so the
+      floor's main term is about 10<sup>&minus;4</sup>.</li>
+  <li>The theorem's own setting: a Wikidata frame and a string-match proxy stand in for the training
+      distribution, and the answers are 366 dates under fixed prompts, with no &ldquo;I don't know&rdquo;.</li>
+  <li>An independent confirmation: the 7B run was added by amendment, at 8-bit precision, and its
+      interval ends 0.008 inside the band.</li>
+</ul>
+<p>The note is AI-assisted; its disclosure section says how. It has not been peer reviewed.</p>
+
+<footer>
+CC BY 4.0 &mdash; note, figures and data; the code is additionally offered under MIT. Part of <a href="https://severinvisionary.github.io/">Hanyu Yang &mdash; mathematics and AI research</a>.
+</footer>
+
+</main>
+</body>
+</html>
