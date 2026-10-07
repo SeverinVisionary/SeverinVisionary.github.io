@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Corrected Metric Does Not Validate a Vocabulary Scaling Law</title>
+<link rel="canonical" href="https://severinvisionary.github.io/vocabulary-scaling-law-metric/">
+<meta name="description" content="A re-analysis of the vocabulary scaling law of Tao et al. (2024). Re-expressing their 60 released runs in bits per character moves the 70B vocabulary prescription from 212K to 106K-119K or 550K-764K, depending on the fitting approach. With a whole model size held out, every procedure misses the best vocabulary at 1.13B by 8-40% compute-equivalent, and the corrected metric does not reduce the miss.">
+<meta name="keywords" content="scaling laws, vocabulary size, tokenization, language models, compute-optimal vocabulary, bits per character, unigram-normalised loss, held-out validation, reproducibility, Hanyu Yang">
+<meta name="author" content="Hanyu Yang">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="citation_title" content="A Corrected Metric Does Not Validate a Vocabulary Scaling Law">
+<meta name="citation_author" content="Yang, Hanyu">
+<meta name="citation_publication_date" content="2026/10/07">
+<meta name="citation_doi" content="10.5281/zenodo.23205402">
+<meta name="citation_publisher" content="Zenodo">
+<meta name="citation_pdf_url" content="https://zenodo.org/records/23205402/files/yang2026_vocab_metric.pdf">
+<meta name="citation_abstract_html_url" content="https://severinvisionary.github.io/vocabulary-scaling-law-metric/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Corrected Metric Does Not Validate a Vocabulary Scaling Law">
+<meta property="og:description" content="Fixing the metric moves the 70B vocabulary prescription; a held-out model size shows every procedure misses by 8-40%, corrected metric or not.">
+<meta property="og:url" content="https://severinvisionary.github.io/vocabulary-scaling-law-metric/">
+<meta property="og:image" content="https://severinvisionary.github.io/vocabulary-scaling-law-metric/fig_regret.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "A Corrected Metric Does Not Validate a Vocabulary Scaling Law",
+  "name": "A Corrected Metric Does Not Validate a Vocabulary Scaling Law",
+  "url": "https://severinvisionary.github.io/vocabulary-scaling-law-metric/",
+  "identifier": "https://doi.org/10.5281/zenodo.23205402",
+  "datePublished": "2026-10-07",
+  "author": {
+    "@type": "Person",
+    "name": "Hanyu Yang",
+    "identifier": "https://orcid.org/0009-0005-0419-4070"
+  },
+  "publisher": {"@type": "Organization", "name": "Zenodo"},
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "inLanguage": "en",
+  "keywords": ["scaling laws", "vocabulary size", "tokenization", "language models", "bits per character", "reproducibility"],
+  "about": ["Machine learning", "Natural language processing"],
+  "abstract": "Tao et al. (2024) fit a law for the compute-optimal vocabulary size to 60 released training runs (1,200 checkpoints), scored by a unigram-normalised loss. That loss shifts with vocabulary size even when text prediction does not. We re-express every checkpoint in bits per character through an exact identity and refit with their code. The exponent of vocabulary parameters falls from 0.416 to about 0.31. The 70B prescription falls from 212K to 106K-119K under their frontier approach and rises to 550K-764K under their parametric approach. We then hide a whole model size and let each procedure pick the vocabulary. At 1.13B parameters every procedure misses the measured best, by 8-40% compute-equivalent, and correcting the metric does not reduce the miss. On DataDecide and on FAIR's released granularity grids, ranking at the largest measured scale contains the winner or misses it by at most 3.2e-4 bits per byte. A corrected metric changes the prescription; a held-out decision test is what tells you whether to trust it.",
+  "image": "https://severinvisionary.github.io/vocabulary-scaling-law-metric/fig_regret.png",
+  "encoding": {
+    "@type": "MediaObject",
+    "encodingFormat": "application/pdf",
+    "contentUrl": "https://zenodo.org/records/23205402/files/yang2026_vocab_metric.pdf"
+  },
+  "citation": ["https://arxiv.org/abs/2407.13623", "https://arxiv.org/abs/2605.01188"],
+  "sameAs": [
+    "https://zenodo.org/records/23205402",
+    "https://www.alphaxiv.org/abs/2610.vocabulary-scaling-law-metric"
+  ]
+}
+</script>
+
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#fbfbfa; --ink:#1a1d21; --ink2:#4a5158; --ink3:#767e86;
+    --rule:#dfe3e7; --accent:#14563d; --accent-soft:#e3f0e9; --mono-bg:#f2f4f5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --bg:#111417; --ink:#e6e9ec; --ink2:#a9b1b8; --ink3:#7d868e;
+      --rule:#2b3238; --accent:#6fc79c; --accent-soft:#152a21; --mono-bg:#1e2429;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#111417; --ink:#e6e9ec; --ink2:#a9b1b8; --ink3:#7d868e;
+    --rule:#2b3238; --accent:#6fc79c; --accent-soft:#152a21; --mono-bg:#1e2429;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+  code,.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  main{max-width:820px;margin:0 auto;padding:40px 20px 80px}
+  h1{font-size:28px;line-height:1.25;margin:0 0 10px}
+  h2{font-size:19px;margin:34px 0 8px}
+  p{margin:0 0 12px;max-width:70ch}
+  a{color:var(--accent)}
+  .sub{color:var(--ink2);font-size:17px;margin-bottom:18px}
+  .meta{font-size:14px;color:var(--ink3);border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);padding:12px 0;margin:20px 0 26px}
+  .result{background:var(--accent-soft);border:1px solid var(--rule);
+    padding:10px 14px;margin:10px 0 18px;font-size:15px;word-break:break-word}
+  .tw{overflow-x:auto}
+  table{border-collapse:collapse;font-size:15px;margin:8px 0 18px}
+  th,td{border-bottom:1px solid var(--rule);padding:6px 14px 6px 0;text-align:left;
+    font-variant-numeric:tabular-nums}
+  figure{margin:14px 0 22px}
+  figure img{max-width:100%;height:auto;border:1px solid var(--rule);background:#fff}
+  figcaption{font-size:14px;color:var(--ink3);margin-top:6px;max-width:70ch}
+  ul{max-width:70ch}
+  footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--rule);
+    font-size:13.5px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<main>
+
+<h1>A Corrected Metric Does Not Validate a Vocabulary Scaling Law</h1>
+<p class="sub">A re-analysis of the compute-optimal vocabulary law of Tao et al.
+(2024) on their own 60 released training runs: what changes when the metric is
+fixed, and whether either version picks the right vocabulary at a model size it
+has not seen.</p>
+
+<div class="meta">
+  DOI <a href="https://doi.org/10.5281/zenodo.23205402">10.5281/zenodo.23205402</a> ·
+  <a href="https://zenodo.org/records/23205402/files/yang2026_vocab_metric.pdf">PDF</a> ·
+  <a href="https://zenodo.org/records/23205402">code and results</a> ·
+  <a href="https://www.alphaxiv.org/abs/2610.vocabulary-scaling-law-metric">alphaXiv</a> ·
+  CC BY 4.0 (paper), MIT (code) · preprint, 7 Oct 2026 ·
+  ORCID <a href="https://orcid.org/0009-0005-0419-4070">0009-0005-0419-4070</a>
+</div>
+
+<div class="result">Re-expressing every checkpoint in bits per character moves
+the 70B prescription from 212K to <strong>106K–119K</strong> or
+<strong>550K–764K</strong>, depending on which of Tao et al.'s two fitting
+approaches you use. With a whole model size held out, every procedure misses the
+best vocabulary at 1.13B by <strong>8–40%</strong> compute-equivalent, and the
+corrected metric does not reduce the miss.</div>
+
+<h2>The metric picks a winner even when there is none</h2>
+<p>The law is fitted to a unigram-normalised loss <span class="m">L<sub>u</sub></span>.
+Its normaliser depends on the tokenizer, so <span class="m">L<sub>u</sub></span>
+moves with vocabulary size even when every vocabulary predicts the text equally
+well. Give all ten released tokenizers the same bits per character, and
+<span class="m">L<sub>u</sub></span> still has a minimum, which grows as the common
+loss falls. That is the shape of the published conclusion, produced with no real
+difference between vocabularies.</p>
+<figure>
+  <img src="fig_null.png" width="1120" height="500" alt="L_u against vocabulary size when every vocabulary has the same bits per character; the minimum moves from 4K to 10K to 24K as bits per character falls.">
+  <figcaption>L<sub>u</sub> at constant bits per character, shifted to minimum zero.
+  The optimum (star) is 4K at 1.5 BPC and above, 10K at 1.1 and 24K at 0.85.</figcaption>
+</figure>
+
+<h2>What the correction changes</h2>
+<p>An exact identity converts each checkpoint's <span class="m">L<sub>u</sub></span>
+to bits per character from measured tokenizer statistics. Refitting with Tao et
+al.'s own code:</p>
+<div class="tw"><table>
+  <tr><th></th><th>L<sub>u</sub></th><th>bits per character</th></tr>
+  <tr><td>Exponent of vocabulary parameters</td><td>0.416</td><td>0.302–0.316</td></tr>
+  <tr><td>Optimal vocabulary at 7B</td><td>62K</td><td>53–56K</td></tr>
+  <tr><td>At 70B, frontier approach</td><td>212K</td><td>106K–119K</td></tr>
+  <tr><td>At 70B, parametric approach</td><td>222K</td><td>550K–764K</td></tr>
+</table></div>
+<p>On the original metric the two approaches give 212K and 222K at 70B. On the
+corrected one they disagree by a factor of five to six.</p>
+
+<h2>A held-out test</h2>
+<p>To ask whether a prescription is right, hide a whole model size, fit on the
+rest, and let each procedure pick a vocabulary at eight compute budgets for the
+hidden size. Score each pick against the best measured vocabulary, as the share
+of compute it wastes.</p>
+<figure>
+  <img src="fig_regret.png" width="1360" height="560" alt="Regret at eight held-out budgets for five procedures at 1.13B in two designs; all procedures miss, and the corrected-metric procedures are not consistently better.">
+  <figcaption>Regret at each held-out budget of the 1.13B model. The grey area is the
+  regret of the worst vocabulary. Arm E was added after the pre-specified analysis.</figcaption>
+</figure>
+<div class="tw"><table>
+  <tr><th>Procedure</th><th>H1, 1.13B</th><th>H2, 632M</th><th>H2, 1.13B</th></tr>
+  <tr><td>L: parametric on L<sub>u</sub> (Tao)</td><td>14.6%</td><td>20.8%</td><td>12.9%</td></tr>
+  <tr><td>C: parametric on bits per character</td><td>22.9%</td><td>15.0%</td><td>40.1%</td></tr>
+  <tr><td>D: frontier on bits per character</td><td>12.5%</td><td>5.0%</td><td>22.9%</td></tr>
+  <tr><td>E: frontier on L<sub>u</sub> (post hoc)</td><td>8.1%</td><td>13.5%</td><td>9.0%</td></tr>
+  <tr><td>Worst vocabulary</td><td>47.2%</td><td>41.3%</td><td>47.2%</td></tr>
+</table></div>
+<p>Median regret over eight budgets. With the fitting method held fixed,
+L<sub>u</sub> beats bits per character in four of six comparisons.</p>
+
+<h2>A simpler rule</h2>
+<p>On DataDecide and on FAIR's released granularity grids, keeping every option
+within noise of the best at the largest measured scale contains the eventual
+winner, or misses it by at most 3.2 × 10<sup>−4</sup> bits per byte. On Tao et
+al.'s release the same rule covers seven of eight budgets in one design and none
+in the other.</p>
+
+<h2>What it does not establish</h2>
+<ul>
+  <li>Seed variation. The release has one seed per run, so how much of the miss is
+      noise cannot be measured from it. Seeded replication is the open question.</li>
+  <li>That bits per character is the right target. The point is that a corrected
+      metric changes the prescription without making it pass a held-out test.</li>
+  <li>Behaviour beyond the released sweep. The largest held-out size is 1.13B, and
+      a framework change at that size is the leading candidate explanation for part
+      of the miss.</li>
+</ul>
+<p>The paper is AI-assisted; its first-page footnote says how. Code, derived inputs,
+pre-written analysis rules and result tables are in the Zenodo supplement;
+third-party data are referenced by pinned source.</p>
+
+<footer>
+CC BY 4.0 — paper and figures; MIT — code. Part of <a href="https://severinvisionary.github.io/">Hanyu Yang — mathematics and AI research</a>.
+</footer>
+
+</main>
+</body>
+</html>
