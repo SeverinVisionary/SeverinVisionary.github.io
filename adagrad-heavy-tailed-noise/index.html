@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AdaGrad under heavy-tailed noise: symmetry, asymmetry and damping</title>
+<link rel="canonical" href="https://severinvisionary.github.io/adagrad-heavy-tailed-noise/">
+<meta name="description" content="Under heavy-tailed noise with a finite p-th moment, AdaGrad reaches the rate T^-(p-1)/(2p) when the noise is symmetric, but with general noise and small damping Liu's slower exponent (3p-4)/(4p) is sharp for every step size, and for p<=4/3 there is no polynomial rate. Damping closes the gap, linearly in alpha wherever the exponent is positive.">
+<meta name="keywords" content="AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, nonconvex optimization, lower bounds, convergence rate, symmetric noise, damping, Hanyu Yang">
+<meta name="author" content="Hanyu Yang">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="citation_title" content="AdaGrad under heavy-tailed noise: symmetry, asymmetry and damping">
+<meta name="citation_author" content="Yang, Hanyu">
+<meta name="citation_publication_date" content="2026/10/08">
+<meta name="citation_doi" content="10.5281/zenodo.23225828">
+<meta name="citation_publisher" content="Zenodo">
+<meta name="citation_pdf_url" content="https://zenodo.org/records/23225828/files/adagrad-heavy-tails.pdf">
+<meta name="citation_abstract_html_url" content="https://severinvisionary.github.io/adagrad-heavy-tailed-noise/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AdaGrad under heavy-tailed noise: symmetry, asymmetry and damping">
+<meta property="og:description" content="Symmetric heavy-tailed noise is easy for AdaGrad; lopsided noise makes it climb, which makes Liu's slower rate sharp. Damping repairs it gradually.">
+<meta property="og:url" content="https://severinvisionary.github.io/adagrad-heavy-tailed-noise/">
+<meta property="og:image" content="https://severinvisionary.github.io/adagrad-heavy-tailed-noise/fig_rates.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "AdaGrad under heavy-tailed noise: symmetry, asymmetry and damping",
+  "name": "AdaGrad under heavy-tailed noise: symmetry, asymmetry and damping",
+  "url": "https://severinvisionary.github.io/adagrad-heavy-tailed-noise/",
+  "identifier": "https://doi.org/10.5281/zenodo.23225828",
+  "datePublished": "2026-10-08",
+  "author": {
+    "@type": "Person",
+    "name": "Hanyu Yang",
+    "identifier": "https://orcid.org/0009-0005-0419-4070"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Zenodo"
+  },
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "inLanguage": "en",
+  "keywords": [
+    "AdaGrad",
+    "heavy-tailed noise",
+    "adaptive gradient methods",
+    "stochastic optimization",
+    "nonconvex optimization",
+    "lower bounds"
+  ],
+  "about": [
+    "Optimization",
+    "Machine learning",
+    "Probability"
+  ],
+  "abstract": "We ask how fast AdaGrad drives the average gradient norm to zero on smooth nonconvex problems when the stochastic gradient has only a finite p-th moment, 1<p<=2. With symmetric noise the rate is T^-(p-1)/(2p) for every p, and this is sharp at a fixed step size. With general noise and small damping, Liu's slower exponent (3p-4)/(4p) is sharp for every step size, and for p<=4/3 no polynomial rate holds. The cause is a climb: asymmetric noise pushes AdaGrad uphill, and the height it gains pays for a long descent that heavy-tailed noise makes slow. Damping limits that height. For damping lambda=sigma T^alpha and a fixed step size we find the exponent across the whole window: it grows linearly in alpha wherever it is positive, and becomes the symmetric one at alpha=(2-p)/p. The matching upper bounds come from Liu's own lemmas with the damping retained.",
+  "image": "https://severinvisionary.github.io/adagrad-heavy-tailed-noise/fig_rates.png",
+  "encoding": {
+    "@type": "MediaObject",
+    "encodingFormat": "application/pdf",
+    "contentUrl": "https://zenodo.org/records/23225828/files/adagrad-heavy-tails.pdf"
+  },
+  "sameAs": [
+    "https://zenodo.org/records/23225828",
+    "https://www.alphaxiv.org/abs/2610.adagrad-heavy-tailed-noise-damping",
+    "https://www.alphaxiv.org/abs/2610.adagrad-under-heavy-tailed-noise-in-pictures"
+  ]
+}
+</script>
+
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#fbfbfa; --ink:#1a1d21; --ink2:#4a5158; --ink3:#767e86;
+    --rule:#dfe3e7; --accent:#14563d; --accent-soft:#e3f0e9; --mono-bg:#f2f4f5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --bg:#111417; --ink:#e6e9ec; --ink2:#a9b1b8; --ink3:#7d868e;
+      --rule:#2b3238; --accent:#6fc79c; --accent-soft:#152a21; --mono-bg:#1e2429;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#111417; --ink:#e6e9ec; --ink2:#a9b1b8; --ink3:#7d868e;
+    --rule:#2b3238; --accent:#6fc79c; --accent-soft:#152a21; --mono-bg:#1e2429;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+  code,.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  main{max-width:820px;margin:0 auto;padding:40px 20px 80px}
+  h1{font-size:28px;line-height:1.25;margin:0 0 10px}
+  h2{font-size:19px;margin:34px 0 8px}
+  p{margin:0 0 12px;max-width:70ch}
+  a{color:var(--accent)}
+  .sub{color:var(--ink2);font-size:17px;margin-bottom:18px}
+  .meta{font-size:14px;color:var(--ink3);border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);padding:12px 0;margin:20px 0 26px}
+  .result{background:var(--accent-soft);border:1px solid var(--rule);
+    padding:10px 14px;margin:10px 0 18px;font-size:15px;word-break:break-word}
+  .tw{overflow-x:auto}
+  table{border-collapse:collapse;font-size:15px;margin:8px 0 18px}
+  th,td{border-bottom:1px solid var(--rule);padding:6px 14px 6px 0;text-align:left;
+    font-variant-numeric:tabular-nums}
+  figure{margin:14px 0 22px}
+  figure img{max-width:100%;height:auto;border:1px solid var(--rule);background:#fff}
+  figcaption{font-size:14px;color:var(--ink3);margin-top:6px;max-width:70ch}
+  ul{max-width:70ch}
+  footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--rule);
+    font-size:13.5px;color:var(--ink3)}
+</style>
+
+</head>
+<body>
+<main>
+
+<h1>AdaGrad under heavy-tailed noise: symmetry, asymmetry and damping</h1>
+<p class="sub">Symmetric heavy-tailed noise is easy for AdaGrad. Lopsided noise makes it climb uphill,
+and that makes Liu's slower rate the true worst case. Damping repairs it gradually.</p>
+
+<div class="meta">
+  DOI <a href="https://doi.org/10.5281/zenodo.23225828">10.5281/zenodo.23225828</a> &middot;
+  <a href="https://zenodo.org/records/23225828/files/adagrad-heavy-tails.pdf">PDF</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.adagrad-heavy-tailed-noise-damping">alphaXiv</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.adagrad-under-heavy-tailed-noise-in-pictures">illustrated post</a> &middot;
+  <a href="https://zenodo.org/records/23225828">source and figures</a> &middot;
+  CC BY 4.0 &middot; preprint, 8 Oct 2026 &middot;
+  ORCID <a href="https://orcid.org/0009-0005-0419-4070">0009-0005-0419-4070</a>
+</div>
+
+<div class="result">Liu (ICML 2026) proved that AdaGrad converges under heavy-tailed noise with a finite
+<i>p</i>-th moment; when the objective is only bounded below, his rate is vacuous for <i>p</i> &le; 4/3, and asked whether the threshold 4/3 is real.
+It is real, and it is caused by asymmetry: with symmetric noise the rate is
+<strong><i>T</i><sup>&minus;(<i>p</i>&minus;1)/(2<i>p</i>)</sup> for every <i>p</i></strong>, while with general noise and
+small damping <strong>(3<i>p</i>&minus;4)/(4<i>p</i>) is sharp for every step size</strong>.</div>
+
+<h2>Abstract</h2>
+<p>We ask how fast AdaGrad drives the average gradient norm to zero on smooth nonconvex problems when the
+stochastic gradient has only a finite <i>p</i>-th moment, 1 &lt; <i>p</i> &le; 2. With symmetric noise the rate is
+<i>T</i><sup>&minus;(<i>p</i>&minus;1)/(2<i>p</i>)</sup> for every <i>p</i>, and this is sharp at a fixed step size. With
+general noise and small damping, Liu's slower exponent (3<i>p</i>&minus;4)/(4<i>p</i>) is sharp for every step size,
+and for <i>p</i> &le; 4/3 no polynomial rate holds. The cause is a climb: asymmetric noise pushes AdaGrad uphill,
+and the height it gains pays for a long descent that heavy-tailed noise makes slow. Damping limits that height.
+For damping &lambda; = &sigma;<i>T</i><sup>&alpha;</sup> and a fixed step size we find the exponent across the whole
+window: it grows linearly in &alpha; wherever it is positive, and becomes the symmetric one at
+&alpha; = (2&minus;<i>p</i>)/<i>p</i>. The matching upper bounds come from Liu's own lemmas with the damping retained.</p>
+
+<h2>Results</h2>
+<p>Rate exponents <i>r</i> with <i>R<sub>T</sub></i> &asymp; <i>T</i><sup>&minus;<i>r</i></sup> up to logarithms, at a
+fixed step size unless stated.</p>
+<div class="tw"><table>
+  <tr><th>noise</th><th>damping &lambda; = &sigma;<i>T</i><sup>&alpha;</sup></th><th>rate exponent</th><th>where</th></tr>
+  <tr><td>symmetric</td><td>any fixed &lambda; &gt; 0</td><td>(<i>p</i>&minus;1)/(2<i>p</i>)</td><td>Theorem 3.1</td></tr>
+  <tr><td>general</td><td>&alpha; &le; (2&minus;<i>p</i>)/(2<i>p</i>)</td><td>(3<i>p</i>&minus;4)/(4<i>p</i>); none for <i>p</i> &le; 4/3; every step size</td><td>Corollary 4.2</td></tr>
+  <tr><td>general</td><td>(2&minus;<i>p</i>)/(2<i>p</i>) &le; &alpha; &le; (2&minus;<i>p</i>)/<i>p</i></td><td>(<i>p</i>&alpha;+2<i>p</i>&minus;3)/(2<i>p</i>) where &ge; 0</td><td>Corollary 5.2(i)</td></tr>
+  <tr><td>general</td><td>(2&minus;<i>p</i>)/<i>p</i> &le; &alpha; &le; 1/<i>p</i></td><td>(<i>p</i>&minus;1)/(2<i>p</i>)</td><td>Corollary 5.2(ii)</td></tr>
+</table></div>
+<figure>
+  <img src="fig_rates.png" width="862" height="612" alt="Rate exponent against the damping exponent alpha for p = 1.2, 1.5 and 1.8: each curve is flat, rises linearly, then stays at the symmetric exponent; for p = 1.2 the flat part is at zero.">
+  <figcaption>Rate exponent under general noise at a fixed step size, against the damping exponent &alpha;, up to &alpha; = 1/<i>p</i>. Dots
+  mark &alpha; = (2&minus;<i>p</i>)/(2<i>p</i>) and &alpha; = (2&minus;<i>p</i>)/<i>p</i>.</figcaption>
+</figure>
+
+<h2>Why symmetry helps</h2>
+<p>AdaGrad divides by a quantity containing the current gradient, so an unbiased gradient need not give an
+unbiased step. If the noise is symmetric, the expected step still points downhill, however large the noise.
+Steps on which the noise dominates cannot pile up: each has probability at least 1/4 of multiplying
+&lambda;<sup>2</sup>+<i>v<sub>t</sub></i> by 3/2, so their expected number is logarithmic.</p>
+
+<h2>Why asymmetry hurts</h2>
+<p>On a gentle slope the noise usually takes a small value that reverses the sign of the gradient. A rare,
+large value restores the mean, but AdaGrad cuts that step to length at most &gamma;. In the paper's instance the
+rare value has probability 1/(4<i>N</i>) with <i>N</i> = &lfloor;<i>T</i>/2&rfloor;, so with probability above 1/2 it never occurs.</p>
+<figure>
+  <img src="fig_step.png" width="1650" height="725" alt="Left: the observed gradient is -0.2 with probability 0.9 and 11.8 with probability 0.1, mean +1. Right: after dividing by sqrt(1+g^2) the steps are -0.196 and 0.996, mean -0.077.">
+  <figcaption>A one-step toy example, not from the paper: update <i>x</i> &minus; &gamma;<i>h</i> with <i>h</i> = <i>g</i>/&radic;(<i>v</i>+<i>g</i><sup>2</sup>),
+  &gamma; = 1, &lambda; = 0, accumulated <i>v</i> = 1; true gradient 1, noise &minus;1.2 with probability 0.9 and +10.8 with probability 0.1.
+  The gradient is unbiased, but the expected move is +0.077: uphill.</figcaption>
+</figure>
+<p>The height gained pays for a long descent, on which symmetric Pareto noise grows the accumulator and slows
+every step. Balancing the climb against the descent gives exactly Liu's exponent (3<i>p</i>&minus;4)/(4<i>p</i>).</p>
+<figure>
+  <img src="fig_ridge.png" width="759" height="594" alt="Top: the objective f rises along a gentle slope to a crest, then falls steeply. Bottom: its derivative is minus kappa on the gentle part and epsilon on the steep part.">
+  <figcaption>The hard instance, drawn for illustration. Starting at <i>x</i><sub>1</sub>, tilt noise drives the iterate
+  up the gentle slope; left of <i>b</i>, symmetric Pareto noise stalls it on the steep part.</figcaption>
+</figure>
+
+<h2>What it does not establish</h2>
+<ul>
+  <li>Failure on a fixed problem: the worst-case instance is chosen after the algorithm parameters and may
+      depend on the horizon. On bounded objectives Liu's Theorem 4.2 gives convergence.</li>
+  <li>A bound on the best iterate: the lower bounds are for the average gradient norm.</li>
+  <li>The rate after tuning the step size with the horizon for (2&minus;<i>p</i>)/<i>p</i> &lt; &alpha; &le; 1/<i>p</i>:
+      there the rates match for each fixed step size only.</li>
+  <li>The same penalty with one common noise law for the whole run: the hard oracle uses two noise laws and
+      picks one by position. This is the open question of the paper.</li>
+</ul>
+<p>The matching upper bound is Liu's own argument for his Lemma A.2, run with the damping kept, followed by
+his Lemma A.3. The paper is AI-assisted; its section on the use of AI tools says how. It has not been peer reviewed.</p>
+
+<footer>
+CC BY 4.0 &mdash; paper and figures; the figure script is additionally offered under MIT. Part of <a href="https://severinvisionary.github.io/">Hanyu Yang &mdash; mathematics and AI research</a>.
+</footer>
+
+</main>
+</body>
+</html>
