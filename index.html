@@ -6,8 +6,8 @@
 <title>Hanyu Yang — mathematics and AI research</title>
 <link rel="canonical" href="https://severinvisionary.github.io/">
 <meta name="google-site-verification" content="B60QY6VtultYCU8wjBrU6MESDhCsu93_Hh0pPYkCP_s">
-<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, three settled conjectures on alternating plane graphs, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, and a new worst-case bound for byte-pair encoding.">
-<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, Hanyu Yang">
+<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, three settled conjectures on alternating plane graphs, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, and a measurement of the slack term in a hallucination lower bound on OLMo-2.">
+<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, Hanyu Yang">
 <meta name="author" content="Hanyu Yang">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="profile">
@@ -158,6 +158,19 @@
       },
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "description": "The worst-case approximation ratio of byte-pair encoding against optimal pair encoding is at most (1-e^-2)/2 \u2248 0.4323, improving the upper bound 5/8 of Kozma and Voderholzer; against encodings whose tokens have length at most three the constant is exact."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Is \u03b4 small? Measuring the premise of a hallucination lower bound on OLMo-2",
+      "url": "https://severinvisionary.github.io/hallucination-bound-delta/",
+      "identifier": "https://doi.org/10.5281/zenodo.23225543",
+      "datePublished": "2026-10-07",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "A measurement of the slack term \u03b4 in the hallucination lower bound of Kalai, Nachum, Vempala and Zhang, on their birthday example, weighting 2,083 people by name-date co-occurrence counts in OLMo-2's public corpus: +0.028 (95% CI [0.017, 0.042]) for the 7B base model, inconclusive for the 1B, and +0.156 with every frame person weighted equally."
     }
   ]
 }
@@ -338,9 +351,22 @@ have length at most three that constant is exact.</div>
 </p>
 </div>
 
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/hallucination-bound-delta/">Is &delta; small? Measuring the premise of a hallucination lower bound on OLMo-2</a></h2>
+<div class="result">Kalai, Nachum, Vempala and Zhang argue that pretraining keeps the slack term
+&delta; of their hallucination bound small, but do not measure it. On their birthday example, with
+OLMo-2's public corpus for the weights, the 7B base model gives &delta; = +0.028 (95% CI [0.017, 0.042]);
+the result is fragile to the weighting, and the floor is vacuous on this frame.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.23225543">10.5281/zenodo.23225543</a> &middot;
+  data <a href="https://doi.org/10.5281/zenodo.23216820">10.5281/zenodo.23216820</a> &middot;
+  preprint, 7 Oct 2026
+</p>
+</div>
+
 <footer>
 Each deposit is licensed on its own page (CC BY 4.0 for data and prose; MIT for
-code where stated; CC0 for the terraces deposit). This index exists so the nine landing pages, their sitemaps
+code where stated; CC0 for the terraces deposit). This index exists so the ten landing pages, their sitemaps
 and a single <a href="https://severinvisionary.github.io/robots.txt">robots.txt</a>
 sit at the site root, where crawlers actually read them.
 </footer>
