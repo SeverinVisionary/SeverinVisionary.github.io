@@ -3,45 +3,48 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How much gradient noise do whole-document long-context batches add?</title>
+<title>Whole-document batches are smaller than they look</title>
 <link rel="canonical" href="https://severinvisionary.github.io/doc-batch-gradients/">
-<meta name="description" content="A preregistered measurement on Pythia and OLMo-2 checkpoints: per-chunk gradients from the same code repository or arXiv paper stay correlated out to 16K tokens, so a batch of whole-document 16K sequences carries 3.5-5x (code) and about 2x (arXiv) the gradient-noise variance of packed web text at equal tokens. Code and Gram matrices are public.">
-<meta name="keywords" content="gradient noise, gradient noise scale, critical batch size, design effect, long-context training, document packing, language models, Pythia, OLMo-2, code repositories, arXiv, PG-19, preregistration, Hanyu Yang">
+<meta name="description" content="Chunks of one code repository or paper have correlated gradients out to 16K tokens. Measured on 512-token chunks of Pythia and OLMo-2 gradients, a whole-document 16K block has 3.5-4.9x fewer effective independent samples than packed web text at equal tokens for code, about 2.3x fewer for arXiv and 1.3-1.6x fewer for books.">
+<meta name="keywords" content="gradient noise, gradient noise scale, critical batch size, design effect, long-context training, document packing, language models, Pythia, OLMo-2, code repositories, arXiv, PG-19, Hanyu Yang">
 <meta name="author" content="Hanyu Yang">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="article">
-<meta property="og:title" content="How much gradient noise do whole-document long-context batches add?">
-<meta property="og:description" content="Chunks of one code repository or paper give correlated gradients out to 16K tokens. A whole-document 16K batch of code acts like 3.5-5x fewer independent samples than packed web text.">
+<meta property="og:title" content="Whole-document batches are smaller than they look">
+<meta property="og:description" content="Chunks of one code repository or paper have correlated gradients out to 16K tokens. Measured on 512-token chunks of Pythia and OLMo-2 gradients, a whole-document 16K block has 3.5-4.9x fewer effective independent samples than packed web text at equal tokens for code, about 2.3x fewer for arXiv and 1.3-1.6x fewer for books.">
 <meta property="og:url" content="https://severinvisionary.github.io/doc-batch-gradients/">
-<meta property="og:image" content="https://severinvisionary.github.io/doc-batch-gradients/fig_rrel.png">
+<meta property="og:image" content="https://severinvisionary.github.io/doc-batch-gradients/fig/f5_R_rel.png">
 <meta name="twitter:card" content="summary_large_image">
-
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Dataset",
-  "name": "How much gradient noise do whole-document long-context batches add?",
-  "url": "https://severinvisionary.github.io/doc-batch-gradients/",
-  "datePublished": "2026-10-09",
-  "creator": {
-    "@type": "Person",
-    "name": "Hanyu Yang",
-    "identifier": "https://orcid.org/0009-0005-0419-4070"
-  },
-  "license": "https://creativecommons.org/licenses/by/4.0/",
-  "inLanguage": "en",
-  "keywords": ["gradient noise", "critical batch size", "design effect", "long-context training", "language models", "preregistration"],
-  "description": "Per-chunk (512-token) gradient Gram matrices for Pythia-410M, Pythia-1.4B and OLMo-2-1B checkpoints on 16 documents of 16K tokens from each of PG-19, code repositories, arXiv and packed FineWeb, with a preregistered analysis. Relative to packed web text, a whole-document 16K-token batch has 4.91 / 3.51 times the gradient-noise variance on code repositories (Pythia-1.4B / OLMo-2-1B, final checkpoints), 2.36 / 2.23 on arXiv and 1.56 / 1.30 on PG-19.",
-  "image": "https://severinvisionary.github.io/doc-batch-gradients/fig_rrel.png",
-  "distribution": {
-    "@type": "DataDownload",
-    "encodingFormat": "application/x-npz",
-    "contentUrl": "https://github.com/SeverinVisionary/doc-batch-gradients"
-  },
-  "sameAs": ["https://github.com/SeverinVisionary/doc-batch-gradients"]
+ "@context": "https://schema.org",
+ "@type": "BlogPosting",
+ "headline": "Whole-document batches are smaller than they look",
+ "url": "https://severinvisionary.github.io/doc-batch-gradients/",
+ "datePublished": "2026-10-09",
+ "author": {
+  "@type": "Person",
+  "name": "Hanyu Yang",
+  "identifier": "https://orcid.org/0009-0005-0419-4070"
+ },
+ "license": "https://creativecommons.org/licenses/by/4.0/",
+ "inLanguage": "en",
+ "description": "Chunks of one code repository or paper have correlated gradients out to 16K tokens. Measured on 512-token chunks of Pythia and OLMo-2 gradients, a whole-document 16K block has 3.5-4.9x fewer effective independent samples than packed web text at equal tokens for code, about 2.3x fewer for arXiv and 1.3-1.6x fewer for books.",
+ "image": "https://severinvisionary.github.io/doc-batch-gradients/fig/f5_R_rel.png",
+ "keywords": [
+  "gradient noise",
+  "critical batch size",
+  "design effect",
+  "long-context training",
+  "language models"
+ ],
+ "identifier": "https://doi.org/10.5281/zenodo.23268862",
+ "sameAs": [
+  "https://github.com/SeverinVisionary/doc-batch-gradients",
+  "https://doi.org/10.5281/zenodo.23268862"
+ ]
 }
 </script>
-
 <style>
   :root{
     color-scheme: light;
@@ -84,79 +87,428 @@
   ul{max-width:70ch}
   footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--rule);
     font-size:13.5px;color:var(--ink3)}
+  .tldr{border-left:3px solid var(--accent);padding:6px 14px;margin:14px 0 22px;font-size:15.5px}
+  .tldr li{margin:4px 0}
+  .box{background:var(--mono-bg);border:1px solid var(--rule);padding:12px 16px;margin:12px 0 18px;font-size:15px}
+  .num{font-variant-numeric:tabular-nums}
+  td.r,th.r{text-align:right}
+  .note{font-size:14px;color:var(--ink2)}
+  .print-only{display:none}
+  @page{size:A4;margin:16mm 16mm 18mm}
+  @media print{html,body{background:#fff}.interactive{display:none}.print-only{display:block}main{padding:0;max-width:none}body{font-size:13.5px}h1{font-size:24px}h2{font-size:16.5px;margin-top:22px;break-after:avoid}h3{break-after:avoid}figure{margin:8px 0 12px;break-inside:avoid}figure img{border:none;max-height:88mm;width:auto}table,.tldr,pre{break-inside:avoid}p,li{max-width:none}}
 </style>
 </head>
 <body>
 <main>
 
-<h1>How much gradient noise do whole-document long-context batches add?</h1>
-<p class="sub">Chunks of one code repository or one paper give correlated gradients out to 16K tokens. A batch of
-whole-document 16K sequences of code therefore acts like 3.5&ndash;5&times; fewer independent samples than packed
-web text.</p>
+<h1>Whole-document batches are smaller than they look</h1>
+<p class="sub">Chunks cut from one long document pull the gradient in the same direction. I measured how much
+that shrinks the effective batch, using 512-token chunks of real documents on open model checkpoints. Grouped
+32 to a document, chunks of code repositories hold only 20&ndash;28% as many effective independent samples as the
+same number of tokens of packed web text.</p>
 
 <div class="meta">
-  <a href="https://github.com/SeverinVisionary/doc-batch-gradients">code and data on GitHub</a> &middot;
+  9 Oct 2026 &middot; Hanyu Yang &middot;
+  <a href="https://github.com/SeverinVisionary/doc-batch-gradients">code and data</a> &middot;
   <a href="https://github.com/SeverinVisionary/doc-batch-gradients/blob/main/docs/PREREGISTRATION.md">preregistration</a> &middot;
-  code MIT, results CC BY 4.0 &middot; 9 Oct 2026 &middot;
-  ORCID <a href="https://orcid.org/0009-0005-0419-4070">0009-0005-0419-4070</a>
+  <a href="https://doi.org/10.5281/zenodo.23268862">doi:10.5281/zenodo.23268862</a>
 </div>
 
-<div class="result">Relative to packed web text, a whole-document 16K-token batch has
-<strong>4.91 / 3.51&times;</strong> the gradient-noise variance on code repositories,
-<strong>2.36 / 2.23&times;</strong> on arXiv and <strong>1.56 / 1.30&times;</strong> on PG-19 books
-(Pythia-1.4B / OLMo-2-1B, final checkpoints).</div>
+<div class="tldr"><ul>
+  <li>Chunks from the same code repository or arXiv paper have correlated gradients, and the correlation is
+      still there at the longest distance I measured, about 16K tokens.</li>
+  <li>So at equal tokens, a block of 32 consecutive 512-token chunks from one document has <b>3.5&ndash;4.9&times;</b>
+      fewer effective independent samples than packed web text for code, about <b>2.3&times;</b> fewer for arXiv,
+      and <b>1.3&ndash;1.6&times;</b> fewer for books.</li>
+  <li>Put differently: 1M tokens of such code blocks per step has as many effective samples as 204&ndash;285K tokens of
+      packed web (95% intervals run from 129K to 421K). That counts samples; it does not say the two batches have
+      equal gradient noise, because the noise of a single chunk differs between corpora.</li>
+  <li><b>What I measured is a proxy.</b> Every chunk was run as its own 512-token sequence. Real 16K training lets
+      each chunk attend to the ones before it, which changes its gradient. I did not measure that case.</li>
+  <li>The effect is there at every Pythia-410M checkpoint from 0.7% of training to the end, at the final checkpoints
+      of Pythia-1.4B and OLMo-2-1B, and in all four parameter groups.</li>
+</ul></div>
 
-<h2>The question</h2>
-<p>Long-context training usually fills each sequence with one long document: a book, a code repository, a paper.
-Chunks of one document are not independent samples. If their gradients are correlated, a batch of
-document-contiguous sequences holds fewer independent samples than its token count suggests: a <i>design
-effect</i> in the survey-sampling sense. This project measures that effect on real gradients of open checkpoints.</p>
+<h2>Two ways to fill a batch</h2>
+<p>Pretraining usually packs many short web documents into each sequence. Long-context training does
+something different: it fills a 16K or 64K sequence with one long document. That could be a book, a code
+repository glued together file by file, or a paper.</p>
+<figure>
+  <img src="fig/f1_concept.png" width="1140" height="540" alt="Two rows of four 16K sequences. Top: each sequence is split into many short grey documents. Bottom: each sequence is a single green document, cut into 32 chunks.">
+  <figcaption>Same token count, very different contents. On top, each batch row mixes many unrelated web
+  documents. Below, each row is one document.</figcaption>
+</figure>
+<p>Both batches have the same number of tokens, so on paper they are the same batch size. But the 32 chunks of
+one repository are not 32 independent samples. They share variable names, style, topic and imports. If their
+gradients point the same way, averaging them cancels less noise than averaging 32 unrelated chunks would.</p>
 
-<h2>Results</h2>
-<p><i>R</i>(16K) is the gradient-noise variance of one document-contiguous 16K-token block divided by that of 32
-independent 512-token chunks with the same tokens. It equals the ratio of McCandlish's <i>B</i><sub>simple</sub>
-for contiguous and shuffled batches. <i>R</i><sub>rel</sub> divides by packed FineWeb at the same model and
-checkpoint. Brackets are 95% document-bootstrap intervals.</p>
+<h2>The idea in one formula</h2>
+<p>Survey statisticians have a name for this: the <b>design effect</b>. If you sample people in clusters (whole
+households, whole schools) instead of one by one, your estimate is noisier than the sample size suggests. For
+a block of <i>m</i> chunks whose noise is correlated, the variance of their average is</p>
+<div class="box" data-md="$$\mathrm{Var}\Big(\tfrac1m\textstyle\sum_{i=1}^m g_i\Big)=\frac{\sigma^2}{m}\,R,\qquad R=1+\frac2m\sum_{i&lt;j}\rho_{ij}.$$">Var(average of <i>m</i> chunks) = (&sigma;&sup2; / <i>m</i>) &times; <b>R</b>,
+&nbsp;&nbsp; with &nbsp; <b>R</b> = 1 + (2/<i>m</i>) &Sigma;<sub>pairs</sub> &rho;</div>
+<p>Here &sigma;&sup2; is the noise of one chunk's gradient and &rho; is the correlation between two chunks' noise. If the
+chunks were independent, <b>R</b> would be 1. If <b>R</b> = 4, your batch carries as much noise as one with a quarter of
+the samples. In the language of McCandlish et al., <b>R</b> is how much the noise scale <i>B</i><sub>simple</sub> grows
+when you swap shuffled chunks for whole-document blocks of the same corpus.</p>
+
+<h2>How I measured it</h2>
+<p>The plan was frozen before any gradient was computed, and it is public. One rule was added later, after part
+of the data had been seen; that is explained under <a href="#went-wrong">What went wrong</a>. The setup:</p>
 <div class="tw"><table>
-  <tr><th>corpus</th><th>Pythia-1.4B <i>R</i><sub>rel</sub></th><th>OLMo-2-1B <i>R</i><sub>rel</sub></th><th>raw <i>R</i>(16K)</th></tr>
-  <tr><td>code repositories</td><td>4.91 [2.61, 7.78]</td><td>3.51 [2.37, 5.23]</td><td>6.91 / 4.73</td></tr>
-  <tr><td>arXiv</td><td>2.36 [1.91, 2.96]</td><td>2.23 [1.78, 2.92]</td><td>3.32 / 3.01</td></tr>
-  <tr><td>PG-19 books</td><td>1.56 [1.26, 1.98]</td><td>1.30 [1.07, 1.67]</td><td>2.20 / 1.75</td></tr>
-  <tr><td>packed FineWeb (control)</td><td>1</td><td>1</td><td>1.41 / 1.35</td></tr>
+  <tr><th>models</th><td>Pythia-410M (4 checkpoints), Pythia-1.4B (2), OLMo-2-1B (2)</td></tr>
+  <tr><th>corpora</th><td>code repositories (The Stack, concatenated by repo), arXiv papers, PG-19 books, and packed FineWeb as the control</td></tr>
+  <tr><th>sample</th><td>16 documents per corpus, the same 16 for every model; from each, the span from token 2,048 to 18,432, cut into 32 chunks of 512 tokens</td></tr>
+  <tr><th>per cell</th><td>512 chunk gradients and their inner products (a Gram matrix)</td></tr>
+  <tr><th>coverage</th><td>32 planned cells: 24 complete, 5 partial, 3 missing; every final checkpoint is complete</td></tr>
+  <tr><th>hardware</th><td>CPU only, 4-core cloud machines; no GPU</td></tr>
 </table></div>
 <figure>
-  <img src="fig_rrel.png" width="1080" height="630" alt="Bar chart of R_rel at 16K tokens: code repositories 4.9 and 3.5, arXiv 2.4 and 2.2, PG-19 books 1.6 and 1.3, for Pythia-1.4B and OLMo-2-1B, with 95% intervals; lines mark packed web at 1 and the 1.5 threshold.">
-  <figcaption>Gradient-noise inflation of whole-document 16K batches relative to packed web text, final
-  checkpoints, with 95% document-bootstrap intervals. The dashed line is the 1.5 threshold of the
-  control-relative criterion.</figcaption>
+  <img src="fig/f2_pipeline.png" width="1230" height="300" alt="Pipeline: 16K-token document span, 32 chunks of 512 tokens, full gradient per chunk, count sketch, Gram matrix of 512 chunks, then rho, R and B_simple.">
+  <figcaption>From documents to numbers. Each chunk runs as its own 512-token sequence, so any correlation comes
+  from the content and not from shared attention context.</figcaption>
 </figure>
-<p>Pythia-410M shows the same ordering at 0.7%, 5%, 25% and 100% of training, so the effect is not a warm-up
-artifact. On code it is heavy-tailed: a few repositories carry most of it.</p>
+<p>That last point cuts both ways. It keeps the measurement clean, but it also means this is not the gradient
+of a real 16K training sequence, where each chunk sees everything before it. The numbers here describe batches
+of 512-token chunks grouped by document. They are a proxy for long-context training, and the real multiplier
+could be larger or smaller.</p>
+<p>A full gradient has hundreds of millions of numbers, and storing 512 of them per cell was not an option on
+CPUs. So each gradient is compressed with a <b>count sketch</b>: every parameter is hashed into one of 131,072
+buckets with a random sign, separately for attention, MLP, embedding and other parameters. Inner products
+survive this almost exactly. Exact squared norms are kept on the side.</p>
+<p>From the inner products, three things fall out. Pairs from <i>different</i> documents give the squared
+length of the mean gradient. The diagonal, minus that, gives the noise variance of one chunk. Pairs from the
+<i>same</i> document at distance &Delta; give the correlation &rho;(&Delta;). For the two 1B models, documents were
+processed in groups of four, so only pairs inside a group exist: 24 of the 120 possible document pairs.</p>
 
-<h2>Method</h2>
-<p>Each 512-token chunk is run as a standalone sequence, and its full parameter gradient is count-sketched into
-2<sup>17</sup> buckets per parameter group, with exact squared norms on the diagonal. Checked against exact
-inner products on 8,176 pairs, the sketch's cosine error has mean &minus;0.00007 and standard deviation 0.002.
-Correlations and <i>R</i>(<i>W</i>) come from Gram matrices of 512 chunk gradients per cell. Everything ran on
-CPU.</p>
+<h2>Result 1: the correlation reaches far</h2>
+<figure>
+  <img src="fig/f3_rho_by_lag.png" width="1260" height="510" alt="Gradient correlation against chunk distance from 0.5K to 16K tokens. Code starts near 0.27 (Pythia) and is still above 0.1 at 16K; arXiv starts near 0.13 and falls to about 0.04 to 0.06; books stay near 0.03; web drops to zero by about 4K.">
+  <figcaption>Correlation between two chunks of the same document, against how far apart they are, at the final
+  checkpoint. The longest distance is 15,872 tokens. The shaded band is the 2K&ndash;16K range the preregistration
+  used.</figcaption>
+</figure>
+<p>Two chunks of the same repository, about 16K tokens apart, still have a noise correlation of about 0.1: 0.14
+on Pythia-1.4B and 0.09 on OLMo-2. ArXiv falls from 0.13 at 512 tokens to 0.07&ndash;0.08 at 2K and 0.04&ndash;0.06 at
+the longest distance. Books are lower but clearly positive. The web control behaves as you would expect from
+packing: some correlation at short range, where one web document spans neighbouring chunks, and essentially zero
+beyond about 4K.</p>
+<p>A correlation of 0.1 sounds small. It is not, because the design effect adds it up over every pair, and a 16K
+block has 496 pairs of chunks. These are averages over pairs and documents; individual pairs vary a lot.</p>
 
-<h2>What it does not establish</h2>
+<h2>Result 2: the noise grows with block length</h2>
+<figure>
+  <img src="fig/f4_R_by_window.png" width="1260" height="510" alt="R(W) against block length from 0.5K to 16K. At 16K, code reaches 6.9 (Pythia-1.4B) and 4.7 (OLMo-2), arXiv 3.3 and 3.0, books 2.2 and 1.75, web 1.4 and 1.35.">
+  <figcaption><b>R</b>(<i>W</i>): the noise of one contiguous <i>W</i>-token block, relative to the same tokens drawn as
+  independent chunks. It is computed directly from the block sums, with no model of &rho; assumed.</figcaption>
+</figure>
+<p>The longer the block, the more correlated pairs it contains, and the bigger the penalty. At 16K tokens a code
+block carries 4.7&ndash;6.9&times; the noise of independent chunks of the same code.</p>
+
+<h2>Result 3: against the control</h2>
+<p>The packed-web control is not at 1 either. Short web documents straddle chunk boundaries, which gives it
+<b>R</b> = 1.3&ndash;1.4. The fair comparison is therefore relative: each corpus divided by packed web at the same model
+and checkpoint, <b>R</b><sub>rel</sub> = <b>R</b><sub>corpus</sub> / <b>R</b><sub>web</sub>. Each <b>R</b> is measured
+against shuffled chunks of its own corpus, so <b>R</b><sub>rel</sub> compares how much each layout shrinks the
+sample count. It does not compare absolute noise levels between corpora; that would also need the ratio of their
+per-chunk noise variances, which is not part of this comparison.</p>
+<figure>
+  <img src="fig/f5_R_rel.png" width="1080" height="600" alt="Bars of R_rel at 16K with 95% intervals: code 4.91 and 3.51, arXiv 2.36 and 2.23, books 1.56 and 1.30, for Pythia-1.4B and OLMo-2-1B.">
+  <figcaption>Design effect of whole-document 16K blocks divided by that of packed web, final checkpoints,
+  with 95% intervals from resampling documents.</figcaption>
+</figure>
+<div class="tw"><table>
+  <tr><th>corpus</th><th class="r">Pythia-1.4B</th><th class="r">OLMo-2-1B</th><th class="r">raw <b>R</b>(16K)</th></tr>
+  <tr><td>code repositories</td><td class="r num">4.91 [2.61, 7.78]</td><td class="r num">3.51 [2.37, 5.23]</td><td class="r num">6.91 / 4.73</td></tr>
+  <tr><td>arXiv papers</td><td class="r num">2.36 [1.91, 2.96]</td><td class="r num">2.23 [1.78, 2.92]</td><td class="r num">3.32 / 3.01</td></tr>
+  <tr><td>PG-19 books</td><td class="r num">1.56 [1.26, 1.98]</td><td class="r num">1.30 [1.07, 1.67]</td><td class="r num">2.20 / 1.75</td></tr>
+  <tr><td>packed web</td><td class="r num">1</td><td class="r num">1</td><td class="r num">1.41 / 1.35</td></tr>
+</table></div>
+<p>The two models disagree on the exact size but agree on the order: code, then arXiv, then books. The
+intervals come from resampling the 16 documents with replacement, so they reflect only the documents I drew.
+Books sit near 1.5, the threshold the plan set in advance for raw <b>R</b> and the addendum later applied to
+<b>R</b><sub>rel</sub>.</p>
+
+<h3>The four corpora side by side</h3>
+<div class="tw"><table>
+  <tr><th></th><th class="r">loss (nats)</th><th class="r">&rho; at 512 tokens</th><th class="r">&rho;, 2K&ndash;16K average</th><th class="r"><b>R</b>(16K)</th><th class="r">per-document share: median / max</th></tr>
+  <tr><td colspan="6" class="note">Pythia-1.4B, final checkpoint</td></tr>
+  <tr><td>code repositories</td><td class="r num">1.14</td><td class="r num">0.27</td><td class="r num">0.16</td><td class="r num">6.91</td><td class="r num">0.07 / 1.06</td></tr>
+  <tr><td>arXiv papers</td><td class="r num">1.71</td><td class="r num">0.13</td><td class="r num">0.06</td><td class="r num">3.32</td><td class="r num">0.06 / 0.10</td></tr>
+  <tr><td>PG-19 books</td><td class="r num">2.76</td><td class="r num">0.06</td><td class="r num">0.03</td><td class="r num">2.20</td><td class="r num">0.03 / 0.07</td></tr>
+  <tr><td>packed web</td><td class="r num">2.93</td><td class="r num">0.07</td><td class="r num">0.00</td><td class="r num">1.41</td><td class="r num">0.00 / 0.05</td></tr>
+  <tr><td colspan="6" class="note">OLMo-2-1B, final checkpoint</td></tr>
+  <tr><td>code repositories</td><td class="r num">1.42</td><td class="r num">0.19</td><td class="r num">0.10</td><td class="r num">4.73</td><td class="r num">0.07 / 0.26</td></tr>
+  <tr><td>arXiv papers</td><td class="r num">1.78</td><td class="r num">0.13</td><td class="r num">0.05</td><td class="r num">3.01</td><td class="r num">0.05 / 0.09</td></tr>
+  <tr><td>PG-19 books</td><td class="r num">2.87</td><td class="r num">0.04</td><td class="r num">0.02</td><td class="r num">1.75</td><td class="r num">0.02 / 0.03</td></tr>
+  <tr><td>packed web</td><td class="r num">2.88</td><td class="r num">0.05</td><td class="r num">0.00</td><td class="r num">1.35</td><td class="r num">&minus;0.01 / 0.06</td></tr>
+</table></div>
+<p>Note the web row: its short-range correlation (0.05&ndash;0.07 at 512 tokens) is as high as the books', but it
+vanishes at long range. The books are the reverse: weak, but it never goes away. The last column is each
+document's long-range term, scaled by the variance of the whole cell rather than its own, so it is not a
+correlation and can exceed 1.</p>
+
+<h2>What it means for your batch size</h2>
+<p>Turn the ratio around and you get an effective batch size: how many tokens of packed web would hold the same
+number of effective independent samples.</p>
+<figure>
+  <img src="fig/f11_effective_batch.png" width="990" height="480" alt="Horizontal bars: effective batch as a percentage of the same tokens of packed web. Code 20% and 28%, arXiv 42% and 45%, books 64% and 77%.">
+  <figcaption>Effective independent samples in whole-document 16K blocks, as a share of those in the same
+  number of tokens of packed web text (1 / <b>R</b><sub>rel</sub>).</figcaption>
+</figure>
+<div class="tw"><table>
+  <tr><th>1M tokens per step of&hellip;</th><th class="r">as many effective samples as (Pythia-1.4B)</th><th class="r">(OLMo-2-1B)</th></tr>
+  <tr><td>whole code repositories</td><td class="r num">204K web tokens [129K, 382K]</td><td class="r num">285K web tokens [191K, 421K]</td></tr>
+  <tr><td>whole arXiv papers</td><td class="r num">424K [337K, 523K]</td><td class="r num">448K [342K, 562K]</td></tr>
+  <tr><td>whole books</td><td class="r num">639K [504K, 793K]</td><td class="r num">769K [597K, 932K]</td></tr>
+</table></div>
+<p>The brackets are the 95% intervals carried over from <b>R</b><sub>rel</sub>; the ranges in the text are the two
+models' point estimates. This matters because long-context data mixes lean heavily on code repositories. ProLong's
+long-document data, for instance, is mostly repositories and books. If you size a whole-document batch by its
+token count, as you would packed data, it may hold several times fewer independent samples than that count
+suggests.</p>
+<p>Three cautions. These numbers count samples; they do not say that 1M tokens of code and 204K tokens of web
+have the same gradient noise in absolute terms, because a single code chunk and a single web chunk have different
+noise variance and different mean gradients. They come from 512-token chunks without long context, so they are a
+proxy for 16K training. And they do not give a learning-rate rule: <i>B</i><sub>simple</sub> ignores curvature, and
+a noisier gradient does not by itself mean a worse model.</p>
+
+<h2>It is not only an early-training effect</h2>
+<figure>
+  <img src="fig/f6_across_training.png" width="990" height="540" alt="R at 16K across Pythia-410M checkpoints at 0.7%, 5%, 25% and 100% of training. Code falls from 7.9 to 4.9, arXiv from 3.2 to 2.5, books around 1.6 to 2, web around 1.3 to 1.6.">
+  <figcaption><b>R</b>(16K) across four Pythia-410M checkpoints, with 95% bands.</figcaption>
+</figure>
+<p>One worry was that this only shows up very early, when the model has not learned much and every gradient
+looks alike. On Pythia-410M it does not. The code effect shrinks over training, from about 8 to about 5, and
+arXiv falls by about a fifth, from 3.2 to 2.5, but the ordering holds at every checkpoint. For the two 1B
+models only the final checkpoints are complete, so this check rests on the smaller model.</p>
+
+<h2>It is lumpy</h2>
+<figure>
+  <img src="fig/f7_per_document.png" width="1260" height="510" alt="Per-document long-range share, one dot per document. Code is widely spread from 0.01 to 1; arXiv is tight around 0.06; books around 0.02 to 0.03; web scattered around zero.">
+  <figcaption>Each document's long-range share (its average long-lag term, scaled by the variance of the whole
+  cell), final checkpoint, with medians. The vertical axis is linear near zero and logarithmic above 0.05.</figcaption>
+</figure>
+<p>ArXiv papers are remarkably uniform: every one of the 16 sits near the median. Code repositories are not. A
+few repositories contribute a lot, and some barely anything. This is why the code intervals are so wide, and it
+suggests the effect depends a lot on <i>which</i> repositories you train on. A sixteen-repository sample is enough
+to see it, not enough to pin it down, and it says nothing about kinds of repositories it did not include.</p>
+
+<h2>It shows up in every parameter group</h2>
+<figure>
+  <img src="fig/f9_param_groups.png" width="1080" height="510" alt="R at 16K by parameter group for Pythia-1.4B: attention, MLP, embeddings and other parameters all show the same corpus ordering, code highest.">
+  <figcaption><b>R</b>(16K) computed separately for each parameter group, Pythia-1.4B final checkpoint. No
+  intervals were computed per group.</figcaption>
+</figure>
+<p>The penalty is not driven by one part of the model, say the embedding rows of rare tokens that keep
+recurring in one repository. Attention, MLP, embeddings and the remaining parameters all show it, in the same
+order. These are four large groups; I did not look at single layers or heads.</p>
+
+<h2>Checking the instrument</h2>
+<p>Two things could fake a result like this: a sketch that distorts inner products, or a position effect where
+chunks late in a sequence look different. The checks below argue against both, but they are narrower than a full
+validation.</p>
+<figure>
+  <img src="fig/f8_sketch_fidelity.png" width="660" height="600" alt="Scatter of sketched against exact cosine for 8,176 chunk pairs; all points lie on the diagonal.">
+  <figcaption>Sketched against exact cosine similarity for 8,176 chunk pairs on Pythia-410M: the first
+  gradient of each of 16 shards, computed exactly, against the 511 others in its shard. The error has mean &minus;0.00007 and standard
+  deviation 0.002.</figcaption>
+</figure>
+<figure>
+  <img src="fig/f10_loss_by_position.png" width="990" height="480" alt="Mean chunk loss against position in the 16K span, flat for all four corpora.">
+  <figcaption>Mean loss of each chunk against where it sits in the 16K span, Pythia-1.4B final checkpoint.</figcaption>
+</figure>
+<p>The sketch check was run on the smallest model only. Losses are flat across the span, which rules out the
+crudest position effect, though not every way a gradient could depend on position. They also show the familiar
+ordering: code is the easiest text for these models, at about 1.1 nats per token, and web the hardest, at about
+2.9. Two more gates are worth naming. The web control's long-range correlation passes the plan's 0.01 limit on
+its point estimate, but its intervals reach 0.010&ndash;0.012. And one gate fails: for Pythia-1.4B books, the squared
+mean gradient is too uncertain (its interval includes zero), which makes <i>B</i><sub>simple</sub> unreliable there.
+<b>R</b> does not divide by it.</p>
+
+<p class="print-only">An interactive version of this post, with a batch-size calculator and every curve, is at <a href="https://severinvisionary.github.io/doc-batch-gradients/">severinvisionary.github.io/doc-batch-gradients</a>.</p>
+<section class="interactive">
+<h2>Try it yourself</h2>
+<p>Pick a corpus, a model and the tokens per step you train with. Then flip through the curves behind the
+numbers above.</p>
+<div class="box" id="calc">
+  <label>corpus <select id="c-corpus"><option value="REPOS">code repositories</option><option value="ARXIV">arXiv papers</option><option value="PG19">PG-19 books</option></select></label>
+  &nbsp; <label>model <select id="c-model"><option value="EleutherAI/pythia-1.4b">Pythia-1.4B</option><option value="allenai/OLMo-2-0425-1B">OLMo-2-1B</option></select></label>
+  &nbsp; <label>tokens per step <input id="c-tok" type="range" min="-2" max="4" step="1" value="0"> <span id="c-tokv" class="num"></span></label>
+  <p id="c-out" style="margin:10px 0 0;font-size:16px"></p>
+</div>
+<div class="box">
+  <label>model and checkpoint <select id="x-cell"></select></label>
+  &nbsp; <label>curve <select id="x-kind"><option value="rho">correlation by distance, &rho;(&Delta;)</option><option value="R">noise ratio by block length, <i>R</i>(<i>W</i>)</option></select></label>
+  <div id="x-legend" class="note" style="margin:8px 0 2px"></div>
+  <svg id="x-svg" viewBox="0 0 640 300" style="width:100%;height:auto;background:#fff;border:1px solid var(--rule)"></svg>
+  <p class="note" id="x-note" style="margin:6px 0 0"></p>
+</div>
+</section>
+
+<h2 id="went-wrong">What went wrong, and what I changed</h2>
+<p>Not everything went to plan, and the details are in the repository.</p>
 <ul>
-  <li>Whether this design effect explains why long-sequence training hurts short-context quality. That needs
-      training runs that hold documents per step fixed while changing the window; none were run.</li>
-  <li>A pass under the original preregistration. The packed-web control was expected below 1.2 and measured
-      1.26&ndash;1.41, because short web documents straddle chunk boundaries; that verdict is inconclusive. The
-      control-relative criterion above was registered as an addendum before the confirmatory data existed.</li>
-  <li>The all-pairs estimate of the mean gradient: cross-document pairs come only from within 4-document shards
-      for the 1B-class models, which leaves it unbiased but noisier.</li>
+  <li><b>The first sketch failed its own test.</b> The preregistered sketch was a small Kronecker projection, and it
+      failed the fidelity check during the trial run. I replaced it with the count sketch above, and wrote that
+      down, before any real measurement.</li>
+  <li><b>The control was not as clean as planned.</b> The plan required packed web to come in below 1.2. At the final
+      checkpoints it came in at 1.26&ndash;1.41, because of the short-range overlap described above. Under the original rules that makes the
+      verdict <i>inconclusive</i>, and it stays so. I then added a control-relative rule, the <b>R</b><sub>rel</sub>
+      above, in a written addendum. By then I had seen all of the Pythia-410M results and part of the 1B data,
+      including half of the Pythia-1.4B web control (<b>R</b>(16K) = 1.59 on 8 documents), so the new rule is not
+      fully blind. Under it, none of the plan's stopping criteria fire. That means the effect is large enough to be
+      worth testing in training, not that it has been shown to matter there.</li>
+  <li><b>Some early checkpoints are incomplete.</b> Compute ran out for a few early 1B-scale cells: 5 are partial
+      and 3 are missing. The final checkpoints, which carry the conclusion, are complete.</li>
+  <li><b>One estimate is noisier than planned.</b> For the 1B models, documents were processed in groups of four,
+      so the mean gradient is estimated from pairs within those groups only.</li>
 </ul>
-<p>The idea that tokens of one sequence give correlated gradients is not new (Everett &amp; Qiu, arXiv
-2609.04577, Appendix I, propose testing it). I found no prior measurement on real LM gradients.</p>
+
+<h2>What this does not show</h2>
+<p>Long-context training can cost some short-context quality, depending on the data mix; ProLong, for one,
+reports both the losses and mixes that avoid them. A noisier gradient is one possible reason. Others include
+attention spreading too thin over long windows, a mismatch between training and test lengths, and a plain shift
+in domain. This measurement shows the extra noise is there for 512-token chunks grouped by document, and how big
+it is. It does not measure the noise of real 16K-context gradients, and it does not show how much of any quality
+cost the noise explains.</p>
+<p>Testing that takes training runs. One design changes only how a fixed set of documents is cut and batched:</p>
+<div class="tw"><table>
+  <tr><th>arm</th><th>window</th><th>documents per step</th><th>what it changes</th></tr>
+  <tr><td>A</td><td>16K, whole documents</td><td>64</td><td>the usual long-context setup</td></tr>
+  <tr><td>B</td><td>1K, the same 64 documents chopped, accumulated into one update</td><td>64</td><td>A vs B: the window, with batch content fixed</td></tr>
+  <tr><td>C</td><td>1K, chunks shuffled across the same pool of documents</td><td>~1,000</td><td>B vs C: batch composition, with the window and the token pool fixed</td></tr>
+</table></div>
+<p>All three arms need the same tokens, the same number of updates and the same exposure to each document over
+training. If each explanation acted alone, you would expect roughly this:</p>
+<div class="tw"><table>
+  <tr><th>explanation, acting alone</th><th>A vs B (window)</th><th>B vs C (composition)</th></tr>
+  <tr><td>design effect (this post)</td><td>about equal</td><td>C better</td></tr>
+  <tr><td>the long window itself hurts</td><td>A worse</td><td>about equal</td></tr>
+  <tr><td>train/test length mismatch</td><td>A worse on short evals only</td><td>about equal</td></tr>
+</table></div>
+<p>In practice these can act together, and A and B differ in more than noise, since longer context changes the
+gradient itself. A gap between B and C would show that batch composition matters, not by itself that this
+design effect is the reason. This would take a few thousand GPU-hours at the 400M&ndash;1B scale. I have not run it.</p>
+
+<h2>Related work</h2>
+<ul>
+  <li>Everett and Qiu (<a href="https://arxiv.org/abs/2609.04577">arXiv 2609.04577</a>, Appendix I) point out that
+      tokens in one sequence share context and are likely more correlated. They suggest comparing batch-size and
+      length splits at matched tokens.</li>
+  <li>McCandlish et al. (<a href="https://arxiv.org/abs/1812.06162">arXiv 1812.06162</a>) define the noise scale
+      <i>B</i><sub>simple</sub> used here.</li>
+  <li>Thomas (<a href="https://arxiv.org/abs/2607.05872">arXiv 2607.05872</a>) uses a shuffled-document control on
+      real language-model gradients and finds that within-document correlation explains only a small part of the
+      gradient-spectrum effect studied there. It does not measure correlation by distance or a design effect.</li>
+  <li>Work on critical batch size (<a href="https://arxiv.org/abs/2410.21676">arXiv 2410.21676</a>) finds little
+      sensitivity to context length, on packed data and contexts up to 4K.</li>
+  <li>Dataset Decomposition (<a href="https://arxiv.org/abs/2405.13226">arXiv 2405.13226</a>) and ProLong
+      (<a href="https://arxiv.org/abs/2410.02660">arXiv 2410.02660</a>) study length curricula and long-document
+      data mixes. They do not measure gradient correlation.</li>
+</ul>
+<p>I could not find an earlier measurement of within-document gradient correlation as a function of distance,
+or of the design effect it implies, on real language-model gradients. If you know of one, I would like to hear
+about it.</p>
+
+<h2>Data and code</h2>
+<p>Everything is in <a href="https://github.com/SeverinVisionary/doc-batch-gradients">doc-batch-gradients</a>: the probe,
+the analysis, the Gram matrices for all 57 shards, and the full report. Every number on this page can be
+recomputed on a laptop in about 20 minutes. The plan, the deviations and the addendum are in <code>docs/</code>.</p>
+
+<h2>How to cite</h2>
+<p>This post, the code and the analysis report are archived on Zenodo as
+<a href="https://doi.org/10.5281/zenodo.23268862">doi:10.5281/zenodo.23268862</a>. The Gram matrices are too large
+for that deposit; they stay in the GitHub repository at tag v1.0, and the deposit lists their SHA-256 hashes.</p>
+<pre class="box m" style="white-space:pre-wrap;font-size:13px">@techreport{yang2026wholedocbatch,
+  author = {Yang, Hanyu},
+  title  = {Whole-document batches are smaller than they look: measuring within-document gradient correlation},
+  year   = {2026},
+  institution = {Zenodo},
+  doi    = {10.5281/zenodo.23268862},
+  url    = {https://doi.org/10.5281/zenodo.23268862}
+}</pre>
 
 <footer>
-Code MIT; results and metadata CC BY 4.0. Part of <a href="https://severinvisionary.github.io/">Hanyu Yang &mdash; mathematics and AI research</a>.
+Text and figures CC BY 4.0; code MIT. Part of <a href="https://severinvisionary.github.io/">Hanyu Yang &mdash; mathematics and AI research</a>.
+Contact: hanyu.yang.92@gmail.com.
 </footer>
 
 </main>
+<script>window.DOCBATCH = {"cells":{"EleutherAI/pythia-1.4b|step143000":{"ARXIV":{"rho":[[512,0.134],[1024,0.1045],[1536,0.0905],[2048,0.0836],[2560,0.0766],[3072,0.0746],[3584,0.0722],[4096,0.0682],[4608,0.0659],[5120,0.0638],[5632,0.0628],[6144,0.0657],[6656,0.0668],[7168,0.0617],[7680,0.0619],[8192,0.0633],[8704,0.0659],[9216,0.0636],[9728,0.0635],[10240,0.0644],[10752,0.0645],[11264,0.0589],[11776,0.0633],[12288,0.0586],[12800,0.059],[13312,0.0615],[13824,0.0567],[14336,0.0583],[14848,0.0506],[15360,0.0611],[15872,0.0592]],"R":[[512,1.0],[1024,1.134],[2048,1.343],[4096,1.702],[8192,2.296],[16384,3.322]],"R16":3.32,"ci":[3.04,3.59]},"PG19":{"rho":[[512,0.059],[1024,0.0489],[1536,0.0458],[2048,0.043],[2560,0.0424],[3072,0.0395],[3584,0.0393],[4096,0.0384],[4608,0.0372],[5120,0.0362],[5632,0.0356],[6144,0.0357],[6656,0.0358],[7168,0.0335],[7680,0.0336],[8192,0.0352],[8704,0.0336],[9216,0.0333],[9728,0.0321],[10240,0.0326],[10752,0.0316],[11264,0.0318],[11776,0.0302],[12288,0.0354],[12800,0.0291],[13312,0.0319],[13824,0.0291],[14336,0.0228],[14848,0.0269],[15360,0.0271],[15872,0.0277]],"R":[[512,1.0],[1024,1.06],[2048,1.156],[4096,1.338],[8192,1.647],[16384,2.202]],"R16":2.2,"ci":[1.99,2.46]},"REPOS":{"rho":[[512,0.2684],[1024,0.2466],[1536,0.2476],[2048,0.2265],[2560,0.2235],[3072,0.2196],[3584,0.2043],[4096,0.213],[4608,0.1919],[5120,0.1812],[5632,0.1869],[6144,0.1726],[6656,0.1567],[7168,0.1663],[7680,0.1633],[8192,0.1578],[8704,0.1509],[9216,0.1423],[9728,0.1523],[10240,0.1367],[10752,0.1283],[11264,0.1365],[11776,0.1295],[12288,0.1269],[12800,0.123],[13312,0.1186],[13824,0.1207],[14336,0.1459],[14848,0.1212],[15360,0.1198],[15872,0.1382]],"R":[[512,1.0],[1024,1.266],[2048,1.764],[4096,2.643],[8192,4.338],[16384,6.912]],"R16":6.91,"ci":[3.84,10.18]},"WEB":{"rho":[[512,0.0659],[1024,0.0367],[1536,0.0256],[2048,0.0201],[2560,0.0167],[3072,0.0121],[3584,0.0253],[4096,0.0097],[4608,0.0078],[5120,0.0113],[5632,0.0064],[6144,0.0044],[6656,0.002],[7168,0.0054],[7680,-0.0005],[8192,-0.0018],[8704,0.0022],[9216,-0.0036],[9728,0.0014],[10240,-0.0016],[10752,0.0008],[11264,0.0022],[11776,0.0017],[12288,-0.0001],[12800,-0.0111],[13312,-0.013],[13824,-0.012],[14336,-0.0137],[14848,-0.0124],[15360,-0.0085],[15872,-0.0139]],"R":[[512,1.0],[1024,1.07],[2048,1.152],[4096,1.256],[8192,1.375],[16384,1.407]],"R16":1.41,"ci":[1.13,1.7]}},"EleutherAI/pythia-410m|step1000":{"ARXIV":{"rho":[[512,0.1442],[1024,0.1028],[1536,0.0896],[2048,0.0809],[2560,0.074],[3072,0.0692],[3584,0.0629],[4096,0.0598],[4608,0.0603],[5120,0.0595],[5632,0.0561],[6144,0.0573],[6656,0.06],[7168,0.0576],[7680,0.0567],[8192,0.0575],[8704,0.0551],[9216,0.0546],[9728,0.055],[10240,0.0542],[10752,0.0554],[11264,0.0532],[11776,0.0509],[12288,0.0507],[12800,0.0468],[13312,0.0524],[13824,0.0461],[14336,0.0494],[14848,0.0486],[15360,0.0516],[15872,0.0572]],"R":[[512,1.0],[1024,1.142],[2048,1.357],[4096,1.708],[8192,2.247],[16384,3.165]],"R16":3.17,"ci":[2.88,3.47]},"PG19":{"rho":[[512,0.0403],[1024,0.0307],[1536,0.0268],[2048,0.0263],[2560,0.0241],[3072,0.0219],[3584,0.021],[4096,0.0202],[4608,0.0198],[5120,0.0196],[5632,0.0184],[6144,0.019],[6656,0.0192],[7168,0.019],[7680,0.0183],[8192,0.018],[8704,0.0198],[9216,0.019],[9728,0.0174],[10240,0.0162],[10752,0.0158],[11264,0.0154],[11776,0.0141],[12288,0.0155],[12800,0.0154],[13312,0.014],[13824,0.0143],[14336,0.0124],[14848,0.0143],[15360,0.0132],[15872,0.0125]],"R":[[512,1.0],[1024,1.042],[2048,1.102],[4096,1.21],[8192,1.383],[16384,1.677]],"R16":1.68,"ci":[1.55,1.81]},"REPOS":{"rho":[[512,0.3308],[1024,0.2913],[1536,0.2753],[2048,0.251],[2560,0.2407],[3072,0.2358],[3584,0.2222],[4096,0.229],[4608,0.217],[5120,0.2151],[5632,0.2142],[6144,0.2064],[6656,0.1992],[7168,0.2077],[7680,0.2012],[8192,0.1961],[8704,0.1879],[9216,0.1844],[9728,0.1835],[10240,0.1759],[10752,0.1789],[11264,0.1785],[11776,0.1664],[12288,0.1625],[12800,0.1454],[13312,0.141],[13824,0.1464],[14336,0.1629],[14848,0.1746],[15360,0.156],[15872,0.1443]],"R":[[512,1.0],[1024,1.329],[2048,1.929],[4096,2.91],[8192,4.759],[16384,7.925]],"R16":7.92,"ci":[5.39,10.62]},"WEB":{"rho":[[512,0.0775],[1024,0.0482],[1536,0.0349],[2048,0.0319],[2560,0.0271],[3072,0.0234],[3584,0.0339],[4096,0.0184],[4608,0.0158],[5120,0.0182],[5632,0.0127],[6144,0.0101],[6656,0.0076],[7168,0.0081],[7680,0.0031],[8192,0.001],[8704,0.0017],[9216,-0.0024],[9728,0.0007],[10240,-0.0017],[10752,0.001],[11264,0.0034],[11776,0.0026],[12288,0.0014],[12800,-0.0065],[13312,-0.0121],[13824,-0.0091],[14336,-0.0124],[14848,-0.0063],[15360,-0.0044],[15872,-0.0108]],"R":[[512,1.0],[1024,1.081],[2048,1.186],[4096,1.336],[8192,1.571],[16384,1.611]],"R16":1.61,"ci":[1.22,2.2]}},"EleutherAI/pythia-410m|step143000":{"ARXIV":{"rho":[[512,0.0935],[1024,0.0693],[1536,0.0604],[2048,0.0576],[2560,0.0485],[3072,0.0479],[3584,0.0474],[4096,0.0416],[4608,0.0434],[5120,0.0404],[5632,0.0343],[6144,0.0384],[6656,0.0443],[7168,0.0355],[7680,0.0427],[8192,0.0387],[8704,0.044],[9216,0.0377],[9728,0.0437],[10240,0.0376],[10752,0.0396],[11264,0.0369],[11776,0.0393],[12288,0.0501],[12800,0.0297],[13312,0.0404],[13824,0.0369],[14336,0.04],[14848,0.0475],[15360,0.032],[15872,0.0518]],"R":[[512,1.0],[1024,1.097],[2048,1.244],[4096,1.481],[8192,1.848],[16384,2.507]],"R16":2.51,"ci":[2.26,2.78]},"PG19":{"rho":[[512,0.0343],[1024,0.0221],[1536,0.0247],[2048,0.0209],[2560,0.0208],[3072,0.0178],[3584,0.0157],[4096,0.0163],[4608,0.018],[5120,0.0164],[5632,0.0122],[6144,0.0137],[6656,0.0164],[7168,0.0167],[7680,0.0161],[8192,0.0196],[8704,0.0204],[9216,0.0192],[9728,0.0142],[10240,0.0212],[10752,0.0099],[11264,0.0117],[11776,0.0129],[12288,0.0138],[12800,0.0112],[13312,0.0093],[13824,0.0166],[14336,0.0081],[14848,0.0155],[15360,0.0205],[15872,0.0239]],"R":[[512,1.0],[1024,1.038],[2048,1.083],[4096,1.173],[8192,1.315],[16384,1.573]],"R16":1.57,"ci":[1.48,1.67]},"REPOS":{"rho":[[512,0.1803],[1024,0.1649],[1536,0.1693],[2048,0.148],[2560,0.1362],[3072,0.1414],[3584,0.127],[4096,0.1372],[4608,0.1215],[5120,0.1127],[5632,0.1155],[6144,0.1059],[6656,0.1055],[7168,0.1191],[7680,0.1061],[8192,0.1048],[8704,0.0995],[9216,0.094],[9728,0.0922],[10240,0.088],[10752,0.0945],[11264,0.0958],[11776,0.0921],[12288,0.0954],[12800,0.0893],[13312,0.0839],[13824,0.1009],[14336,0.0891],[14848,0.1088],[15360,0.0961],[15872,0.0948]],"R":[[512,1.0],[1024,1.18],[2048,1.519],[4096,2.081],[8192,3.178],[16384,4.882]],"R16":4.88,"ci":[3.07,6.82]},"WEB":{"rho":[[512,0.0424],[1024,0.0235],[1536,0.0141],[2048,0.0112],[2560,0.0098],[3072,0.009],[3584,0.0212],[4096,0.0044],[4608,0.0076],[5120,-0.0003],[5632,0.0062],[6144,0.0042],[6656,-0.0033],[7168,0.0017],[7680,-0.0031],[8192,0.0018],[8704,0.0002],[9216,-0.002],[9728,0.0022],[10240,0.0012],[10752,0.001],[11264,0.0041],[11776,0.0012],[12288,-0.0026],[12800,-0.0006],[13312,-0.0029],[13824,-0.0097],[14336,-0.0112],[14848,-0.0063],[15360,-0.0061],[15872,-0.0072]],"R":[[512,1.0],[1024,1.04],[2048,1.093],[4096,1.163],[8192,1.251],[16384,1.257]],"R16":1.26,"ci":[1.1,1.45]}},"EleutherAI/pythia-410m|step36000":{"ARXIV":{"rho":[[512,0.1332],[1024,0.1004],[1536,0.0897],[2048,0.0816],[2560,0.0744],[3072,0.0706],[3584,0.0673],[4096,0.0647],[4608,0.0627],[5120,0.0606],[5632,0.0586],[6144,0.0613],[6656,0.0611],[7168,0.0586],[7680,0.0576],[8192,0.0619],[8704,0.0622],[9216,0.0583],[9728,0.059],[10240,0.0606],[10752,0.0574],[11264,0.0564],[11776,0.0563],[12288,0.0561],[12800,0.0531],[13312,0.0528],[13824,0.0487],[14336,0.0482],[14848,0.0411],[15360,0.0486],[15872,0.0535]],"R":[[512,1.0],[1024,1.134],[2048,1.336],[4096,1.68],[8192,2.243],[16384,3.207]],"R16":3.21,"ci":[2.93,3.48]},"PG19":{"rho":[[512,0.054],[1024,0.0424],[1536,0.0379],[2048,0.0355],[2560,0.0341],[3072,0.032],[3584,0.0319],[4096,0.0325],[4608,0.0296],[5120,0.0299],[5632,0.0285],[6144,0.0294],[6656,0.0293],[7168,0.0277],[7680,0.0285],[8192,0.0309],[8704,0.0298],[9216,0.0295],[9728,0.0283],[10240,0.028],[10752,0.0246],[11264,0.0255],[11776,0.0243],[12288,0.024],[12800,0.0237],[13312,0.0253],[13824,0.0228],[14336,0.0217],[14848,0.0243],[15360,0.0254],[15872,0.0164]],"R":[[512,1.0],[1024,1.055],[2048,1.141],[4096,1.293],[8192,1.545],[16384,2.006]],"R16":2.01,"ci":[1.82,2.23]},"REPOS":{"rho":[[512,0.2337],[1024,0.2078],[1536,0.2085],[2048,0.1864],[2560,0.1786],[3072,0.1786],[3584,0.1657],[4096,0.1703],[4608,0.1586],[5120,0.1486],[5632,0.1511],[6144,0.1422],[6656,0.1354],[7168,0.1437],[7680,0.1445],[8192,0.1337],[8704,0.1288],[9216,0.1246],[9728,0.1248],[10240,0.1178],[10752,0.1129],[11264,0.1248],[11776,0.1126],[12288,0.1146],[12800,0.1028],[13312,0.1036],[13824,0.1098],[14336,0.1153],[14848,0.1143],[15360,0.1093],[15872,0.1211]],"R":[[512,1.0],[1024,1.23],[2048,1.656],[4096,2.386],[8192,3.752],[16384,5.956]],"R16":5.96,"ci":[4.13,8.28]},"WEB":{"rho":[[512,0.0687],[1024,0.0396],[1536,0.0264],[2048,0.0225],[2560,0.0174],[3072,0.0148],[3584,0.025],[4096,0.0116],[4608,0.0095],[5120,0.0125],[5632,0.0074],[6144,0.0059],[6656,0.0039],[7168,0.0037],[7680,-0.0001],[8192,0.0003],[8704,0.0012],[9216,-0.0021],[9728,-0.0015],[10240,-0.0018],[10752,0.0013],[11264,0.0012],[11776,0.0013],[12288,-0.0011],[12800,-0.0079],[13312,-0.0121],[13824,-0.0091],[14336,-0.0112],[14848,-0.008],[15360,-0.0094],[15872,-0.0195]],"R":[[512,1.0],[1024,1.07],[2048,1.157],[4096,1.273],[8192,1.413],[16384,1.442]],"R16":1.44,"ci":[1.21,1.74]}},"EleutherAI/pythia-410m|step7000":{"ARXIV":{"rho":[[512,0.1269],[1024,0.095],[1536,0.085],[2048,0.0777],[2560,0.0705],[3072,0.067],[3584,0.0623],[4096,0.0595],[4608,0.0584],[5120,0.0566],[5632,0.0553],[6144,0.0558],[6656,0.0577],[7168,0.0566],[7680,0.0532],[8192,0.0559],[8704,0.0579],[9216,0.054],[9728,0.054],[10240,0.057],[10752,0.0548],[11264,0.0529],[11776,0.0516],[12288,0.048],[12800,0.0474],[13312,0.0494],[13824,0.0479],[14336,0.0495],[14848,0.0478],[15360,0.0524],[15872,0.0568]],"R":[[512,1.0],[1024,1.126],[2048,1.322],[4096,1.652],[8192,2.173],[16384,3.075]],"R16":3.07,"ci":[2.8,3.35]},"PG19":{"rho":[[512,0.0367],[1024,0.0279],[1536,0.0255],[2048,0.0244],[2560,0.0227],[3072,0.0213],[3584,0.0199],[4096,0.0206],[4608,0.0189],[5120,0.0185],[5632,0.0183],[6144,0.018],[6656,0.0173],[7168,0.018],[7680,0.017],[8192,0.0188],[8704,0.0193],[9216,0.0191],[9728,0.0181],[10240,0.0175],[10752,0.0155],[11264,0.0147],[11776,0.0141],[12288,0.0152],[12800,0.0154],[13312,0.0148],[13824,0.013],[14336,0.0129],[14848,0.0156],[15360,0.012],[15872,0.0097]],"R":[[512,1.0],[1024,1.038],[2048,1.095],[4096,1.195],[8192,1.357],[16384,1.646]],"R16":1.65,"ci":[1.53,1.76]},"REPOS":{"rho":[[512,0.2353],[1024,0.2127],[1536,0.2096],[2048,0.1853],[2560,0.1819],[3072,0.1792],[3584,0.1661],[4096,0.1755],[4608,0.159],[5120,0.1525],[5632,0.1535],[6144,0.1473],[6656,0.1419],[7168,0.1485],[7680,0.1438],[8192,0.1403],[8704,0.1335],[9216,0.1276],[9728,0.1275],[10240,0.1206],[10752,0.1203],[11264,0.1272],[11776,0.1178],[12288,0.1172],[12800,0.107],[13312,0.1043],[13824,0.1093],[14336,0.1098],[14848,0.1164],[15360,0.109],[15872,0.1061]],"R":[[512,1.0],[1024,1.23],[2048,1.668],[4096,2.399],[8192,3.781],[16384,6.04]],"R16":6.04,"ci":[4.23,8.34]},"WEB":{"rho":[[512,0.0569],[1024,0.0343],[1536,0.0242],[2048,0.0194],[2560,0.016],[3072,0.0133],[3584,0.0249],[4096,0.0109],[4608,0.0076],[5120,0.0111],[5632,0.007],[6144,0.0059],[6656,0.0044],[7168,0.0042],[7680,0.0024],[8192,-0.0],[8704,0.0022],[9216,-0.0031],[9728,-0.0006],[10240,-0.0022],[10752,-0.0011],[11264,0.002],[11776,0.0027],[12288,0.0002],[12800,-0.0081],[13312,-0.0134],[13824,-0.0121],[14336,-0.0141],[14848,-0.0059],[15360,-0.0073],[15872,-0.0182]],"R":[[512,1.0],[1024,1.06],[2048,1.135],[4096,1.234],[8192,1.362],[16384,1.391]],"R16":1.39,"ci":[1.17,1.68]}},"allenai/OLMo-2-0425-1B|stage1-step1907359-tokens4001B":{"ARXIV":{"rho":[[512,0.1308],[1024,0.0961],[1536,0.0838],[2048,0.0742],[2560,0.0692],[3072,0.0655],[3584,0.0617],[4096,0.0574],[4608,0.0548],[5120,0.0536],[5632,0.0559],[6144,0.0531],[6656,0.054],[7168,0.0514],[7680,0.0495],[8192,0.0516],[8704,0.0526],[9216,0.0517],[9728,0.0534],[10240,0.0523],[10752,0.0504],[11264,0.0488],[11776,0.0458],[12288,0.0484],[12800,0.0453],[13312,0.0477],[13824,0.0449],[14336,0.0415],[14848,0.0432],[15360,0.0434],[15872,0.0369]],"R":[[512,1.0],[1024,1.135],[2048,1.328],[4096,1.657],[8192,2.168],[16384,3.009]],"R16":3.01,"ci":[2.67,3.33]},"PG19":{"rho":[[512,0.0398],[1024,0.0329],[1536,0.0286],[2048,0.0276],[2560,0.0261],[3072,0.0239],[3584,0.0246],[4096,0.0231],[4608,0.0233],[5120,0.0216],[5632,0.0222],[6144,0.0222],[6656,0.0227],[7168,0.022],[7680,0.0212],[8192,0.0212],[8704,0.0233],[9216,0.0205],[9728,0.0192],[10240,0.0185],[10752,0.0189],[11264,0.0163],[11776,0.0186],[12288,0.0174],[12800,0.0183],[13312,0.017],[13824,0.0154],[14336,0.0201],[14848,0.0156],[15360,0.0134],[15872,0.0177]],"R":[[512,1.0],[1024,1.04],[2048,1.106],[4096,1.218],[8192,1.409],[16384,1.752]],"R16":1.75,"ci":[1.66,1.87]},"REPOS":{"rho":[[512,0.1944],[1024,0.1677],[1536,0.1543],[2048,0.1309],[2560,0.1385],[3072,0.1193],[3584,0.1254],[4096,0.1173],[4608,0.1138],[5120,0.1131],[5632,0.1059],[6144,0.1128],[6656,0.1002],[7168,0.1003],[7680,0.0966],[8192,0.0949],[8704,0.1044],[9216,0.0962],[9728,0.0904],[10240,0.0934],[10752,0.0869],[11264,0.094],[11776,0.1007],[12288,0.0938],[12800,0.0907],[13312,0.0977],[13824,0.0846],[14336,0.0897],[14848,0.0788],[15360,0.0771],[15872,0.0945]],"R":[[512,1.0],[1024,1.196],[2048,1.549],[4096,2.113],[8192,3.035],[16384,4.731]],"R16":4.73,"ci":[3.39,6.57]},"WEB":{"rho":[[512,0.0514],[1024,0.0333],[1536,0.0175],[2048,0.0188],[2560,0.0139],[3072,0.0141],[3584,0.0151],[4096,0.0096],[4608,0.0065],[5120,0.0054],[5632,0.0052],[6144,0.0036],[6656,0.0054],[7168,0.0005],[7680,0.0009],[8192,0.0003],[8704,0.0063],[9216,-0.0033],[9728,-0.0004],[10240,-0.0014],[10752,0.0069],[11264,0.0015],[11776,0.0076],[12288,-0.0025],[12800,-0.0018],[13312,-0.0074],[13824,-0.0068],[14336,-0.0053],[14848,-0.0143],[15360,-0.0025],[15872,0.0035]],"R":[[512,1.0],[1024,1.053],[2048,1.121],[4096,1.21],[8192,1.304],[16384,1.348]],"R16":1.35,"ci":[1.06,1.61]}}},"rel":{"EleutherAI/pythia-1.4b|PG19":1.565,"EleutherAI/pythia-1.4b|REPOS":4.911,"EleutherAI/pythia-1.4b|ARXIV":2.361,"allenai/OLMo-2-0425-1B|PG19":1.3,"allenai/OLMo-2-0425-1B|REPOS":3.51,"allenai/OLMo-2-0425-1B|ARXIV":2.233},"rel_ci":{"EleutherAI/pythia-1.4b|PG19":[1.261,1.982],"EleutherAI/pythia-1.4b|REPOS":[2.615,7.777],"EleutherAI/pythia-1.4b|ARXIV":[1.913,2.963],"allenai/OLMo-2-0425-1B|PG19":[1.073,1.674],"allenai/OLMo-2-0425-1B|REPOS":[2.375,5.228],"allenai/OLMo-2-0425-1B|ARXIV":[1.779,2.923]}};</script>
+<script>
+(function () {
+  var D = window.DOCBATCH;
+  var NAME = {REPOS: "code repositories", ARXIV: "arXiv papers", PG19: "PG-19 books", WEB: "packed web"};
+  var COL = {REPOS: "#14563d", ARXIV: "#3f8f6b", PG19: "#7fb89a", WEB: "#8a9299"};
+  var MOD = {"EleutherAI/pythia-410m": "Pythia-410M", "EleutherAI/pythia-1.4b": "Pythia-1.4B",
+             "allenai/OLMo-2-0425-1B": "OLMo-2-1B"};
+  var STEP = {"step1000": "0.7% of training", "step7000": "5%", "step36000": "25%", "step143000": "final",
+              "stage1-step1907359-tokens4001B": "final"};
+
+  function fmtTok(n) { return n >= 1e6 ? (+(n / 1e6).toFixed(2)) + "M" : Math.round(n / 1e3) + "K"; }
+
+  // effective-batch calculator
+  function calc() {
+    var c = document.getElementById("c-corpus").value, m = document.getElementById("c-model").value;
+    var tok = 1e6 * Math.pow(2, +document.getElementById("c-tok").value);
+    var rel = D.rel[m + "|" + c], ci = D.rel_ci[m + "|" + c];
+    document.getElementById("c-tokv").textContent = fmtTok(tok);
+    document.getElementById("c-out").innerHTML = "A step of <b>" + fmtTok(tok) + "</b> tokens of whole " + NAME[c] +
+      ", in 512-token chunks grouped by document, has as many effective independent samples as about <b>" +
+      fmtTok(tok / rel) + "</b> tokens of packed web text (95% interval " + fmtTok(tok / ci[1]) + "&ndash;" +
+      fmtTok(tok / ci[0]) + "; <i>R</i><sub>rel</sub> = " + rel.toFixed(2) + "). This counts samples, not absolute " +
+      "noise, and real 16K-context gradients were not measured.";
+  }
+  ["c-corpus", "c-model", "c-tok"].forEach(function (id) { document.getElementById(id).addEventListener("input", calc); });
+  calc();
+
+  // curve explorer
+  var sel = document.getElementById("x-cell");
+  Object.keys(D.cells).sort().forEach(function (k) {
+    var p = k.split("|"), o = document.createElement("option");
+    o.value = k; o.textContent = MOD[p[0]] + ", " + (STEP[p[1]] || p[1]);
+    if (k === "EleutherAI/pythia-1.4b|step143000") o.selected = true;
+    sel.appendChild(o);
+  });
+  var NS = "http://www.w3.org/2000/svg";
+  function el(t, a, parent) { var e = document.createElementNS(NS, t); for (var k in a) e.setAttribute(k, a[k]); parent.appendChild(e); return e; }
+
+  function draw() {
+    var cell = D.cells[sel.value], kind = document.getElementById("x-kind").value;
+    var svg = document.getElementById("x-svg"); while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var L = 58, Rr = 20, T = 14, B = 40, W = 640 - L - Rr, H = 300 - T - B;
+    var corpora = ["REPOS", "ARXIV", "PG19", "WEB"].filter(function (k) { return cell[k]; });
+    var ys = []; corpora.forEach(function (k) { cell[k][kind].forEach(function (p) { ys.push(p[1]); }); });
+    var ymin = kind === "rho" ? Math.min(0, Math.min.apply(null, ys)) : 1, ymax = Math.max.apply(null, ys) * 1.08;
+    var lx = function (x) { return L + (Math.log2(x / 512) / 5) * W; };
+    var ly = function (y) { return T + H - (y - ymin) / (ymax - ymin) * H; };
+    [512, 1024, 2048, 4096, 8192, 16384].forEach(function (x) {
+      el("line", {x1: lx(x), x2: lx(x), y1: T, y2: T + H, stroke: "#eef0f2"}, svg);
+      el("text", {x: lx(x), y: T + H + 16, "text-anchor": "middle", "font-size": 11, fill: "#4a5158"}, svg).textContent = (x / 1024) + "K";
+    });
+    for (var i = 0; i <= 4; i++) {
+      var yv = ymin + (ymax - ymin) * i / 4;
+      el("text", {x: L - 6, y: ly(yv) + 4, "text-anchor": "end", "font-size": 11, fill: "#4a5158"}, svg).textContent = yv.toFixed(kind === "rho" ? 2 : 1);
+    }
+    el("line", {x1: L, x2: L + W, y1: ly(kind === "rho" ? 0 : 1), y2: ly(kind === "rho" ? 0 : 1), stroke: "#999"}, svg);
+    el("text", {x: L + W / 2, y: 296, "text-anchor": "middle", "font-size": 11, fill: "#4a5158"}, svg).textContent =
+      kind === "rho" ? "distance between chunks (tokens)" : "contiguous block length W (tokens)";
+    var leg = [];
+    corpora.forEach(function (k) {
+      var pts = cell[k][kind].map(function (p) { return lx(p[0]).toFixed(1) + "," + ly(p[1]).toFixed(1); }).join(" ");
+      el("polyline", {points: pts, fill: "none", stroke: COL[k], "stroke-width": 2.2}, svg);
+      leg.push('<span style="color:' + COL[k] + '">&#9632;</span> ' + NAME[k] + " (<i>R</i>(16K) = " + cell[k].R16 + ")");
+    });
+    document.getElementById("x-legend").innerHTML = leg.join(" &nbsp; ");
+    document.getElementById("x-note").textContent = kind === "rho"
+      ? "Correlation between the gradient noise of two chunks of the same document."
+      : "Noise of one contiguous block relative to the same tokens as independent chunks; 1 means no penalty.";
+  }
+  sel.addEventListener("change", draw); document.getElementById("x-kind").addEventListener("change", draw);
+  draw();
+})();
+</script>
 </body>
 </html>
