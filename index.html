@@ -6,8 +6,8 @@
 <title>Hanyu Yang — mathematics and AI research</title>
 <link rel="canonical" href="https://severinvisionary.github.io/">
 <meta name="google-site-verification" content="B60QY6VtultYCU8wjBrU6MESDhCsu93_Hh0pPYkCP_s">
-<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, and sharp rates for AdaGrad under heavy-tailed noise.">
-<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, Hanyu Yang">
+<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, and a preregistered measurement of the gradient-noise cost of whole-document long-context batches.">
+<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, Hanyu Yang">
 <meta name="author" content="Hanyu Yang">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="profile">
@@ -184,6 +184,18 @@
       },
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "description": "Under heavy-tailed noise with a finite p-th moment, AdaGrad reaches the rate T^-(p-1)/(2p) when the noise is symmetric, while with general noise and small damping Liu's slower exponent (3p-4)/(4p) is sharp for every step size, and for p <= 4/3 there is no polynomial rate; damping lambda = sigma T^alpha raises the exponent, linearly in alpha wherever it is positive, until it reaches the symmetric one."
+    },
+    {
+      "@type": "Dataset",
+      "name": "How much gradient noise do whole-document long-context batches add?",
+      "url": "https://severinvisionary.github.io/doc-batch-gradients/",
+      "datePublished": "2026-10-09",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "A preregistered measurement on Pythia and OLMo-2 checkpoints: relative to packed web text, a whole-document 16K-token batch has 3.5-4.9 times the gradient-noise variance on code repositories and about 2.3 times on arXiv, while PG-19 books are close to the control. Code and gradient Gram matrices are public."
     }
   ]
 }
@@ -391,9 +403,20 @@ step size. Damping closes the gap, linearly in &alpha; wherever the exponent is 
 </p>
 </div>
 
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/doc-batch-gradients/">How much gradient noise do whole-document long-context batches add?</a></h2>
+<div class="result">Chunks of one code repository or paper give correlated gradients out to 16K tokens. Relative to
+packed web text, a whole-document 16K batch has 3.5&ndash;4.9&times; the gradient-noise variance on code and about
+2.3&times; on arXiv, measured on Pythia and OLMo-2 checkpoints; books stay close to the control.</div>
+<p class="links">
+  <a href="https://github.com/SeverinVisionary/doc-batch-gradients">code and data</a> &middot;
+  preregistered measurement, 9 Oct 2026
+</p>
+</div>
+
 <footer>
 Each deposit is licensed on its own page (CC BY 4.0 for data and prose; MIT for
-code where stated; CC0 for the terraces deposit). This index exists so the eleven landing pages, their sitemaps
+code where stated; CC0 for the terraces deposit). This index exists so the twelve landing pages, their sitemaps
 and a single <a href="https://severinvisionary.github.io/robots.txt">robots.txt</a>
 sit at the site root, where crawlers actually read them.
 </footer>
