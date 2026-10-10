@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Long documents make your batch smaller than it looks</title>
+<title>Long documents make a training batch smaller than it looks</title>
 <link rel="canonical" href="https://severinvisionary.github.io/doc-batch-gradients/">
 <meta name="description" content="Chunks of one code repository or paper have correlated gradients out to 16K tokens. Measured on 512-token chunks of Pythia and OLMo-2 gradients, a whole-document 16K block has 3.5-4.9x fewer effective independent samples than packed web text at equal tokens for code, about 2.3x fewer for arXiv and 1.3-1.6x fewer for books.">
 <meta name="keywords" content="gradient noise, gradient noise scale, critical batch size, design effect, long-context training, document packing, language models, Pythia, OLMo-2, code repositories, arXiv, PG-19, Hanyu Yang">
 <meta name="author" content="Hanyu Yang">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Long documents make your batch smaller than it looks">
+<meta property="og:title" content="Long documents make a training batch smaller than it looks">
 <meta property="og:description" content="Chunks of one code repository or paper have correlated gradients out to 16K tokens. Measured on 512-token chunks of Pythia and OLMo-2 gradients, a whole-document 16K block has 3.5-4.9x fewer effective independent samples than packed web text at equal tokens for code, about 2.3x fewer for arXiv and 1.3-1.6x fewer for books.">
 <meta property="og:url" content="https://severinvisionary.github.io/doc-batch-gradients/">
 <meta property="og:image" content="https://severinvisionary.github.io/doc-batch-gradients/fig/f5_R_rel.png">
@@ -19,7 +19,7 @@
 {
  "@context": "https://schema.org",
  "@type": "BlogPosting",
- "headline": "Long documents make your batch smaller than it looks",
+ "headline": "Long documents make a training batch smaller than it looks",
  "url": "https://severinvisionary.github.io/doc-batch-gradients/",
  "datePublished": "2026-10-09",
  "author": {
@@ -101,70 +101,131 @@
 <body>
 <main>
 
-<h1>Long documents make your batch smaller than it looks</h1>
+<h1>Long documents make a training batch smaller than it looks</h1>
+<p class="sub">A long-context training batch is usually made of a few long documents, cut into pieces. Pieces of the same document are alike and usually push the model in much the same direction, so each training batch gains less than its size suggests. To measure how much less, I cut real documents into 512-token chunks and ran them through open models. For code training, chunks from one code repository were worth only 20&ndash;28% as much as the same amount of ordinary web text.</p>
 
 <div class="meta">
-  Hanyu Yang &middot; October 9, 2026 &middot;
-  <a href="https://github.com/SeverinVisionary/doc-batch-gradients">Code and data</a> &middot;
-  <a href="https://doi.org/10.5281/zenodo.23268861">Zenodo</a>
+  9 Oct 2026 &middot; Hanyu Yang &middot;
+  <a href="https://github.com/SeverinVisionary/doc-batch-gradients">code and data</a> &middot;
+  <a href="https://github.com/SeverinVisionary/doc-batch-gradients/blob/main/docs/PREREGISTRATION.md">preregistration</a> &middot;
+  <a href="https://doi.org/10.5281/zenodo.23268861">doi:10.5281/zenodo.23268861</a>
 </div>
 
-<h2>Q: Why isn&rsquo;t counting tokens enough?</h2>
-<p>Take a repo and cut it into 32 chunks. The same classes, imports and names keep showing up. You split the text,
-but those connections are still there.</p>
-<p>I measured how much gradient noise the chunks share. When noise is shared, averaging cancels less of it.</p>
+<div class="tldr"><ul>
+  <li>Chunks from the same code repository or arXiv paper have correlated gradients, and the correlation is
+      still there even at the longest distance I measured (16K tokens).</li>
+  <li>Take 32 chunks from one code repo and you get <b>3.5&ndash;4.9&times;</b> fewer independent samples than from web text. For arXiv it's around <b>2.3&times;</b>, and books only <b>1.3&ndash;1.6&times;</b>.</li>
+  <li>In effective samples, 1M tokens of whole code repos &asymp; 204&ndash;285K tokens of web text. That&rsquo;s a sample count, not a noise measurement, because a single code chunk is noisier or quieter than a web chunk to begin with.</li>
+  <li>What I measured is a proxy. Every chunk was run as its own 512-token sequence, while real 16K training lets
+      each chunk attend to the ones before it, and that changes its gradient. I did not measure that case.</li>
+  <li>The effect is there at every Pythia-410M checkpoint from 0.7% of training to the end, at the final checkpoints
+      of Pythia-1.4B and OLMo-2-1B, and in all four parameter groups.</li>
+</ul></div>
 
-<h2>Q: What did you run?</h2>
-<p>Three models: Pythia-410M, Pythia-1.4B and OLMo-2-0425-1B. The results below are from the final checkpoints of the
-last two.</p>
-<p>The data came from The Stack repositories, arXiv papers, PG-19 books and packed FineWeb. &ldquo;Packed web&rdquo;
-means joining web documents to fill a sequence.</p>
-<p>I used 16 documents per corpus, the same across models. Each 16K span was split into 32 chunks of 512 tokens.</p>
-<p>Each chunk ran alone, without attention to earlier chunks. This isn&rsquo;t an actual 16K training step. The effect
-with full attention could be larger or smaller.</p>
+<h2>Two ways to fill a batch</h2>
+<p>Pretraining usually packs many short web documents into each sequence. Long-context training does
+something different: it fills a 16K or 64K sequence with one long document. That could be a book, a code
+repository glued together file by file, or a paper.</p>
+<figure>
+  <img src="fig/f1_concept.png" width="1140" height="540" alt="Two rows of four 16K sequences. Top: each sequence is split into many short grey documents. Bottom: each sequence is a single green document, cut into 32 chunks.">
+  <figcaption>Same token count, very different contents. On top, each batch row mixes many unrelated web
+  documents. Below, each row is one document.</figcaption>
+</figure>
+<p>Both batches have the same number of tokens, so on paper they are the same batch size. But the 32 chunks of
+one repository are not 32 independent samples. They share variable names, style, topic and imports. If their
+gradients point the same way, averaging them cancels less noise than averaging 32 unrelated chunks would.</p>
 
-<h2>Q: How far apart were chunks still correlated?</h2>
-<p>For code, chunks 15,872 tokens apart still had correlation 0.14 on Pythia-1.4B and 0.09 on OLMo.</p>
-<p>Web was near zero by about 4K. arXiv and books were between code and web.</p>
-<p>A correlation of 0.09 may look small. But each 32-chunk block has 496 pairs. Small correlations across many pairs
-can add up.</p>
+<h2>The idea in one formula</h2>
+<p>Statisticians who run surveys already have a word for this: the <i>design effect</i>. Interview whole households instead of random people and your answers will be noisier than the headcount suggests. For an average of <i>m</i> chunks, the variance is</p>
+<div class="box" data-md="$$\mathrm{Var}\Big(\tfrac1m\textstyle\sum_{i=1}^m g_i\Big)=\frac{\sigma^2}{m}\,R,\qquad R=1+\frac2m\sum_{i&lt;j}\rho_{ij}.$$">Var(average of <i>m</i> chunks) = (&sigma;&sup2; / <i>m</i>) &times; <b>R</b>,
+&nbsp;&nbsp; with &nbsp; <b>R</b> = 1 + (2/<i>m</i>) &Sigma;<sub>pairs</sub> &rho;</div>
+<p>&sigma;&sup2; is how noisy one chunk&rsquo;s gradient is, and &rho; is how much two chunks&rsquo; noise moves together. Independent chunks give <b>R</b> = 1. <b>R</b> = 4 means your batch is as noisy as one with a quarter of the samples. In McCandlish et al.&rsquo;s terms, <b>R</b> is how much <i>B</i><sub>simple</sub> goes up when you trade shuffled chunks for whole documents.</p>
+
+<h2>How I measured it</h2>
+<p>I published the plan before computing a single gradient. One thing in this post isn&rsquo;t in it: the comparison with packed web in Result 3. I added that after I&rsquo;d seen some of the data (more under <a href="#went-wrong">What went wrong</a>). The setup:</p>
+<div class="tw"><table>
+  <tr><th>models</th><td>Pythia-410M (4 checkpoints), Pythia-1.4B (2), OLMo-2-1B (2)</td></tr>
+  <tr><th>corpora</th><td>code repositories (The Stack, concatenated by repo), arXiv papers, PG-19 books, and packed FineWeb as the control</td></tr>
+  <tr><th>sample</th><td>16 documents per corpus, the same 16 for every model; from each, the span from token 2,048 to 18,432, cut into 32 chunks of 512 tokens</td></tr>
+  <tr><th>per cell</th><td>512 chunk gradients and their inner products (a Gram matrix)</td></tr>
+  <tr><th>coverage</th><td>32 planned cells: 24 complete, 5 partial, 3 missing; every final checkpoint is complete</td></tr>
+  <tr><th>hardware</th><td>CPU only, 4-core cloud machines; no GPU</td></tr>
+</table></div>
+<figure>
+  <img src="fig/f2_pipeline.png" width="1230" height="300" alt="Pipeline: 16K-token document span, 32 chunks of 512 tokens, full gradient per chunk, count sketch, Gram matrix of 512 chunks, then rho, R and B_simple.">
+  <figcaption>From documents to numbers. Each chunk runs as its own 512-token sequence, so any correlation comes
+  from the content and not from shared attention context.</figcaption>
+</figure>
+<p>Running chunks on their own keeps attention out of the measurement. It also means this is not the gradient
+of a real 16K training sequence, where each chunk sees everything before it. The numbers describe training batches of
+512-token chunks grouped by document, a proxy for long-context training.</p>
+<p>How the gradients are compressed and compared: see <a href="https://github.com/SeverinVisionary/doc-batch-gradients#method">Method</a> on GitHub.</p>
+
+<h2>Result 1: the correlation reaches far</h2>
 <figure>
   <img src="fig/f3_rho_by_lag.png" width="1260" height="510" alt="Gradient correlation against chunk distance from 0.5K to 16K tokens. Code starts near 0.27 (Pythia) and is still above 0.1 at 16K; arXiv starts near 0.13 and falls to about 0.04 to 0.06; books stay near 0.03; web drops to zero by about 4K.">
-  <figcaption>Correlation by chunk distance, final checkpoints.</figcaption>
+  <figcaption>Correlation between two chunks of the same document, against how far apart they are, at the final
+  checkpoint. The longest distance is 15,872 tokens. The shaded band is the 2K&ndash;16K range the preregistration
+  used.</figcaption>
 </figure>
+<p>Two chunks from the same repo, almost 16K tokens apart, still correlate at about 0.1 (0.14 on Pythia-1.4B, 0.09 on OLMo-2). ArXiv drops from 0.13 for neighbouring chunks to 0.07&ndash;0.08 at 2K and 0.04&ndash;0.06 at the far end. Books stay low, around 0.02&ndash;0.03 past 2K. Web text does what packing predicts: a little correlation between neighbours, where one page runs across two chunks, and nothing past about 4K.</p>
+<p>A 16K block has 496 chunk pairs and <b>R</b> adds them all up, so even 0.1 matters. These are averages, and single pairs vary a lot.</p>
 
-<h2>Q: What is <b>R</b>?</h2>
-<p><b>R</b> compares the noise variance of the average gradient with what it would be for independent chunks from the same
-corpus.</p>
-<p><b>R</b> = 1 means no increase. <b>R</b> = 4 means the noise variance of averaging one-quarter as many independent chunks.</p>
-<p>Web has correlation too. So I divide each corpus&rsquo;s <b>R</b> by web&rsquo;s <b>R</b>. That gives <b>R</b><sub>rel</sub>.</p>
+<h2>Result 2: <b>R</b> grows with block length</h2>
+<figure>
+  <img src="fig/f4_R_by_window.png" width="1260" height="510" alt="R(W) against block length from 0.5K to 16K. At 16K, code reaches 6.9 (Pythia-1.4B) and 4.7 (OLMo-2), arXiv 3.3 and 3.0, books 2.2 and 1.75, web 1.4 and 1.35.">
+  <figcaption><b>R</b>(<i>W</i>): the noise of one contiguous <i>W</i>-token block, relative to the same tokens drawn as
+  independent chunks. It is computed directly from the block sums, with no model of &rho; assumed.</figcaption>
+</figure>
+<p>At 16K tokens, a block of code is 4.7&ndash;6.9&times; noisier than the same number of independent code chunks. ArXiv comes in at 3.0&ndash;3.3, books at 1.75&ndash;2.2.</p>
 
-<h2>Q: What does that give for a 1M-token batch?</h2>
-<p>The calculation is 1M / <b>R</b><sub>rel</sub>. These are the web-relative effective sample counts:</p>
+<h2>Result 3: against the control</h2>
+<p>Packed web isn&rsquo;t at 1 either. Short pages spill across chunk boundaries, which puts it at <b>R</b> = 1.3&ndash;1.4. So I divide every corpus by packed web, with the same model and checkpoint: <b>R</b><sub>rel</sub> = <b>R</b><sub>corpus</sub> / <b>R</b><sub>web</sub>.</p>
+<p><b>R</b><sub>rel</sub> compares how much each layout cuts the number of effective samples. It doesn&rsquo;t compare raw noise. Code and web chunks differ in how noisy they are and in their mean gradient, and <b>R</b><sub>rel</sub> ignores both.</p>
+<figure>
+  <img src="fig/f5_R_rel.png" width="1080" height="600" alt="Bars of R_rel at 16K with 95% intervals: code 4.91 and 3.51, arXiv 2.36 and 2.23, books 1.56 and 1.30, for Pythia-1.4B and OLMo-2-1B.">
+  <figcaption>Design effect of whole-document 16K blocks divided by that of packed web, final checkpoints,
+  with 95% intervals from resampling documents.</figcaption>
+</figure>
 <div class="tw"><table>
-  <tr><th>Data</th><th class="r">Pythia-1.4B</th><th class="r">OLMo-2</th></tr>
-  <tr><td>Code</td><td class="r num">204K</td><td class="r num">285K</td></tr>
-  <tr><td>arXiv</td><td class="r num">424K</td><td class="r num">448K</td></tr>
-  <tr><td>Books</td><td class="r num">639K</td><td class="r num">769K</td></tr>
+  <tr><th>corpus</th><th class="r">Pythia-1.4B</th><th class="r">OLMo-2-1B</th><th class="r">raw <b>R</b>(16K)</th></tr>
+  <tr><td>code repositories</td><td class="r num">4.91 [2.61, 7.78]</td><td class="r num">3.51 [2.37, 5.23]</td><td class="r num">6.91 / 4.73</td></tr>
+  <tr><td>arXiv papers</td><td class="r num">2.36 [1.91, 2.96]</td><td class="r num">2.23 [1.78, 2.92]</td><td class="r num">3.32 / 3.01</td></tr>
+  <tr><td>PG-19 books</td><td class="r num">1.56 [1.26, 1.98]</td><td class="r num">1.30 [1.07, 1.67]</td><td class="r num">2.20 / 1.75</td></tr>
+  <tr><td>packed web</td><td class="r num">1</td><td class="r num">1</td><td class="r num">1.41 / 1.35</td></tr>
 </table></div>
-<p>So code gives about 20&ndash;28% of packed web&rsquo;s effective count at matched tokens.</p>
-<p>204K and 285K are two model estimates, not the ends of a confidence interval. For code, the 95% intervals are
-129K&ndash;382K on Pythia and 191K&ndash;421K on OLMo.</p>
-<p>The bootstrap intervals describe this small document sample, not the full corpora.</p>
+<p>The two models disagree on the exact size but agree on the order: code, then arXiv, then books. The
+intervals come from resampling the 16 documents with replacement, so they reflect only the documents I drew.
+Books sit near 1.5, the threshold the plan set in advance for raw <b>R</b> and the addendum later applied to
+<b>R</b><sub>rel</sub>.</p>
 
-<h2>Q: Does that mean most code tokens are wasted?</h2>
-<p>No. I didn&rsquo;t measure how many tokens were useful.</p>
-<p>This adjusts sample counts for correlation. It doesn&rsquo;t compare absolute gradient noise. Per-chunk noise variance
-and mean gradients differ across corpora.</p>
-<p>There&rsquo;s no learning-rate rule here either. The gradient-noise scale <i>B</i><sub>simple</sub> ignores curvature. More noise
-doesn&rsquo;t by itself mean worse training.</p>
+<h2>What it means for your batch size</h2>
+<p>1&nbsp;/&nbsp;<b>R</b><sub>rel</sub> gives an effective batch size: the tokens of packed web that hold as many
+effective independent samples.</p>
+<figure>
+  <img src="fig/f11_effective_batch.png" width="990" height="480" alt="Horizontal bars: effective batch as a percentage of the same tokens of packed web. Code 20% and 28%, arXiv 42% and 45%, books 64% and 77%.">
+  <figcaption>Effective independent samples in whole-document 16K blocks, as a share of those in the same
+  number of tokens of packed web text (1 / <b>R</b><sub>rel</sub>).</figcaption>
+</figure>
+<div class="tw"><table>
+  <tr><th>1M tokens per step of&hellip;</th><th class="r">as many effective samples as (Pythia-1.4B)</th><th class="r">(OLMo-2-1B)</th></tr>
+  <tr><td>whole code repositories</td><td class="r num">204K web tokens [129K, 382K]</td><td class="r num">285K web tokens [191K, 421K]</td></tr>
+  <tr><td>whole arXiv papers</td><td class="r num">424K [337K, 523K]</td><td class="r num">448K [342K, 562K]</td></tr>
+  <tr><td>whole books</td><td class="r num">639K [504K, 793K]</td><td class="r num">769K [597K, 932K]</td></tr>
+</table></div>
+<p>The brackets are the 95% intervals carried over from <b>R</b><sub>rel</sub>; the ranges in the text are the two
+models' point estimates. This matters because long-context data mixes lean heavily on code repositories. ProLong's
+long-document data, for instance, is mostly repositories and books. If you size a whole-document batch by its
+token count, as you would packed data, it may hold several times fewer independent samples than that count
+suggests.</p>
+<p>The table counts samples, for 512-token chunks grouped by document. It does not say what a 16K training step
+sees, and it gives no learning-rate rule: <i>B</i><sub>simple</sub> ignores curvature, and a noisier gradient does
+not by itself mean a worse model.</p>
 
-<h2>Q: Did the preregistered test pass?</h2>
-<p>No. The web control needed <b>R</b> below 1.2. It got 1.26&ndash;1.41.</p>
-<p>The later rule moved the 1.5 threshold from raw <b>R</b> to <b>R</b><sub>rel</sub>. None of the stopping criteria fire under that rule.</p>
-<p>But the change was made after seeing results. I cannot call this a preregistered pass. The verdict stays
-inconclusive.</p>
+<h2>More checks</h2>
+<p>The ordering holds at every Pythia-410M checkpoint and in every parameter group of Pythia-1.4B. Per-repository results, the check of the gradient compression and the full tables are in the <a href="https://doi.org/10.5281/zenodo.23274045">full report</a>.</p>
 
+<p class="print-only">An interactive version of this post, with a batch-size calculator and every curve, is at <a href="https://severinvisionary.github.io/doc-batch-gradients/">severinvisionary.github.io/doc-batch-gradients</a>.</p>
 <section class="interactive">
 <h2>Try it yourself</h2>
 <p>Pick a corpus, a model and the tokens per step you train with. Then flip through the curves behind the
@@ -184,10 +245,42 @@ numbers above.</p>
 </div>
 </section>
 
+<h2 id="went-wrong">What went wrong, and what I changed</h2>
+<p>The control failed. The plan required packed web to come in below 1.2, and at the final checkpoints it came
+in at 1.26&ndash;1.41, because of the short-range overlap described above. Under the preregistered rules that makes the
+verdict <i>inconclusive</i>, and it stays inconclusive.</p>
+<p>I then wrote an addendum that judges each corpus against packed web, the <b>R</b><sub>rel</sub> above. That rule
+is post hoc. When I wrote it I had seen all of the Pythia-410M results and part of the 1B data, including half of
+the Pythia-1.4B web control (<b>R</b>(16K) = 1.59 on 8 documents). Under the new rule none of the plan's stopping
+criteria fire.</p>
+<h2>What this does not show</h2>
+<p>Long-context training can cost some short-context quality, depending on the data mix; ProLong, for example,
+reports both the losses and mixes that avoid them. A noisier gradient is one possible reason. I measured how big
+the extra noise is in the proxy.</p>
+<p>A training experiment to test this is described in the <a href="https://doi.org/10.5281/zenodo.23274045">full report</a>.</p>
+
+<h2>Related work</h2>
+<ul>
+  <li>Everett and Qiu (<a href="https://arxiv.org/abs/2609.04577">arXiv 2609.04577</a>, Appendix I) guess that tokens in the same sequence are more correlated, and suggest testing it at matched tokens.</li>
+  <li><i>B</i><sub>simple</sub> is from McCandlish et al. (<a href="https://arxiv.org/abs/1812.06162">arXiv 1812.06162</a>).</li>
+  <li>Thomas (<a href="https://arxiv.org/abs/2607.05872">arXiv 2607.05872</a>) shuffles documents too, but to study the gradient spectrum. Within-document correlation turned out to be a small part of that. Distance isn't looked at.</li>
+  <li>The critical-batch-size paper (<a href="https://arxiv.org/abs/2410.21676">arXiv 2410.21676</a>) finds context length barely matters, but that's packed data, up to 4K.</li>
+  <li>Dataset Decomposition (<a href="https://arxiv.org/abs/2405.13226">arXiv 2405.13226</a>) and ProLong (<a href="https://arxiv.org/abs/2410.02660">arXiv 2410.02660</a>) are about which long data to train on and in what order. Neither measures gradients.</li>
+</ul>
+<p>I couldn't find anyone who measured this before. If you know of a paper, email me.</p>
+
+<h2>Data and code</h2>
+<p>Everything is in <a href="https://github.com/SeverinVisionary/doc-batch-gradients">doc-batch-gradients</a>: the probe,
+the analysis, the Gram matrices for all 57 shards, and the full report. Every number on this page can be
+recomputed on a laptop in about 20 minutes. The plan, the deviations and the addendum are in <code>docs/</code>.</p>
+
 <h2>How to cite</h2>
+<p>This post, the code and the analysis report are archived on Zenodo as
+<a href="https://doi.org/10.5281/zenodo.23268861">doi:10.5281/zenodo.23268861</a>. The Gram matrices are too large
+for that deposit; they stay in the GitHub repository at tag v2.0, and the deposit lists their SHA-256 hashes.</p>
 <pre class="box m" style="white-space:pre-wrap;font-size:13px">@techreport{yang2026longdocbatch,
   author = {Yang, Hanyu},
-  title  = {Long documents make your batch smaller than it looks: measuring within-document gradient correlation},
+  title  = {Long documents make a training batch smaller than it looks: measuring within-document gradient correlation},
   year   = {2026},
   institution = {Zenodo},
   doi    = {10.5281/zenodo.23268861},
@@ -195,7 +288,7 @@ numbers above.</p>
 }</pre>
 
 <footer>
-Text and figures: CC BY 4.0. Code: MIT. Part of <a href="https://severinvisionary.github.io/">Hanyu Yang &mdash; mathematics and AI research</a>.
+Text and figures CC BY 4.0; code MIT. Part of <a href="https://severinvisionary.github.io/">Hanyu Yang &mdash; mathematics and AI research</a>.
 Contact: hanyu.yang.92@gmail.com.
 </footer>
 
