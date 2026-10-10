@@ -105,40 +105,64 @@
 
 <div class="meta">
   Hanyu Yang &middot; October 9, 2026 &middot;
-  <a href="https://github.com/SeverinVisionary/doc-batch-gradients">code and data</a> &middot;
-  <a href="https://doi.org/10.5281/zenodo.23268861">doi:10.5281/zenodo.23268861</a>
+  <a href="https://github.com/SeverinVisionary/doc-batch-gradients">Code and data</a> &middot;
+  <a href="https://doi.org/10.5281/zenodo.23268861">Zenodo</a>
 </div>
 
 <h2>Q: Why isn&rsquo;t counting tokens enough?</h2>
 <p>Take a repo and cut it into 32 chunks. The same classes, imports and names keep showing up. You split the text,
 but those connections are still there.</p>
-<p>I measured how much gradient noise these chunks share. When the noise is correlated, averaging cancels less of
-it.</p>
+<p>I measured how much gradient noise the chunks share. When noise is shared, averaging cancels less of it.</p>
 
-<h2>Q: How big was the difference?</h2>
-<p>For the same token count, code gave about 20&ndash;28% of packed web&rsquo;s effective sample count.</p>
-<p>Here&rsquo;s the comparison for 1M tokens:</p>
+<h2>Q: What did you run?</h2>
+<p>Three models: Pythia-410M, Pythia-1.4B and OLMo-2-0425-1B. The results below are from the final checkpoints of the
+last two.</p>
+<p>The data came from The Stack repositories, arXiv papers, PG-19 books and packed FineWeb. &ldquo;Packed web&rdquo;
+means joining web documents to fill a sequence.</p>
+<p>I used 16 documents per corpus, the same across models. Each 16K span was split into 32 chunks of 512 tokens.</p>
+<p>Each chunk ran alone, without attention to earlier chunks. This isn&rsquo;t an actual 16K training step. The effect
+with full attention could be larger or smaller.</p>
+
+<h2>Q: How far apart were chunks still correlated?</h2>
+<p>For code, chunks 15,872 tokens apart still had correlation 0.14 on Pythia-1.4B and 0.09 on OLMo.</p>
+<p>Web was near zero by about 4K. arXiv and books were between code and web.</p>
+<p>A correlation of 0.09 may look small. But each 32-chunk block has 496 pairs. Small correlations across many pairs
+can add up.</p>
+<figure>
+  <img src="fig/f3_rho_by_lag.png" width="1260" height="510" alt="Gradient correlation against chunk distance from 0.5K to 16K tokens. Code starts near 0.27 (Pythia) and is still above 0.1 at 16K; arXiv starts near 0.13 and falls to about 0.04 to 0.06; books stay near 0.03; web drops to zero by about 4K.">
+  <figcaption>Correlation by chunk distance, final checkpoints.</figcaption>
+</figure>
+
+<h2>Q: What is <b>R</b>?</h2>
+<p><b>R</b> compares the noise variance of the average gradient with what it would be for independent chunks from the same
+corpus.</p>
+<p><b>R</b> = 1 means no increase. <b>R</b> = 4 means the noise variance of averaging one-quarter as many independent chunks.</p>
+<p>Web has correlation too. So I divide each corpus&rsquo;s <b>R</b> by web&rsquo;s <b>R</b>. That gives <b>R</b><sub>rel</sub>.</p>
+
+<h2>Q: What does that give for a 1M-token batch?</h2>
+<p>The calculation is 1M / <b>R</b><sub>rel</sub>. These are the web-relative effective sample counts:</p>
 <div class="tw"><table>
-  <tr><th>Data</th><th class="r">Web-relative effective count</th></tr>
-  <tr><td>Code</td><td class="r num">204K&ndash;285K</td></tr>
-  <tr><td>arXiv</td><td class="r num">424K&ndash;448K</td></tr>
-  <tr><td>Books</td><td class="r num">639K&ndash;769K</td></tr>
+  <tr><th>Data</th><th class="r">Pythia-1.4B</th><th class="r">OLMo-2</th></tr>
+  <tr><td>Code</td><td class="r num">204K</td><td class="r num">285K</td></tr>
+  <tr><td>arXiv</td><td class="r num">424K</td><td class="r num">448K</td></tr>
+  <tr><td>Books</td><td class="r num">639K</td><td class="r num">769K</td></tr>
 </table></div>
-<p>For code, the two estimates were 204K on Pythia-1.4B and 285K on OLMo.</p>
+<p>So code gives about 20&ndash;28% of packed web&rsquo;s effective count at matched tokens.</p>
+<p>204K and 285K are two model estimates, not the ends of a confidence interval. For code, the 95% intervals are
+129K&ndash;382K on Pythia and 191K&ndash;421K on OLMo.</p>
+<p>The bootstrap intervals describe this small document sample, not the full corpora.</p>
 
 <h2>Q: Does that mean most code tokens are wasted?</h2>
 <p>No. I didn&rsquo;t measure how many tokens were useful.</p>
-<p>These numbers adjust the sample count for correlation. They don&rsquo;t compare absolute gradient noise. Code and
-web have different per-chunk noise variances and mean gradients.</p>
-
-<h2>Q: Did you run actual 16K training?</h2>
-<p>No. Each 512-token chunk ran separately, without attention to earlier chunks.</p>
-<p>That leaves cross-chunk attention out of the measurement. With real 16K attention, the effect could be larger or
-smaller.</p>
+<p>This adjusts sample counts for correlation. It doesn&rsquo;t compare absolute gradient noise. Per-chunk noise variance
+and mean gradients differ across corpora.</p>
+<p>There&rsquo;s no learning-rate rule here either. The gradient-noise scale <i>B</i><sub>simple</sub> ignores curvature. More noise
+doesn&rsquo;t by itself mean worse training.</p>
 
 <h2>Q: Did the preregistered test pass?</h2>
 <p>No. The web control needed <b>R</b> below 1.2. It got 1.26&ndash;1.41.</p>
-<p>I added the web-relative rule after seeing data. I cannot call that a preregistered pass. The verdict stays
+<p>The later rule moved the 1.5 threshold from raw <b>R</b> to <b>R</b><sub>rel</sub>. None of the stopping criteria fire under that rule.</p>
+<p>But the change was made after seeing results. I cannot call this a preregistered pass. The verdict stays
 inconclusive.</p>
 
 <section class="interactive">
