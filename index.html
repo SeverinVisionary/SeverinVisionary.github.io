@@ -6,8 +6,8 @@
 <title>Hanyu Yang — mathematics and AI research</title>
 <link rel="canonical" href="https://severinvisionary.github.io/">
 <meta name="google-site-verification" content="B60QY6VtultYCU8wjBrU6MESDhCsu93_Hh0pPYkCP_s">
-<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, and a preregistered measurement of the gradient-noise cost of whole-document long-context batches.">
-<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, Hanyu Yang">
+<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, a preregistered measurement of the gradient-noise cost of whole-document long-context batches, and an exploratory study of temperature scaling and the overfitting penalty in data-constrained pretraining.">
+<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, temperature scaling, overfitting, overconfidence, data wall, data-constrained pretraining, CALREP, Hanyu Yang">
 <meta name="author" content="Hanyu Yang">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="profile">
@@ -197,6 +197,19 @@
       },
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "description": "A preregistered measurement on Pythia and OLMo-2 checkpoints, using 512-token chunks grouped by document: at equal tokens, a whole-document 16K-token block has 3.5-4.9 times fewer effective independent samples than packed web text on code repositories and about 2.3 times fewer on arXiv, while PG-19 books are close to the control. Code and gradient Gram matrices are public."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Overfitting or Overconfidence at the Data Wall?",
+      "url": "https://www.alphaxiv.org/abs/2610.overfitting-overconfidence-data-wall",
+      "identifier": "https://doi.org/10.5281/zenodo.23291816",
+      "datePublished": "2026-10-11",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "On 125 public C4 checkpoints (7M-2.8B parameters, 1-64 epochs), cross-fitted scalar temperature scaling removes about a third of the fitted data-repetition penalty: rho = 0.682 (95% bootstrap interval 0.580-0.858). Exploratory results: the preregistered evaluator check failed, and the hypothesis that at least half of the fitted penalty would disappear was not supported."
     }
   ]
 }
@@ -416,6 +429,21 @@ stay close to the control.</div>
   <a href="https://doi.org/10.5281/zenodo.23268861">doi:10.5281/zenodo.23268861</a> &middot;
   <a href="https://www.alphaxiv.org/abs/2610.long-documents-make-a-training-batch-smaller-than-it-looks">alphaXiv</a> &middot;
   preregistered measurement, 9 Oct 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://www.alphaxiv.org/abs/2610.overfitting-overconfidence-data-wall">Overfitting or Overconfidence at the Data Wall?</a></h2>
+<div class="result">On 125 public C4 checkpoints (7M&ndash;2.8B parameters, 1&ndash;64 epochs),
+cross-fitted scalar temperature scaling removes about a third of the fitted data-repetition penalty:
+<span class="m">&rho; = 0.682</span> (95% bootstrap interval 0.580&ndash;0.858).
+The results are exploratory: the preregistered evaluator check failed, and the hypothesis that at least
+half of the fitted penalty would disappear was not supported.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.23291816">10.5281/zenodo.23291816</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.overfitting-overconfidence-data-wall">alphaXiv</a> &middot;
+  <a href="https://github.com/SeverinVisionary/calrep">code and results</a> &middot;
+  exploratory preprint, 11 Oct 2026
 </p>
 </div>
 
