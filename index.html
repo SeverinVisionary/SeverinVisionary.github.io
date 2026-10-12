@@ -6,8 +6,8 @@
 <title>Hanyu Yang — mathematics and AI research</title>
 <link rel="canonical" href="https://severinvisionary.github.io/">
 <meta name="google-site-verification" content="B60QY6VtultYCU8wjBrU6MESDhCsu93_Hh0pPYkCP_s">
-<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, a preregistered measurement of the gradient-noise cost of whole-document long-context batches, an exploratory study of temperature scaling and the overfitting penalty in data-constrained pretraining, and a measurement of how much post-training forgetting a context-free logit correction recovers across 14 released model pairs.">
-<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, temperature scaling, overfitting, overconfidence, data wall, data-constrained pretraining, CALREP, catastrophic forgetting, post-training, logit bias, continued pretraining, Hanyu Yang">
+<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, a preregistered measurement of the gradient-noise cost of whole-document long-context batches, an exploratory study of temperature scaling and the overfitting penalty in data-constrained pretraining, a measurement of how much post-training forgetting a context-free logit correction recovers across 14 released model pairs, and a preregistered test of whether a confusable fake fact gains pull when it enters the local window of a sliding-window hybrid.">
+<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, temperature scaling, overfitting, overconfidence, data wall, data-constrained pretraining, CALREP, catastrophic forgetting, post-training, logit bias, continued pretraining, sliding-window attention, hybrid attention, distractors, needle in a haystack, Hanyu Yang">
 <meta name="author" content="Hanyu Yang">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="profile">
@@ -223,6 +223,19 @@
       },
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "description": "On 14 released base/derived pairs (OLMo-2, Qwen2.5, SmolLM2; 1B-7B), a context-free token bias recovers at most 9.8% of the web-text loss increase out of sample, and bias plus temperature up to 36%, mostly in overconfident OLMo-2 preference-tuned models. Math continued pretraining loses up to 0.8 nats per token and recovers at most 3.1%. Code and per-document data are public."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "No step at the window edge: confusable fake facts in matched sliding-window hybrids",
+      "url": "https://www.alphaxiv.org/abs/2610.sliding-window-hybrids-fake-facts",
+      "identifier": "https://doi.org/10.5281/zenodo.23311150",
+      "datePublished": "2026-10-12",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "In three matched 665M models (full attention, SWA-128, and SWA-128 with NoPE global layers), a look-alike fake fact shows no jump in pull as it crosses the 128-token window edge, and the preregistered window-capture test fails (Delta S = -0.054, 95% CI [-0.069, -0.039]). The standard hybrid picks the fake fact more often at every distance (71% against 35% at 96 tokens)."
     }
   ]
 }
@@ -473,6 +486,19 @@ Math continued pretraining loses up to 0.8 nats per token and recovers at most 3
   data <a href="https://doi.org/10.5281/zenodo.23304208">10.5281/zenodo.23304208</a>,
   <a href="https://huggingface.co/datasets/coldrainy/prior-shift-diagnostic">Hugging Face</a> &middot;
   exploratory preprint, 12 Oct 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://www.alphaxiv.org/abs/2610.sliding-window-hybrids-fake-facts">No step at the window edge: confusable fake facts in matched sliding-window hybrids</a></h2>
+<div class="result">In three matched 665M models (full attention, SWA-128, SWA-128 with NoPE global layers), a look-alike
+fake fact shows no jump in pull as it crosses the 128-token window edge; the preregistered window-capture test fails
+(&Delta;S = <span class="m">&minus;0.054</span> [&minus;0.069, &minus;0.039]).
+The standard hybrid picks the fake fact more often at every distance (71% against 35% at 96 tokens).</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.23311150">10.5281/zenodo.23311150</a> (all versions; code, items and per-item scores inside) &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.sliding-window-hybrids-fake-facts">alphaXiv</a> &middot;
+  preregistered negative result, 12 Oct 2026
 </p>
 </div>
 
