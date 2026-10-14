@@ -6,8 +6,8 @@
 <title>Hanyu Yang — mathematics and AI research</title>
 <link rel="canonical" href="https://severinvisionary.github.io/">
 <meta name="google-site-verification" content="B60QY6VtultYCU8wjBrU6MESDhCsu93_Hh0pPYkCP_s">
-<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, a preregistered measurement of the gradient-noise cost of whole-document long-context batches, an exploratory study of temperature scaling and the overfitting penalty in data-constrained pretraining, a measurement of how much post-training forgetting a context-free logit correction recovers across 14 released model pairs, and a preregistered test of whether a confusable fake fact gains pull when it enters the local window of a sliding-window hybrid.">
-<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, temperature scaling, overfitting, overconfidence, data wall, data-constrained pretraining, CALREP, catastrophic forgetting, post-training, logit bias, continued pretraining, sliding-window attention, hybrid attention, distractors, needle in a haystack, Hanyu Yang">
+<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, a preregistered measurement of the gradient-noise cost of whole-document long-context batches, an exploratory study of temperature scaling and the overfitting penalty in data-constrained pretraining, a measurement of how much post-training forgetting a context-free logit correction recovers across 14 released model pairs, a preregistered test of whether a confusable fake fact gains pull when it enters the local window of a sliding-window hybrid, and a study of whether speculative decoding offsets the tokenization cost of non-English languages.">
+<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, temperature scaling, overfitting, overconfidence, data wall, data-constrained pretraining, CALREP, catastrophic forgetting, post-training, logit bias, continued pretraining, sliding-window attention, hybrid attention, distractors, needle in a haystack, speculative decoding, multilingual tokenization, token tax, tokenizer fertility, MTP, FLORES-200, Hanyu Yang">
 <meta name="author" content="Hanyu Yang">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="profile">
@@ -236,6 +236,20 @@
       },
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "description": "In three matched 665M models (full attention, SWA-128, and SWA-128 with NoPE global layers), a look-alike fake fact shows no jump in pull as it crosses the 128-token window edge, and the preregistered window-capture test fails (Delta S = -0.054, 95% CI [-0.069, -0.039]). The standard hybrid picks the fake fact more often at every distance (71% against 35% at 96 tokens)."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "No Refund for the Token Tax: Speculative Decoding Across 21 Languages",
+      "url": "https://www.alphaxiv.org/abs/2610.speculative-decoding-token-tax-languagesv2",
+      "identifier": "https://doi.org/10.5281/zenodo.23355847",
+      "datePublished": "2026-10-13",
+      "version": "Zenodo v1.4; alphaXiv v2",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "description": "Using 200 FLORES-200 devtest sentences per language across 21 languages, Qwen3.5-9B with its MTP head and Gemma 4 E4B with its assistant show no rise in acceptance with tokenizer fertility; every non-English language has lower acceptance length than English. A six-language vLLM follow-up finds smaller speedups than English in the other five languages for both built-in drafters. These serving measurements use a single run on one A100 at batch size 1; speculative greedy outputs often differ from plain greedy."
     }
   ]
 }
@@ -502,9 +516,25 @@ The standard hybrid picks the fake fact more often at every distance (71% agains
 </p>
 </div>
 
+<div class="work">
+<h2><a href="https://www.alphaxiv.org/abs/2610.speculative-decoding-token-tax-languagesv2">No Refund for the Token Tax: Speculative Decoding Across 21 Languages</a></h2>
+<div class="result">Using 200 FLORES-200 devtest sentences per language across 21 languages, Qwen3.5-9B with its MTP head
+and Gemma 4 E4B with its assistant show no rise in acceptance with tokenizer fertility; every non-English
+language has lower acceptance length than English. A six-language vLLM follow-up finds smaller speedups
+than English in the other five languages for both built-in drafters. These serving measurements use a
+single run on one A100 at batch size 1; speculative greedy outputs often differ from plain greedy.</div>
+<p class="links">
+  Zenodo v1.4 DOI <a href="https://doi.org/10.5281/zenodo.23355847">10.5281/zenodo.23355847</a> &middot;
+  <a href="https://doi.org/10.5281/zenodo.23331652">all versions</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.speculative-decoding-token-tax-languagesv2">alphaXiv v2</a> &middot;
+  <a href="https://github.com/SeverinVisionary/fert-refund">code and data</a> &middot;
+  preprint, 13 Oct 2026
+</p>
+</div>
+
 <footer>
-Each deposit is licensed on its own page (CC BY 4.0 for data and prose; MIT for
-code where stated; CC0 for the terraces deposit). This index exists so the twelve landing pages, their sitemaps
+Each deposit is licensed on its own page (CC BY 4.0 for data and prose, or CC BY-SA 4.0
+for the token-tax deposit; MIT for code where stated; CC0 for the terraces deposit). This index exists so the twelve landing pages, their sitemaps
 and a single <a href="https://severinvisionary.github.io/robots.txt">robots.txt</a>
 sit at the site root, where crawlers actually read them.
 </footer>
