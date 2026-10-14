@@ -33,47 +33,135 @@
   },
   "hasPart": [
     {
-      "@type": "Dataset",
-      "name": "The Bernstein constant: ten rigorously certified digits",
-      "url": "https://severinvisionary.github.io/bernstein-constant-certificate/",
-      "identifier": "https://doi.org/10.5281/zenodo.22106774",
-      "datePublished": "2026-08-26",
+      "@type": "ScholarlyArticle",
+      "name": "No Refund for the Token Tax: Speculative Decoding Across 21 Languages",
+      "url": "https://www.alphaxiv.org/abs/2610.speculative-decoding-token-tax-languagesv2",
+      "identifier": "https://doi.org/10.5281/zenodo.23355847",
+      "datePublished": "2026-10-13",
+      "version": "Zenodo v1.4; alphaXiv v2",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "description": "Using 200 FLORES-200 devtest sentences per language across 21 languages, Qwen3.5-9B with its MTP head and Gemma 4 E4B with its assistant show no rise in acceptance with tokenizer fertility; every non-English language has lower acceptance length than English. A six-language vLLM follow-up finds smaller speedups than English in the other five languages for both built-in drafters. These serving measurements use a single run on one A100 at batch size 1; speculative greedy outputs often differ from plain greedy."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Is forgetting in post-trained language models just a shift in vocabulary bias?",
+      "url": "https://www.alphaxiv.org/abs/2610.language-model-forgetting-vocabulary-bias",
+      "identifier": "https://doi.org/10.5281/zenodo.23312067",
+      "datePublished": "2026-10-12",
       "creator": {
         "@type": "Person",
         "name": "Hanyu Yang"
       },
       "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "Ten correctly-rounded decimal places of Bernstein's constant, beta = 0.2801694990, proved in Arb interval arithmetic, where the 1985 Varga-Carpenter rigorous enclosure determines five. Ships the certificate and a single reproduction command."
+      "description": "On 14 released base/derived pairs (OLMo-2, Qwen2.5, SmolLM2; 1B-7B), a context-free token bias recovers at most 9.8% of the web-text loss increase out of sample, and bias plus temperature up to 36%, mostly in overconfident OLMo-2 preference-tuned models. Math continued pretraining loses up to 0.8 nats per token and recovers at most 3.1%. Code and per-document data are public."
     },
     {
-      "@type": "SoftwareSourceCode",
-      "name": "Twofold coverings of the Hamming cube: a Lean-verified K(8,1,2) >= 61",
-      "url": "https://severinvisionary.github.io/oeis-a004045/",
-      "identifier": "https://doi.org/10.5281/zenodo.22217672",
-      "datePublished": "2026-09-03",
-      "creator": {
-        "@type": "Person",
-        "name": "Hanyu Yang"
-      },
-      "programmingLanguage": [
-        "Lean 4",
-        "Python"
-      ],
-      "license": "https://opensource.org/licenses/MIT",
-      "description": "A Lean 4 formalisation, with no sorry, of the lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), together with an elementary even-n theorem that improves five published lower bounds."
-    },
-    {
-      "@type": "Dataset",
-      "name": "Heilbronn's triangle problem in the disk: a certified n = 14 construction",
-      "url": "https://severinvisionary.github.io/heilbronn-records/",
-      "identifier": "https://doi.org/10.5281/zenodo.22091169",
-      "datePublished": "2026-08-25",
+      "@type": "ScholarlyArticle",
+      "name": "No step at the window edge: confusable fake facts in matched sliding-window hybrids",
+      "url": "https://www.alphaxiv.org/abs/2610.sliding-window-hybrids-fake-facts",
+      "identifier": "https://doi.org/10.5281/zenodo.23311150",
+      "datePublished": "2026-10-12",
       "creator": {
         "@type": "Person",
         "name": "Hanyu Yang"
       },
       "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "An explicit 14-point configuration in exact integer coordinates certifying alpha_disk(14) >= 0.0767158857710289397517847755066, about 1.075% above the best earlier documented value. A certified lower bound, not a proved record."
+      "description": "In three matched 665M models (full attention, SWA-128, and SWA-128 with NoPE global layers), a look-alike fake fact shows no jump in pull as it crosses the 128-token window edge, and the preregistered window-capture test fails (Delta S = -0.054, 95% CI [-0.069, -0.039]). The standard hybrid picks the fake fact more often at every distance (71% against 35% at 96 tokens)."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Overfitting or Overconfidence at the Data Wall?",
+      "url": "https://www.alphaxiv.org/abs/2610.overfitting-overconfidence-data-wall",
+      "identifier": "https://doi.org/10.5281/zenodo.23291816",
+      "datePublished": "2026-10-11",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "On 125 public C4 checkpoints (7M-2.8B parameters, 1-64 epochs), cross-fitted scalar temperature scaling removes about a third of the fitted data-repetition penalty: rho = 0.682 (95% bootstrap interval 0.580-0.858). Exploratory results: the preregistered evaluator check failed, and the hypothesis that at least half of the fitted penalty would disappear was not supported."
+    },
+    {
+      "@type": "Dataset",
+      "name": "Long documents make a training batch smaller than it looks: measuring within-document gradient correlation",
+      "url": "https://severinvisionary.github.io/doc-batch-gradients/",
+      "identifier": "https://doi.org/10.5281/zenodo.23268861",
+      "datePublished": "2026-10-09",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "A preregistered measurement on Pythia and OLMo-2 checkpoints, using 512-token chunks grouped by document: at equal tokens, a whole-document 16K-token block has 3.5-4.9 times fewer effective independent samples than packed web text on code repositories and about 2.3 times fewer on arXiv, while PG-19 books are close to the control. Code and gradient Gram matrices are public."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Is \u03b4 small? Measuring the premise of a hallucination lower bound on OLMo-2",
+      "url": "https://severinvisionary.github.io/hallucination-bound-delta/",
+      "identifier": "https://doi.org/10.5281/zenodo.23225543",
+      "datePublished": "2026-10-08",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "A measurement of the slack term \u03b4 in the hallucination lower bound of Kalai, Nachum, Vempala and Zhang, on their birthday example, weighting 2,083 people by name-date co-occurrence counts in OLMo-2's public corpus: +0.028 (95% CI [0.017, 0.042]) for the 7B base model, inconclusive for the 1B, and +0.156 with every frame person weighted equally."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "AdaGrad under heavy-tailed noise: symmetry, asymmetry and damping",
+      "url": "https://severinvisionary.github.io/adagrad-heavy-tailed-noise/",
+      "identifier": "https://doi.org/10.5281/zenodo.23225828",
+      "datePublished": "2026-10-08",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "Under heavy-tailed noise with a finite p-th moment, AdaGrad reaches the rate T^-(p-1)/(2p) when the noise is symmetric, while with general noise and small damping Liu's slower exponent (3p-4)/(4p) is sharp for every step size, and for p <= 4/3 there is no polynomial rate; damping lambda = sigma T^alpha raises the exponent, linearly in alpha wherever it is positive, until it reaches the symmetric one."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "A Corrected Metric Does Not Validate a Vocabulary Scaling Law",
+      "url": "https://severinvisionary.github.io/vocabulary-scaling-law-metric/",
+      "identifier": "https://doi.org/10.5281/zenodo.23205402",
+      "datePublished": "2026-10-07",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "A re-analysis of the vocabulary scaling law of Tao et al. (2024): re-expressing their released runs in bits per character moves the 70B prescription from 212K to 106K-119K or 550K-764K, and with a model size held out every procedure misses the best vocabulary at 1.13B by 8-40% compute-equivalent, corrected metric or not."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Byte-pair encoding can lose more than half of the optimal compression",
+      "url": "https://severinvisionary.github.io/bpe-beyond-half/",
+      "identifier": "https://doi.org/10.5281/zenodo.23207123",
+      "datePublished": "2026-10-07",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "The worst-case approximation ratio of byte-pair encoding against optimal pair encoding is at most (1-e^-2)/2 \u2248 0.4323, improving the upper bound 5/8 of Kozma and Voderholzer; against encodings whose tokens have length at most three the constant is exact."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Rounding error in FlashAttention: centered, uncentered, and radial",
+      "url": "https://severinvisionary.github.io/flashattention-rounding-error/",
+      "identifier": "https://doi.org/10.5281/zenodo.23179058",
+      "datePublished": "2026-10-06",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "A forward rounding-error bound for FlashAttention-2 compared with two-pass attention: both share the same worst-case term, FlashAttention-2 is more accurate on peaked attention, and the split-KV merge leaves a scale error that grows with the logits, measured at up to 2.2% on an NVIDIA L4."
     },
     {
       "@type": "SoftwareSourceCode",
@@ -121,135 +209,47 @@
       "description": "Three entries of section 7.1(a) of Small Ramsey Numbers improved: R(4,4,4;3) >= 84, R(4,6;3) >= 64 and R(5,5;4) >= 36, each by a group-invariant colouring printed as a table over group orbits, regenerated without a solver and checked by complete enumeration."
     },
     {
-      "@type": "ScholarlyArticle",
-      "name": "Rounding error in FlashAttention: centered, uncentered, and radial",
-      "url": "https://severinvisionary.github.io/flashattention-rounding-error/",
-      "identifier": "https://doi.org/10.5281/zenodo.23179058",
-      "datePublished": "2026-10-06",
+      "@type": "SoftwareSourceCode",
+      "name": "Twofold coverings of the Hamming cube: a Lean-verified K(8,1,2) >= 61",
+      "url": "https://severinvisionary.github.io/oeis-a004045/",
+      "identifier": "https://doi.org/10.5281/zenodo.22217672",
+      "datePublished": "2026-09-03",
       "creator": {
         "@type": "Person",
         "name": "Hanyu Yang"
       },
-      "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "A forward rounding-error bound for FlashAttention-2 compared with two-pass attention: both share the same worst-case term, FlashAttention-2 is more accurate on peaked attention, and the split-KV merge leaves a scale error that grows with the logits, measured at up to 2.2% on an NVIDIA L4."
-    },
-    {
-      "@type": "ScholarlyArticle",
-      "name": "A Corrected Metric Does Not Validate a Vocabulary Scaling Law",
-      "url": "https://severinvisionary.github.io/vocabulary-scaling-law-metric/",
-      "identifier": "https://doi.org/10.5281/zenodo.23205402",
-      "datePublished": "2026-10-07",
-      "creator": {
-        "@type": "Person",
-        "name": "Hanyu Yang"
-      },
-      "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "A re-analysis of the vocabulary scaling law of Tao et al. (2024): re-expressing their released runs in bits per character moves the 70B prescription from 212K to 106K-119K or 550K-764K, and with a model size held out every procedure misses the best vocabulary at 1.13B by 8-40% compute-equivalent, corrected metric or not."
-    },
-    {
-      "@type": "ScholarlyArticle",
-      "name": "Byte-pair encoding can lose more than half of the optimal compression",
-      "url": "https://severinvisionary.github.io/bpe-beyond-half/",
-      "identifier": "https://doi.org/10.5281/zenodo.23207123",
-      "datePublished": "2026-10-07",
-      "creator": {
-        "@type": "Person",
-        "name": "Hanyu Yang"
-      },
-      "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "The worst-case approximation ratio of byte-pair encoding against optimal pair encoding is at most (1-e^-2)/2 \u2248 0.4323, improving the upper bound 5/8 of Kozma and Voderholzer; against encodings whose tokens have length at most three the constant is exact."
-    },
-    {
-      "@type": "ScholarlyArticle",
-      "name": "Is \u03b4 small? Measuring the premise of a hallucination lower bound on OLMo-2",
-      "url": "https://severinvisionary.github.io/hallucination-bound-delta/",
-      "identifier": "https://doi.org/10.5281/zenodo.23225543",
-      "datePublished": "2026-10-08",
-      "creator": {
-        "@type": "Person",
-        "name": "Hanyu Yang"
-      },
-      "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "A measurement of the slack term \u03b4 in the hallucination lower bound of Kalai, Nachum, Vempala and Zhang, on their birthday example, weighting 2,083 people by name-date co-occurrence counts in OLMo-2's public corpus: +0.028 (95% CI [0.017, 0.042]) for the 7B base model, inconclusive for the 1B, and +0.156 with every frame person weighted equally."
-    },
-    {
-      "@type": "ScholarlyArticle",
-      "name": "AdaGrad under heavy-tailed noise: symmetry, asymmetry and damping",
-      "url": "https://severinvisionary.github.io/adagrad-heavy-tailed-noise/",
-      "identifier": "https://doi.org/10.5281/zenodo.23225828",
-      "datePublished": "2026-10-08",
-      "creator": {
-        "@type": "Person",
-        "name": "Hanyu Yang"
-      },
-      "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "Under heavy-tailed noise with a finite p-th moment, AdaGrad reaches the rate T^-(p-1)/(2p) when the noise is symmetric, while with general noise and small damping Liu's slower exponent (3p-4)/(4p) is sharp for every step size, and for p <= 4/3 there is no polynomial rate; damping lambda = sigma T^alpha raises the exponent, linearly in alpha wherever it is positive, until it reaches the symmetric one."
+      "programmingLanguage": [
+        "Lean 4",
+        "Python"
+      ],
+      "license": "https://opensource.org/licenses/MIT",
+      "description": "A Lean 4 formalisation, with no sorry, of the lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), together with an elementary even-n theorem that improves five published lower bounds."
     },
     {
       "@type": "Dataset",
-      "name": "Long documents make a training batch smaller than it looks: measuring within-document gradient correlation",
-      "url": "https://severinvisionary.github.io/doc-batch-gradients/",
-      "identifier": "https://doi.org/10.5281/zenodo.23268861",
-      "datePublished": "2026-10-09",
+      "name": "The Bernstein constant: ten rigorously certified digits",
+      "url": "https://severinvisionary.github.io/bernstein-constant-certificate/",
+      "identifier": "https://doi.org/10.5281/zenodo.22106774",
+      "datePublished": "2026-08-26",
       "creator": {
         "@type": "Person",
         "name": "Hanyu Yang"
       },
       "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "A preregistered measurement on Pythia and OLMo-2 checkpoints, using 512-token chunks grouped by document: at equal tokens, a whole-document 16K-token block has 3.5-4.9 times fewer effective independent samples than packed web text on code repositories and about 2.3 times fewer on arXiv, while PG-19 books are close to the control. Code and gradient Gram matrices are public."
+      "description": "Ten correctly-rounded decimal places of Bernstein's constant, beta = 0.2801694990, proved in Arb interval arithmetic, where the 1985 Varga-Carpenter rigorous enclosure determines five. Ships the certificate and a single reproduction command."
     },
     {
-      "@type": "ScholarlyArticle",
-      "name": "Overfitting or Overconfidence at the Data Wall?",
-      "url": "https://www.alphaxiv.org/abs/2610.overfitting-overconfidence-data-wall",
-      "identifier": "https://doi.org/10.5281/zenodo.23291816",
-      "datePublished": "2026-10-11",
+      "@type": "Dataset",
+      "name": "Heilbronn's triangle problem in the disk: a certified n = 14 construction",
+      "url": "https://severinvisionary.github.io/heilbronn-records/",
+      "identifier": "https://doi.org/10.5281/zenodo.22091169",
+      "datePublished": "2026-08-25",
       "creator": {
         "@type": "Person",
         "name": "Hanyu Yang"
       },
       "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "On 125 public C4 checkpoints (7M-2.8B parameters, 1-64 epochs), cross-fitted scalar temperature scaling removes about a third of the fitted data-repetition penalty: rho = 0.682 (95% bootstrap interval 0.580-0.858). Exploratory results: the preregistered evaluator check failed, and the hypothesis that at least half of the fitted penalty would disappear was not supported."
-    },
-    {
-      "@type": "ScholarlyArticle",
-      "name": "Is forgetting in post-trained language models just a shift in vocabulary bias?",
-      "url": "https://www.alphaxiv.org/abs/2610.language-model-forgetting-vocabulary-bias",
-      "identifier": "https://doi.org/10.5281/zenodo.23312067",
-      "datePublished": "2026-10-12",
-      "creator": {
-        "@type": "Person",
-        "name": "Hanyu Yang"
-      },
-      "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "On 14 released base/derived pairs (OLMo-2, Qwen2.5, SmolLM2; 1B-7B), a context-free token bias recovers at most 9.8% of the web-text loss increase out of sample, and bias plus temperature up to 36%, mostly in overconfident OLMo-2 preference-tuned models. Math continued pretraining loses up to 0.8 nats per token and recovers at most 3.1%. Code and per-document data are public."
-    },
-    {
-      "@type": "ScholarlyArticle",
-      "name": "No step at the window edge: confusable fake facts in matched sliding-window hybrids",
-      "url": "https://www.alphaxiv.org/abs/2610.sliding-window-hybrids-fake-facts",
-      "identifier": "https://doi.org/10.5281/zenodo.23311150",
-      "datePublished": "2026-10-12",
-      "creator": {
-        "@type": "Person",
-        "name": "Hanyu Yang"
-      },
-      "license": "https://creativecommons.org/licenses/by/4.0/",
-      "description": "In three matched 665M models (full attention, SWA-128, and SWA-128 with NoPE global layers), a look-alike fake fact shows no jump in pull as it crosses the 128-token window edge, and the preregistered window-capture test fails (Delta S = -0.054, 95% CI [-0.069, -0.039]). The standard hybrid picks the fake fact more often at every distance (71% against 35% at 96 tokens)."
-    },
-    {
-      "@type": "ScholarlyArticle",
-      "name": "No Refund for the Token Tax: Speculative Decoding Across 21 Languages",
-      "url": "https://www.alphaxiv.org/abs/2610.speculative-decoding-token-tax-languagesv2",
-      "identifier": "https://doi.org/10.5281/zenodo.23355847",
-      "datePublished": "2026-10-13",
-      "version": "Zenodo v1.4; alphaXiv v2",
-      "creator": {
-        "@type": "Person",
-        "name": "Hanyu Yang"
-      },
-      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
-      "description": "Using 200 FLORES-200 devtest sentences per language across 21 languages, Qwen3.5-9B with its MTP head and Gemma 4 E4B with its assistant show no rise in acceptance with tokenizer fertility; every non-English language has lower acceptance length than English. A six-language vLLM follow-up finds smaller speedups than English in the other five languages for both built-in drafters. These serving measurements use a single run on one A100 at batch size 1; speculative greedy outputs often differ from plain greedy."
+      "description": "An explicit 14-point configuration in exact integer coordinates certifying alpha_disk(14) >= 0.0767158857710289397517847755066, about 1.075% above the best earlier documented value. A certified lower bound, not a proved record."
     }
   ]
 }
@@ -308,182 +308,18 @@ item has a DOI, and each states what it does <em>not</em> establish.</p>
 </div>
 
 <div class="work">
-<h2><a href="https://severinvisionary.github.io/bernstein-constant-certificate/">Bernstein's constant: ten rigorously certified digits</a></h2>
-<div class="result"><span class="m">β = 0.2801694990</span> — ten
-correctly-rounded decimal places, proved in Arb interval arithmetic, where the
-1985 Varga–Carpenter rigorous enclosure determines five.</div>
+<h2><a href="https://www.alphaxiv.org/abs/2610.speculative-decoding-token-tax-languagesv2">No Refund for the Token Tax: Speculative Decoding Across 21 Languages</a></h2>
+<div class="result">Using 200 FLORES-200 devtest sentences per language across 21 languages, Qwen3.5-9B with its MTP head
+and Gemma 4 E4B with its assistant show no rise in acceptance with tokenizer fertility; every non-English
+language has lower acceptance length than English. A six-language vLLM follow-up finds smaller speedups
+than English in the other five languages for both built-in drafters. These serving measurements use a
+single run on one A100 at batch size 1; speculative greedy outputs often differ from plain greedy.</div>
 <p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.22106774">10.5281/zenodo.22106774</a> ·
-  <a href="https://github.com/SeverinVisionary/bernstein-constant-certificate">repository</a> ·
-  <a href="https://oeis.org/A073001">OEIS A073001</a> · dataset, 26 Aug 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/oeis-a004045/">Twofold coverings of the Hamming cube: a Lean-verified <span class="m">K(8,1,2) ≥ 61</span></a></h2>
-<div class="result"><span class="m">61 ≤ K(8,1,2) ≤ 64</span> — the lower bound
-formalised in Lean 4 with zero <span class="m">sorry</span>s, plus an elementary
-even-<span class="m">n</span> theorem improving five published lower bounds.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.22217672">10.5281/zenodo.22217672</a> ·
-  <a href="https://github.com/SeverinVisionary/oeis-a004045">repository</a> ·
-  <a href="https://oeis.org/A004045">OEIS A004045</a> · software, 3 Sep 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/heilbronn-records/">Heilbronn's triangle problem in the disk: a certified <span class="m">n = 14</span> construction</a></h2>
-<div class="result"><span class="m">α_disk(14) ≥ 0.0767158857710289397517847755066…</span>
-— an explicit 14-point configuration in exact integer coordinates, about +1.075%
-above the best earlier documented value; a certified lower bound, not a proved
-record.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.22091169">10.5281/zenodo.22091169</a> ·
-  <a href="https://github.com/SeverinVisionary/heilbronn-records">repository</a> ·
-  dataset, 25 Aug 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/alternating-plane-graphs/">Alternating plane graphs: settling Conjectures 10.1 and 10.2, with witnesses for 10.3</a></h2>
-<div class="result">Conjectures <span class="m">10.1</span> and <span class="m">10.2</span> of
-Alth&ouml;fer et al. (2015) are settled. Conjecture <span class="m">10.3</span>
-has verified witnesses at 54 orders; its infinite tail is not proved. The fourth
-problem remains open.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.22269200">10.5281/zenodo.22269200</a> &middot;
-  <a href="https://github.com/SeverinVisionary/alternating-plane-graphs">repository</a> &middot;
-  <a href="https://doi.org/10.26493/1855-3974.584.09a">the source paper</a> &middot; software, 18 Sep 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/hypergraph-ramsey-bounds/">Three improved hypergraph Ramsey lower bounds</a></h2>
-<div class="result"><span class="m">R(4,4,4;3) &ge; 84</span>,
-<span class="m">R(4,6;3) &ge; 64</span> and <span class="m">R(5,5;4) &ge; 36</span>
-&mdash; three entries of &sect;7.1(a) of <em>Small Ramsey Numbers</em> improved, each by a
-group-invariant colouring printed as a table over group orbits, regenerated
-without a solver and checked by complete enumeration.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.22698342">10.5281/zenodo.22698342</a> &middot;
-  <a href="https://github.com/SeverinVisionary/hypergraph-ramsey-bounds">repository</a> &middot;
-  <a href="https://doi.org/10.37236/21">the survey</a> &middot; software, 10 Sep 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/bailey-terraces-256-384/">A terrace for every non-abelian group of order 256 and 384</a></h2>
-<div class="result">All <span class="m">56,070</span> non-abelian groups of order
-256 and all <span class="m">20,154</span> of order 384 given an explicit terrace
-&mdash; the two orders left open by Theorem 32(vi) of Ollis's dynamic survey, so
-that with it every non-abelian group of order at most 511 is terraced. 76,325
-witness records, checked by a standard-library Python verifier, nine negative
-controls, a coverage count, and a GAP check tying every record to its
-<span class="m">SmallGroup</span> id.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.22785373">10.5281/zenodo.22785373</a> &middot;
-  <a href="https://github.com/SeverinVisionary/bailey-terraces-256-384">repository</a> &middot;
-  Ollis, <em>Sequenceable Groups and Related Topics</em>, EJC Dynamic Survey DS10 v3 &middot;
-  dataset, CC0, 16 Sep 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/flashattention-rounding-error/">Rounding error in FlashAttention: centered, uncentered, and radial</a></h2>
-<div class="result">A forward error bound for FlashAttention-2: it shares its
-worst-case term with two-pass attention and is more accurate on peaked attention.
-The split-KV merge does not renormalize, and an output that should be exactly
-<span class="m">1</span> comes back up to <span class="m">2.2%</span> off on an
-NVIDIA L4. Also counterexamples to a published <span class="m">O(u log n)</span> bound.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.23179058">10.5281/zenodo.23179058</a> &middot;
-  <a href="https://www.alphaxiv.org/abs/2610.flashattention-rounding-error-analysis">alphaXiv</a> &middot;
-  <a href="https://www.alphaxiv.org/abs/2610.rounding-error-in-flashattention-in-pictures">illustrated summary</a> &middot;
-  preprint, 6 Oct 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/vocabulary-scaling-law-metric/">A Corrected Metric Does Not Validate a Vocabulary Scaling Law</a></h2>
-<div class="result">Re-expressing the 60 released runs of Tao et al. (2024) in bits
-per character moves their 70B vocabulary prescription from 212K to 106K&ndash;119K or
-550K&ndash;764K, depending on the fitting approach. With a whole model size held out,
-every procedure misses the best vocabulary at 1.13B by 8&ndash;40% compute-equivalent,
-and the corrected metric does not reduce the miss.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.23205402">10.5281/zenodo.23205402</a> &middot;
-  <a href="https://www.alphaxiv.org/abs/2610.vocabulary-scaling-law-metric">alphaXiv</a> &middot;
-  preprint, 7 Oct 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/bpe-beyond-half/">Byte-pair encoding can lose more than half of the optimal compression</a></h2>
-<div class="result">Kozma and Voderholzer showed that byte-pair encoding recovers between 1/3 and
-5/8 of the optimal pair-encoding utility in the worst case. An explicit family of strings lowers the
-upper bound to (1&minus;e<sup>&minus;2</sup>)/2 &asymp; 0.4323, and against encodings whose tokens
-have length at most three that constant is exact.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.23207123">10.5281/zenodo.23207123</a> &middot;
-  <a href="https://www.alphaxiv.org/abs/2610.byte-pair-encoding-optimal-compression">alphaXiv</a> &middot;
-  preprint, 7 Oct 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/hallucination-bound-delta/">Is &delta; small? Measuring the premise of a hallucination lower bound on OLMo-2</a></h2>
-<div class="result">Kalai, Nachum, Vempala and Zhang argue that pretraining keeps the slack term
-&delta; of their hallucination bound small, but do not measure it. On their birthday example, with
-OLMo-2's public corpus for the weights, the 7B base model gives &delta; = +0.028 (95% CI [0.017, 0.042]);
-the result is fragile to the weighting, and the floor is vacuous on this frame.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.23225543">10.5281/zenodo.23225543</a> &middot;
-  data <a href="https://doi.org/10.5281/zenodo.23216820">10.5281/zenodo.23216820</a> &middot;
-  preprint, 8 Oct 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/adagrad-heavy-tailed-noise/">AdaGrad under heavy-tailed noise: symmetry, asymmetry and damping</a></h2>
-<div class="result">Liu asked whether AdaGrad's threshold <i>p</i> = 4/3 under heavy-tailed noise is real. It is,
-and it is caused by asymmetry: with symmetric noise the rate is <i>T</i><sup>&minus;(<i>p</i>&minus;1)/(2<i>p</i>)</sup>
-for every <i>p</i>, while with general noise and small damping (3<i>p</i>&minus;4)/(4<i>p</i>) is sharp for every
-step size. Damping closes the gap, linearly in &alpha; wherever the exponent is positive.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.23225828">10.5281/zenodo.23225828</a> &middot;
-  <a href="https://www.alphaxiv.org/abs/2610.adagrad-heavy-tailed-noise-damping">alphaXiv</a> &middot;
-  <a href="https://www.alphaxiv.org/abs/2610.adagrad-under-heavy-tailed-noise-in-pictures">illustrated post</a> &middot;
-  preprint, 8 Oct 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://severinvisionary.github.io/doc-batch-gradients/">Long documents make a training batch smaller than it looks</a></h2>
-<div class="result">Chunks of one code repository or paper give correlated gradients out to 16K tokens. At equal
-tokens, a whole-document 16K block has 3.5&ndash;4.9&times; fewer effective independent samples than packed web text
-on code and about 2.3&times; fewer on arXiv, measured with 512-token chunks on Pythia and OLMo-2 checkpoints; books
-stay close to the control.</div>
-<p class="links">
-  <a href="https://severinvisionary.github.io/doc-batch-gradients/">illustrated post</a> &middot;
-  <a href="https://github.com/SeverinVisionary/doc-batch-gradients">code and data</a> &middot;
-  <a href="https://doi.org/10.5281/zenodo.23268861">doi:10.5281/zenodo.23268861</a> &middot;
-  <a href="https://www.alphaxiv.org/abs/2610.long-documents-make-a-training-batch-smaller-than-it-looks">alphaXiv</a> &middot;
-  preregistered measurement, 9 Oct 2026
-</p>
-</div>
-
-<div class="work">
-<h2><a href="https://www.alphaxiv.org/abs/2610.overfitting-overconfidence-data-wall">Overfitting or Overconfidence at the Data Wall?</a></h2>
-<div class="result">On 125 public C4 checkpoints (7M&ndash;2.8B parameters, 1&ndash;64 epochs),
-cross-fitted scalar temperature scaling removes about a third of the fitted data-repetition penalty:
-<span class="m">&rho; = 0.682</span> (95% bootstrap interval 0.580&ndash;0.858).
-The results are exploratory: the preregistered evaluator check failed, and the hypothesis that at least
-half of the fitted penalty would disappear was not supported.</div>
-<p class="links">
-  DOI <a href="https://doi.org/10.5281/zenodo.23291816">10.5281/zenodo.23291816</a> &middot;
-  <a href="https://www.alphaxiv.org/abs/2610.overfitting-overconfidence-data-wall">alphaXiv</a> &middot;
-  <a href="https://github.com/SeverinVisionary/calrep">code and results</a> &middot;
-  exploratory preprint, 11 Oct 2026
+  Zenodo v1.4 DOI <a href="https://doi.org/10.5281/zenodo.23355847">10.5281/zenodo.23355847</a> &middot;
+  <a href="https://doi.org/10.5281/zenodo.23331652">all versions</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.speculative-decoding-token-tax-languagesv2">alphaXiv v2</a> &middot;
+  <a href="https://github.com/SeverinVisionary/fert-refund">code and data</a> &middot;
+  preprint, 13 Oct 2026
 </p>
 </div>
 
@@ -517,18 +353,182 @@ The standard hybrid picks the fake fact more often at every distance (71% agains
 </div>
 
 <div class="work">
-<h2><a href="https://www.alphaxiv.org/abs/2610.speculative-decoding-token-tax-languagesv2">No Refund for the Token Tax: Speculative Decoding Across 21 Languages</a></h2>
-<div class="result">Using 200 FLORES-200 devtest sentences per language across 21 languages, Qwen3.5-9B with its MTP head
-and Gemma 4 E4B with its assistant show no rise in acceptance with tokenizer fertility; every non-English
-language has lower acceptance length than English. A six-language vLLM follow-up finds smaller speedups
-than English in the other five languages for both built-in drafters. These serving measurements use a
-single run on one A100 at batch size 1; speculative greedy outputs often differ from plain greedy.</div>
+<h2><a href="https://www.alphaxiv.org/abs/2610.overfitting-overconfidence-data-wall">Overfitting or Overconfidence at the Data Wall?</a></h2>
+<div class="result">On 125 public C4 checkpoints (7M&ndash;2.8B parameters, 1&ndash;64 epochs),
+cross-fitted scalar temperature scaling removes about a third of the fitted data-repetition penalty:
+<span class="m">&rho; = 0.682</span> (95% bootstrap interval 0.580&ndash;0.858).
+The results are exploratory: the preregistered evaluator check failed, and the hypothesis that at least
+half of the fitted penalty would disappear was not supported.</div>
 <p class="links">
-  Zenodo v1.4 DOI <a href="https://doi.org/10.5281/zenodo.23355847">10.5281/zenodo.23355847</a> &middot;
-  <a href="https://doi.org/10.5281/zenodo.23331652">all versions</a> &middot;
-  <a href="https://www.alphaxiv.org/abs/2610.speculative-decoding-token-tax-languagesv2">alphaXiv v2</a> &middot;
-  <a href="https://github.com/SeverinVisionary/fert-refund">code and data</a> &middot;
-  preprint, 13 Oct 2026
+  DOI <a href="https://doi.org/10.5281/zenodo.23291816">10.5281/zenodo.23291816</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.overfitting-overconfidence-data-wall">alphaXiv</a> &middot;
+  <a href="https://github.com/SeverinVisionary/calrep">code and results</a> &middot;
+  exploratory preprint, 11 Oct 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/doc-batch-gradients/">Long documents make a training batch smaller than it looks</a></h2>
+<div class="result">Chunks of one code repository or paper give correlated gradients out to 16K tokens. At equal
+tokens, a whole-document 16K block has 3.5&ndash;4.9&times; fewer effective independent samples than packed web text
+on code and about 2.3&times; fewer on arXiv, measured with 512-token chunks on Pythia and OLMo-2 checkpoints; books
+stay close to the control.</div>
+<p class="links">
+  <a href="https://severinvisionary.github.io/doc-batch-gradients/">illustrated post</a> &middot;
+  <a href="https://github.com/SeverinVisionary/doc-batch-gradients">code and data</a> &middot;
+  <a href="https://doi.org/10.5281/zenodo.23268861">doi:10.5281/zenodo.23268861</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.long-documents-make-a-training-batch-smaller-than-it-looks">alphaXiv</a> &middot;
+  preregistered measurement, 9 Oct 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/hallucination-bound-delta/">Is &delta; small? Measuring the premise of a hallucination lower bound on OLMo-2</a></h2>
+<div class="result">Kalai, Nachum, Vempala and Zhang argue that pretraining keeps the slack term
+&delta; of their hallucination bound small, but do not measure it. On their birthday example, with
+OLMo-2's public corpus for the weights, the 7B base model gives &delta; = +0.028 (95% CI [0.017, 0.042]);
+the result is fragile to the weighting, and the floor is vacuous on this frame.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.23225543">10.5281/zenodo.23225543</a> &middot;
+  data <a href="https://doi.org/10.5281/zenodo.23216820">10.5281/zenodo.23216820</a> &middot;
+  preprint, 8 Oct 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/adagrad-heavy-tailed-noise/">AdaGrad under heavy-tailed noise: symmetry, asymmetry and damping</a></h2>
+<div class="result">Liu asked whether AdaGrad's threshold <i>p</i> = 4/3 under heavy-tailed noise is real. It is,
+and it is caused by asymmetry: with symmetric noise the rate is <i>T</i><sup>&minus;(<i>p</i>&minus;1)/(2<i>p</i>)</sup>
+for every <i>p</i>, while with general noise and small damping (3<i>p</i>&minus;4)/(4<i>p</i>) is sharp for every
+step size. Damping closes the gap, linearly in &alpha; wherever the exponent is positive.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.23225828">10.5281/zenodo.23225828</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.adagrad-heavy-tailed-noise-damping">alphaXiv</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.adagrad-under-heavy-tailed-noise-in-pictures">illustrated post</a> &middot;
+  preprint, 8 Oct 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/vocabulary-scaling-law-metric/">A Corrected Metric Does Not Validate a Vocabulary Scaling Law</a></h2>
+<div class="result">Re-expressing the 60 released runs of Tao et al. (2024) in bits
+per character moves their 70B vocabulary prescription from 212K to 106K&ndash;119K or
+550K&ndash;764K, depending on the fitting approach. With a whole model size held out,
+every procedure misses the best vocabulary at 1.13B by 8&ndash;40% compute-equivalent,
+and the corrected metric does not reduce the miss.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.23205402">10.5281/zenodo.23205402</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.vocabulary-scaling-law-metric">alphaXiv</a> &middot;
+  preprint, 7 Oct 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/bpe-beyond-half/">Byte-pair encoding can lose more than half of the optimal compression</a></h2>
+<div class="result">Kozma and Voderholzer showed that byte-pair encoding recovers between 1/3 and
+5/8 of the optimal pair-encoding utility in the worst case. An explicit family of strings lowers the
+upper bound to (1&minus;e<sup>&minus;2</sup>)/2 &asymp; 0.4323, and against encodings whose tokens
+have length at most three that constant is exact.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.23207123">10.5281/zenodo.23207123</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.byte-pair-encoding-optimal-compression">alphaXiv</a> &middot;
+  preprint, 7 Oct 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/flashattention-rounding-error/">Rounding error in FlashAttention: centered, uncentered, and radial</a></h2>
+<div class="result">A forward error bound for FlashAttention-2: it shares its
+worst-case term with two-pass attention and is more accurate on peaked attention.
+The split-KV merge does not renormalize, and an output that should be exactly
+<span class="m">1</span> comes back up to <span class="m">2.2%</span> off on an
+NVIDIA L4. Also counterexamples to a published <span class="m">O(u log n)</span> bound.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.23179058">10.5281/zenodo.23179058</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.flashattention-rounding-error-analysis">alphaXiv</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.rounding-error-in-flashattention-in-pictures">illustrated summary</a> &middot;
+  preprint, 6 Oct 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/alternating-plane-graphs/">Alternating plane graphs: settling Conjectures 10.1 and 10.2, with witnesses for 10.3</a></h2>
+<div class="result">Conjectures <span class="m">10.1</span> and <span class="m">10.2</span> of
+Alth&ouml;fer et al. (2015) are settled. Conjecture <span class="m">10.3</span>
+has verified witnesses at 54 orders; its infinite tail is not proved. The fourth
+problem remains open.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.22269200">10.5281/zenodo.22269200</a> &middot;
+  <a href="https://github.com/SeverinVisionary/alternating-plane-graphs">repository</a> &middot;
+  <a href="https://doi.org/10.26493/1855-3974.584.09a">the source paper</a> &middot; software, 18 Sep 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/bailey-terraces-256-384/">A terrace for every non-abelian group of order 256 and 384</a></h2>
+<div class="result">All <span class="m">56,070</span> non-abelian groups of order
+256 and all <span class="m">20,154</span> of order 384 given an explicit terrace
+&mdash; the two orders left open by Theorem 32(vi) of Ollis's dynamic survey, so
+that with it every non-abelian group of order at most 511 is terraced. 76,325
+witness records, checked by a standard-library Python verifier, nine negative
+controls, a coverage count, and a GAP check tying every record to its
+<span class="m">SmallGroup</span> id.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.22785373">10.5281/zenodo.22785373</a> &middot;
+  <a href="https://github.com/SeverinVisionary/bailey-terraces-256-384">repository</a> &middot;
+  Ollis, <em>Sequenceable Groups and Related Topics</em>, EJC Dynamic Survey DS10 v3 &middot;
+  dataset, CC0, 16 Sep 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/hypergraph-ramsey-bounds/">Three improved hypergraph Ramsey lower bounds</a></h2>
+<div class="result"><span class="m">R(4,4,4;3) &ge; 84</span>,
+<span class="m">R(4,6;3) &ge; 64</span> and <span class="m">R(5,5;4) &ge; 36</span>
+&mdash; three entries of &sect;7.1(a) of <em>Small Ramsey Numbers</em> improved, each by a
+group-invariant colouring printed as a table over group orbits, regenerated
+without a solver and checked by complete enumeration.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.22698342">10.5281/zenodo.22698342</a> &middot;
+  <a href="https://github.com/SeverinVisionary/hypergraph-ramsey-bounds">repository</a> &middot;
+  <a href="https://doi.org/10.37236/21">the survey</a> &middot; software, 10 Sep 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/oeis-a004045/">Twofold coverings of the Hamming cube: a Lean-verified <span class="m">K(8,1,2) ≥ 61</span></a></h2>
+<div class="result"><span class="m">61 ≤ K(8,1,2) ≤ 64</span> — the lower bound
+formalised in Lean 4 with zero <span class="m">sorry</span>s, plus an elementary
+even-<span class="m">n</span> theorem improving five published lower bounds.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.22217672">10.5281/zenodo.22217672</a> ·
+  <a href="https://github.com/SeverinVisionary/oeis-a004045">repository</a> ·
+  <a href="https://oeis.org/A004045">OEIS A004045</a> · software, 3 Sep 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/bernstein-constant-certificate/">Bernstein's constant: ten rigorously certified digits</a></h2>
+<div class="result"><span class="m">β = 0.2801694990</span> — ten
+correctly-rounded decimal places, proved in Arb interval arithmetic, where the
+1985 Varga–Carpenter rigorous enclosure determines five.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.22106774">10.5281/zenodo.22106774</a> ·
+  <a href="https://github.com/SeverinVisionary/bernstein-constant-certificate">repository</a> ·
+  <a href="https://oeis.org/A073001">OEIS A073001</a> · dataset, 26 Aug 2026
+</p>
+</div>
+
+<div class="work">
+<h2><a href="https://severinvisionary.github.io/heilbronn-records/">Heilbronn's triangle problem in the disk: a certified <span class="m">n = 14</span> construction</a></h2>
+<div class="result"><span class="m">α_disk(14) ≥ 0.0767158857710289397517847755066…</span>
+— an explicit 14-point configuration in exact integer coordinates, about +1.075%
+above the best earlier documented value; a certified lower bound, not a proved
+record.</div>
+<p class="links">
+  DOI <a href="https://doi.org/10.5281/zenodo.22091169">10.5281/zenodo.22091169</a> ·
+  <a href="https://github.com/SeverinVisionary/heilbronn-records">repository</a> ·
+  dataset, 25 Aug 2026
 </p>
 </div>
 
