@@ -6,8 +6,8 @@
 <title>Hanyu Yang — mathematics and AI research</title>
 <link rel="canonical" href="https://severinvisionary.github.io/">
 <meta name="google-site-verification" content="B60QY6VtultYCU8wjBrU6MESDhCsu93_Hh0pPYkCP_s">
-<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, a preregistered measurement of the gradient-noise cost of whole-document long-context batches, an exploratory study of temperature scaling and the overfitting penalty in data-constrained pretraining, a measurement of how much post-training forgetting a context-free logit correction recovers across 14 released model pairs, a preregistered test of whether a confusable fake fact gains pull when it enters the local window of a sliding-window hybrid, and a study of whether speculative decoding offsets the tokenization cost of non-English languages.">
-<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, temperature scaling, overfitting, overconfidence, data wall, data-constrained pretraining, CALREP, catastrophic forgetting, post-training, logit bias, continued pretraining, sliding-window attention, hybrid attention, distractors, needle in a haystack, speculative decoding, multilingual tokenization, token tax, tokenizer fertility, MTP, FLORES-200, Hanyu Yang">
+<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, a preregistered measurement of the gradient-noise cost of whole-document long-context batches, an exploratory study of temperature scaling and the overfitting penalty in data-constrained pretraining, a measurement of how much post-training forgetting a context-free logit correction recovers across 14 released model pairs, a preregistered test of whether a confusable fake fact gains pull when it enters the local window of a sliding-window hybrid, a study of whether speculative decoding offsets the tokenization cost of non-English languages, and a placebo-controlled trial of execution-checked versus tag-format rewards in zero-data self-play.">
+<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, temperature scaling, overfitting, overconfidence, data wall, data-constrained pretraining, CALREP, catastrophic forgetting, post-training, logit bias, continued pretraining, sliding-window attention, hybrid attention, distractors, needle in a haystack, speculative decoding, multilingual tokenization, token tax, tokenizer fertility, MTP, FLORES-200, zero-data self-play, Absolute Zero, placebo-controlled trial, reinforcement learning, reward verification, Hanyu Yang">
 <meta name="author" content="Hanyu Yang">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="profile">
@@ -32,6 +32,20 @@
     ]
   },
   "hasPart": [
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Does the reward matter? A placebo trial for zero-data self-play",
+      "url": "https://zenodo.org/records/23359965",
+      "identifier": "https://doi.org/10.5281/zenodo.23359965",
+      "datePublished": "2026-10-14",
+      "version": "1.0",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "In a 100-step Qwen2.5-Coder-3B trial with fixed coding tasks, a tag-format placebo reward gives no detectable math gain, while execution-checked rewards gain 5.7 and 5.1 percentage points across two seeds on six math benchmarks. The result is limited to this short code-to-math setting; the second seed was scored only with Absolute Zero's prompt."
+    },
     {
       "@type": "ScholarlyArticle",
       "name": "No Refund for the Token Tax: Speculative Decoding Across 21 Languages",
@@ -305,6 +319,19 @@ item has a DOI, and each states what it does <em>not</em> establish.</p>
 <div class="meta">
   ORCID <a href="https://orcid.org/0009-0005-0419-4070">0009-0005-0419-4070</a> ·
   <a href="https://github.com/SeverinVisionary">github.com/SeverinVisionary</a>
+</div>
+
+<div class="work">
+<h2><a href="https://zenodo.org/records/23359965">Does the reward matter? A placebo trial for zero-data self-play</a></h2>
+<div class="result">In a 100-step Qwen2.5-Coder-3B trial with fixed coding tasks, a tag-format placebo reward
+gives no detectable math gain, while execution-checked rewards gain 5.7 and 5.1 percentage points
+across two seeds on six math benchmarks. The result is limited to this short code-to-math setting;
+the second seed was scored only with Absolute Zero's prompt.</div>
+<p class="links">
+  Zenodo v1.0 DOI <a href="https://doi.org/10.5281/zenodo.23359965">10.5281/zenodo.23359965</a> &middot;
+  <a href="https://doi.org/10.5281/zenodo.23359964">all versions</a> &middot;
+  paper, code and results in the deposit &middot; preprint, 14 Oct 2026
+</p>
 </div>
 
 <div class="work">
