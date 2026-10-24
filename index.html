@@ -6,8 +6,8 @@
 <title>Hanyu Yang — mathematics and AI research</title>
 <link rel="canonical" href="https://severinvisionary.github.io/">
 <meta name="google-site-verification" content="B60QY6VtultYCU8wjBrU6MESDhCsu93_Hh0pPYkCP_s">
-<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, a preregistered measurement of the gradient-noise cost of whole-document long-context batches, an exploratory study of temperature scaling and the overfitting penalty in data-constrained pretraining, a measurement of how much post-training forgetting a context-free logit correction recovers across 14 released model pairs, a preregistered test of whether a confusable fake fact gains pull when it enters the local window of a sliding-window hybrid, a study of whether speculative decoding offsets the tokenization cost of non-English languages, and a placebo-controlled trial of execution-checked versus tag-format rewards in zero-data self-play.">
-<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, temperature scaling, overfitting, overconfidence, data wall, data-constrained pretraining, CALREP, catastrophic forgetting, post-training, logit bias, continued pretraining, sliding-window attention, hybrid attention, distractors, needle in a haystack, speculative decoding, multilingual tokenization, token tax, tokenizer fertility, MTP, FLORES-200, zero-data self-play, Absolute Zero, placebo-controlled trial, reinforcement learning, reward verification, Hanyu Yang">
+<meta name="description" content="Mathematics and AI research with public certificates and DOIs: ten certified digits of Bernstein's constant, a Lean 4-verified lower bound K(8,1,2) >= 61 for binary twofold covering codes (OEIS A004045), a certified n = 14 construction for Heilbronn's triangle problem in the disk, two settled conjectures on alternating plane graphs, with finite witnesses for a third, an explicit terrace for every non-abelian group of order 256 and 384, a rounding-error analysis of FlashAttention, a held-out test of a vocabulary scaling law for language models, a new worst-case bound for byte-pair encoding, a measurement of the slack term in a hallucination lower bound on OLMo-2, sharp rates for AdaGrad under heavy-tailed noise, a preregistered measurement of the gradient-noise cost of whole-document long-context batches, an exploratory study of temperature scaling and the overfitting penalty in data-constrained pretraining, a measurement of how much post-training forgetting a context-free logit correction recovers across 14 released model pairs, a preregistered test of whether a confusable fake fact gains pull when it enters the local window of a sliding-window hybrid, a study of whether speculative decoding offsets the tokenization cost of non-English languages, a placebo-controlled trial of execution-checked versus tag-format rewards in zero-data self-play, and an exact-distribution test that found seven speculative-decoding bugs in vLLM and SGLang.">
+<meta name="keywords" content="mathematics, artificial intelligence, machine learning, numerical analysis of AI systems, certified computation, computer-assisted proof, formal verification, Lean 4, interval arithmetic, exact arithmetic, Bernstein constant, covering codes, OEIS A004045, OEIS A073001, Heilbronn triangle problem, alternating plane graphs, rotation systems, terraces, Bailey's conjecture, sequenceable groups, GAP Small Groups library, reproducible research, open data, FlashAttention, rounding error analysis, floating-point arithmetic, scaling laws, vocabulary size, tokenization, byte-pair encoding, BPE, optimal pair encoding, approximation ratio, hallucination, calibration, OLMo-2, training data frequency, AdaGrad, heavy-tailed noise, adaptive gradient methods, stochastic optimization, lower bounds, gradient noise, critical batch size, design effect, long-context training, Pythia, temperature scaling, overfitting, overconfidence, data wall, data-constrained pretraining, CALREP, catastrophic forgetting, post-training, logit bias, continued pretraining, sliding-window attention, hybrid attention, distractors, needle in a haystack, speculative decoding, multilingual tokenization, token tax, tokenizer fertility, MTP, FLORES-200, zero-data self-play, Absolute Zero, placebo-controlled trial, reinforcement learning, reward verification, speculative decoding correctness, vLLM, SGLang, rejection sampling, lookup-table models, goodness-of-fit test, Hanyu Yang">
 <meta name="author" content="Hanyu Yang">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="profile">
@@ -32,6 +32,20 @@
     ]
   },
   "hasPart": [
+    {
+      "@type": "ScholarlyArticle",
+      "name": "The \u201cLossless\u201d Illusion: How Speculative Decoding Silently Changes What LLMs Say",
+      "url": "https://www.alphaxiv.org/abs/2610.speculative-decoding-distribution-shifts",
+      "identifier": "https://doi.org/10.5281/zenodo.23432534",
+      "datePublished": "2026-10-16",
+      "version": "Zenodo v1.2; alphaXiv v1",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "Small lookup-table models loaded into vLLM and SGLang expose seven speculative-decoding bugs in which the server runs normally but samples from the wrong distribution; in SGLang's NGRAM drafter, token 0 is emitted at a rate of 0.538 against a correct 0.049. Fix pull requests were open for all seven within 24 hours. Rates on a real model (Qwen3-0.6B) depend on the prompt set, and the effect on RL training was not measured."
+    },
     {
       "@type": "ScholarlyArticle",
       "name": "Does the reward matter? A placebo trial for zero-data self-play",
@@ -319,6 +333,21 @@ item has a DOI, and each states what it does <em>not</em> establish.</p>
 <div class="meta">
   ORCID <a href="https://orcid.org/0009-0005-0419-4070">0009-0005-0419-4070</a> ·
   <a href="https://github.com/SeverinVisionary">github.com/SeverinVisionary</a>
+</div>
+
+<div class="work">
+<h2><a href="https://www.alphaxiv.org/abs/2610.speculative-decoding-distribution-shifts">The &ldquo;Lossless&rdquo; Illusion: How Speculative Decoding Silently Changes What LLMs Say</a></h2>
+<div class="result">Small lookup-table models loaded into vLLM and SGLang expose seven speculative-decoding bugs
+in which the server runs normally but samples from the wrong distribution; in SGLang's NGRAM drafter,
+token 0 is emitted at a rate of 0.538 against a correct 0.049. Fix pull requests were open for all seven
+within 24 hours. Rates on a real model (Qwen3-0.6B) depend on the prompt set, and the effect on RL
+training was not measured.</div>
+<p class="links">
+  Zenodo v1.2 DOI <a href="https://doi.org/10.5281/zenodo.23432534">10.5281/zenodo.23432534</a> &middot;
+  <a href="https://doi.org/10.5281/zenodo.23431955">all versions</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2610.speculative-decoding-distribution-shifts">alphaXiv</a> &middot;
+  code, counts and verdicts in the deposit &middot; preprint, 16 Oct 2026
+</p>
 </div>
 
 <div class="work">
