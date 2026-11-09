@@ -34,6 +34,20 @@
   "hasPart": [
     {
       "@type": "ScholarlyArticle",
+      "name": "Draft-Model Speculative Decoding Can Emit Zero-Probability Tokens",
+      "url": "https://www.alphaxiv.org/abs/2611.speculative-decoding-zero-probability-tokens",
+      "identifier": "https://doi.org/10.5281/zenodo.24074132",
+      "datePublished": "2026-11-08",
+      "version": "Zenodo v6; alphaXiv v2",
+      "creator": {
+        "@type": "Person",
+        "name": "Hanyu Yang"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "description": "TensorRT-LLM 1.2.1's two-model draft-target path, with the VANILLA attention backend, fails at every sampling setting tested: under top-k sampling, 45% of its sampled sequences have probability zero under the engine's own top-k distribution. The verifier receives fewer draft distributions than draft tokens, so some tokens are never checked and the first is checked against the wrong one. Forty-seven cells across vLLM, SGLang, llama.cpp and Hugging Face Transformers show no deviation at the stated detection limits; the test enumerates every output of a tiny fixture exactly."
+    },
+    {
+      "@type": "ScholarlyArticle",
       "name": "Commit Now, Pay Later: When Can a Streaming Program Keep Track of Where Its Output Came From?",
       "url": "https://www.alphaxiv.org/abs/2611.commit-now-pay-later",
       "identifier": "https://doi.org/10.5281/zenodo.24025411",
@@ -347,6 +361,23 @@ item has a DOI, and each states what it does <em>not</em> establish.</p>
 <div class="meta">
   ORCID <a href="https://orcid.org/0009-0005-0419-4070">0009-0005-0419-4070</a> ·
   <a href="https://github.com/SeverinVisionary">github.com/SeverinVisionary</a>
+</div>
+
+<div class="work">
+<h2><a href="https://www.alphaxiv.org/abs/2611.speculative-decoding-zero-probability-tokens">Draft-Model Speculative Decoding Can Emit Zero-Probability Tokens</a></h2>
+<div class="result">TensorRT-LLM 1.2.1's two-model draft-target path, with the VANILLA attention backend, fails at
+every sampling setting tested: under top-<i>k</i> sampling, 45% of its sampled sequences have probability
+zero under the engine's own top-<i>k</i> distribution. The verifier receives fewer draft distributions than
+draft tokens, so some tokens are never checked and the first is checked against the wrong one. Forty-seven
+cells across vLLM, SGLang, llama.cpp and Hugging Face Transformers show no deviation at the stated detection
+limits; the test enumerates every output of a tiny fixture exactly.</div>
+<p class="links">
+  Zenodo v6 DOI <a href="https://doi.org/10.5281/zenodo.24074132">10.5281/zenodo.24074132</a> &middot;
+  <a href="https://doi.org/10.5281/zenodo.23908668">all versions</a> &middot;
+  <a href="https://www.alphaxiv.org/abs/2611.speculative-decoding-zero-probability-tokens">alphaXiv v2</a> &middot;
+  <a href="https://github.com/SeverinVisionary/spec-decode-exactness">code and preregistration</a> &middot;
+  preprint, 8 Nov 2026
+</p>
 </div>
 
 <div class="work">
