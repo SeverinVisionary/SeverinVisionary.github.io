@@ -523,7 +523,7 @@ half of the fitted penalty would disappear was not supported.</div>
 <div class="result">Chunks of one code repository or paper give correlated gradients out to 16K tokens. At equal
 tokens, a whole-document 16K block has 3.5&ndash;4.9&times; fewer effective independent samples than packed web text
 on code and about 2.3&times; fewer on arXiv, measured with 512-token chunks on Pythia and OLMo-2 checkpoints; books
-stay close to the control.</div>
+stay close to the control. <strong>Corrected 17 Nov 2026:</strong> in full causal context the ratio is about 1.3, below the 1.5 hurdle; the 512-token standalone chunks overstated the excess about fivefold, exploratory (<a href="https://doi.org/10.5281/zenodo.24302210">version 7</a>).</div>
 <p class="links">
   <a href="https://severinvisionary.github.io/doc-batch-gradients/">illustrated post</a> &middot;
   <a href="https://github.com/SeverinVisionary/doc-batch-gradients">code and data</a> &middot;
